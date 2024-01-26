@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Formulario</title>
+		<script>
+		
+		function sumar(event) {
+			event.preventDefault();
+			
+			var a = parseFloat(document.getElementById("a").value);
+			var b = parseFloat(document.getElementById("b").value);
+			var resultado = a + b;
+			
+			document.getElementById('result').innerHTML = 'Resultado: ' + resultado;
+			
+		}
+		</script>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+	<body>
+	    <div class="container">
+	    	<fieldset>
+	    		<legend><h1>Calculadora</h1></legend>
+	    			        
+	        
+		        <form action="resultado.jsp">
+		        	<label for="a"></label>
+		        	<input type="number" name="a" id="a">
+		        	<br/>
+		        	<label for="b"></label>
+		        	<input type="number" name="b" id="b">
+		        	<br/>
+		        	<button onClick="sumar(event)" class="register-button">sumarrr</button>
+		        </form>
+	        
+	        <div id="result"></div>
+			
+	    	</fieldset>
+	    </div>
+	</body>
+</html>

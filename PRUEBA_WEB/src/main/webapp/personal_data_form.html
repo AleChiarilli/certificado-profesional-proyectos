@@ -5,38 +5,53 @@
 		<title>Formulario</title>
 		<script>
 		
-		function sumar(event) {
+		function animateContainer() {
 			event.preventDefault();
-			
-			var a = parseFloat(document.getElementById("a").value);
-			var b = parseFloat(document.getElementById("b").value);
-			var resultado = a + b;
-			
-			document.getElementById('result').innerHTML = 'Resultado: ' + resultado;
-			
+		    var container = document.querySelector('.container');
+		    container.classList.add('clicked');
+		    
+		    setTimeout(function () {
+		        window.location.href = "contact_data_form.html";
+		    }, 500);
 		}
+		
 		</script>
 		<link rel="stylesheet" type="text/css" href="styles.css">
 	</head>
 	<body>
 	    <div class="container">
-	    	<fieldset>
-	    		<legend><h1>Calculadora</h1></legend>
-	    			        
-	        
-		        <form action="resultado.jsp">
-		        	<label for="a"></label>
-		        	<input type="number" name="a" id="a">
-		        	<br/>
-		        	<label for="b"></label>
-		        	<input type="number" name="b" id="b">
-		        	<br/>
-		        	<button onClick="sumar(event)" class="register-button">sumarrr</button>
-		        </form>
-	        
-	        <div id="result"></div>
+			<h1>Ingresa tus datos personales</h1>
 			
-	    	</fieldset>
+			<div class="form-container">
+				<form name="datos_personales" action="" style="text-align:left;">
+					<label for="nombre">Nombre</label><br>
+					<input type="text" class="register-input" id="nombre" name="nombre" maxlength="30" autofocus required>
+					<br><br>
+					
+					<label for="apellido">Apellido</label><br>
+					<input type="text" class="register-input" id="apellido" name="apellido" maxlength="30" required>
+					<br><br>
+					
+					<label for="edad">Edad</label><br>
+					<input type="number" class="register-input" id="edad" name="edad" maxlength="8"  required >
+					<br><br>
+					
+					<label for="genero">Género</label><br>
+					<input type="radio" id="masculino" name="genero" required>
+					<label for="masculino">Masculino</label>
+					<input type="radio" id="femenino" name="genero" required>
+					<label for="femenino">Femenino</label>
+					<br><br>
+					
+					<label for="dni">DNI</label><br>
+					<input type="number" class="register-input" id="dni" name="dni" maxlength="8"  required >
+					<br><br>
+					
+					<input type="reset" value="Borrar" class="register-button"/>
+					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event)"/>
+					
+				</form>
+			</div>
 	    </div>
 	</body>
 </html>

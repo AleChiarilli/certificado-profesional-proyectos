@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Formulario</title>
+		<script>
+		
+		function animateContainer() {
+			event.preventDefault();
+		    var container = document.querySelector('.container');
+		    container.classList.add('clicked');
+		    
+		    setTimeout(function () {
+		        window.location.href = "selectCountry.html";
+		    }, 500);
+		}
+		
+		</script>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+	<body>
+	    <div class="container">
+			<h1>Ingresa tus datos de contacto</h1>
+			
+			<div class="form-container">
+				<form name="contact_data" action="" style="text-align:left;">
+					<label for="email">Email</label><br>
+					<input type="email" class="register-input" id="email" name="email" maxlength="30" autofocus required>
+					<br><br>
+					
+					<label for="phone">Número de teléfono</label><br>
+					<input type="number" class="register-input" id="phone" name="phone" maxlength="30" required>
+					<br><br>
+					
+					<label for="address">Dirección</label><br>
+					<input type="text" class="register-input" id="address" name="address" maxlength="8"  required >
+					<br><br>
+					
+					<label for="postal_code">Dirección</label><br>
+					<input type="text" class="register-input" id="postal_code" name="postal_code" maxlength="8"  required >
+					<br><br>
+					
+					<input type="reset" value="Borrar" class="register-button"/>
+					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event)"/>
+					
+				</form>
+			</div>
+	    </div>
+	</body>
+</html>

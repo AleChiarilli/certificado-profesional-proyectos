@@ -11,8 +11,6 @@ body {
     font-family: Helvetica;
 }
 
-h1 {background: blue;}
-
 .container {
     text-align: center;
     background-color: white;
@@ -25,6 +23,11 @@ h1 {background: blue;}
 /* Estilo adicional para la transición al hacer clic */
 .container.clicked {
     transform: translateX(-100%); /* Mover hacia la izquierda al hacer clic */
+}
+
+.form-container {
+	display: flex;
+    justify-content: center;
 }
 
 /* Agrega la animación al cargar la página */
@@ -57,10 +60,9 @@ h1 {background: blue;}
 }
 
 .register-input {
-	width:150px;
+	width:200px;
 	height:30px;
 	border-radius:5px;
-	margin: 10px;
 	box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
 }
 
@@ -94,4 +96,10 @@ h1 {background: blue;}
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
