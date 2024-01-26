@@ -5,7 +5,7 @@
 		<title>Formulario</title>
 		<script>
 		
-		function animateContainer() {
+		function animateContainer(event) {
 			event.preventDefault();
 		    var container = document.querySelector('.container');
 		    container.classList.add('clicked');
@@ -14,6 +14,22 @@
 		        window.location.href = "contact_data_form.html";
 		    }, 500);
 		}
+		
+		function handleInputs() {
+			  // Obtener todos los elementos de input del formulario
+			  var inputs = document.querySelectorAll('.register-input');
+			  
+			  // Crear un objeto para almacenar los datos
+			  var personalData = {};
+
+			  // Recorrer cada input y agregar su valor al objeto
+			  inputs.forEach(function(input) {
+			    personalData[input.id] = input.value;
+			  });
+
+			  // Almacenar el objeto en el localStorage
+			  localStorage.setItem('personalData', JSON.stringify(personalData));
+		};
 		
 		</script>
 		<link rel="stylesheet" type="text/css" href="styles.css">
@@ -44,11 +60,11 @@
 					<br><br>
 					
 					<label for="dni">DNI</label><br>
-					<input type="number" class="register-input" id="dni" name="dni" maxlength="8"  required >
+					<input type="text" class="register-input" id="dni" name="dni" maxlength="8"  required >
 					<br><br>
 					
 					<input type="reset" value="Borrar" class="register-button"/>
-					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event)"/>
+					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event); handleInputs();"/>
 					
 				</form>
 			</div>

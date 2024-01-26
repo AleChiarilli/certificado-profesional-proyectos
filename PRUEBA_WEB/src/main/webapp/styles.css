@@ -25,11 +25,6 @@ body {
     transform: translateX(-100%); /* Mover hacia la izquierda al hacer clic */
 }
 
-.form-container {
-	display: flex;
-    justify-content: center;
-}
-
 /* Agrega la animación al cargar la página */
 @keyframes entradaDesdeDerecha {
     0% {
@@ -42,6 +37,11 @@ body {
     }
 }
 
+.form-container {
+	display: flex;
+    justify-content: center;
+}
+
 #display {
     display: flex;
     justify-content: center;
@@ -50,9 +50,6 @@ body {
     height: 13rem;
     margin: 20px auto;
 }
-
-/* ... Otros estilos ... */
-
 
 #display img {
     width: 20rem;

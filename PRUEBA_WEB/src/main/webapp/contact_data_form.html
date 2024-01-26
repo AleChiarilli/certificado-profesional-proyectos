@@ -13,7 +13,25 @@
 		    setTimeout(function () {
 		        window.location.href = "selectCountry.html";
 		    }, 500);
+		    
 		}
+		
+		function handleInputs() {
+			  // Obtener todos los elementos de input del formulario
+			  var inputs = document.querySelectorAll('.register-input');
+			  
+			  // Crear un objeto para almacenar los datos
+			  var contactData = {};
+
+			  // Recorrer cada input y agregar su valor al objeto
+			  inputs.forEach(function(input) {
+			    contactData[input.id] = input.value;
+			  });
+
+			  // Almacenar el objeto en el localStorage
+			  localStorage.setItem('contactData', JSON.stringify(contactData));
+			  
+		};
 		
 		</script>
 		<link rel="stylesheet" type="text/css" href="styles.css">
@@ -29,19 +47,19 @@
 					<br><br>
 					
 					<label for="phone">Número de teléfono</label><br>
-					<input type="number" class="register-input" id="phone" name="phone" maxlength="30" required>
+					<input type="number" class="register-input" id="phone" name="phone" maxlength="15" required>
 					<br><br>
 					
 					<label for="address">Dirección</label><br>
-					<input type="text" class="register-input" id="address" name="address" maxlength="8"  required >
+					<input type="text" class="register-input" id="address" name="address" maxlength="50"  required >
 					<br><br>
 					
-					<label for="postal_code">Dirección</label><br>
-					<input type="text" class="register-input" id="postal_code" name="postal_code" maxlength="8"  required >
+					<label for="postal_code">Código postal</label><br>
+					<input type="text" class="register-input" id="postal_code" name="postal_code" maxlength="6"  required >
 					<br><br>
 					
 					<input type="reset" value="Borrar" class="register-button"/>
-					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event)"/>
+					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event), handleInputs();"/>
 					
 				</form>
 			</div>
