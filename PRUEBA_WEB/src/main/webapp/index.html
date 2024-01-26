@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Primera página web con JAVA y TOMCAT</title>
+	    <link rel="stylesheet" type="text/css" href="styles.css">
+	    <script>
+		function animateContainer() {
+			event.preventDefault();
+		    var container = document.querySelector('.container');
+		    container.classList.add('clicked');
+		    
+		    setTimeout(function () {
+		        window.location.href = "selectCountry.html";
+		    }, 500);
+		}
+		
+		var mostrarPassword = false;
+		function verPassword() {
+			
+			event.preventDefault();
+			var passwordInput = document.getElementById("password");
+
+			// Cambiar el tipo de input en función del booleano
+			passwordInput.type = mostrarPassword ? "password" : "text";
+
+			// Invertir el valor del booleano para la próxima vez
+			mostrarPassword = !mostrarPassword;
+		}
+	    </script>
+	</head>
+	<body>
+		<div class="container">
+			<form action="final/paginaFinal.html" method="get" >
+			<label for="usuario">Usuarrrrrrriooooooooo:</label>
+			<input class="register-input" style="margin-right: 35px;" id="usuario" type="text" name="usuario" size="30" maxlength="31" autofocus required/>
+			<br><br>
+			
+			<label for="password">Password:</label>
+			<input class="register-input" id="password" type="password" name="password" size="8" maxlength="8" required/>
+			<button onclick="verPassword(event)" class="ver-password-button">👀</button>
+			<br><br>
+			
+			<input type="reset" value="Borrar" class="register-button"/>
+			<input type="submit" value="Acceder" class="register-button" onclick="animateContainer(event)"/>
+			</form>
+		</div>
+
+	</body>
+</html>

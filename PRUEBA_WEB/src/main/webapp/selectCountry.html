@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Formulario</title>
+		<script>
+			function animateContainer() {
+				event.preventDefault();
+			    var container = document.querySelector('.container');
+			    container.classList.add('clicked');
+			    
+			    setTimeout(function () {
+			        window.location.href = "index.html";
+			    }, 1000);
+			}
+			
+			var mostrarPassword = false;
+			function verPassword() {
+				
+				event.preventDefault();
+				var passwordInput = document.getElementById("password");
+	
+				// Cambiar el tipo de input en función del booleano
+				passwordInput.type = mostrarPassword ? "password" : "text";
+	
+				// Invertir el valor del booleano para la próxima vez
+				mostrarPassword = !mostrarPassword;
+			}
+			
+			function showCountry(country) {
+				var selectedCountry = country.innerHTML.toLowerCase();
+				
+				document.querySelector("#display").innerHTML = "<img src='imagenes/" + selectedCountry + ".png'/>";
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+	<body>
+	    <div class="container">
+	        <h1>Selecciona el país de la oficina a la que quieres aplicar</h1>
+	        
+	        <div id="display"></div>
+	        
+	        <div class="button-container">
+	            <button class="country-button" onClick="showCountry(this);">España</button>
+	            <button class="country-button" onClick="showCountry(this);">Suiza</button>
+	            <button class="country-button" onClick="showCountry(this);">Tailandia</button>
+	        </div>
+	        
+	        <a href="driving_form.html" class="country-button" onclick="animateContainer(event)">
+	            Continuar
+	        </a>
+	    </div>
+	</body>
+</html>

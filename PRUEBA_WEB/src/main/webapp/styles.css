@@ -1,0 +1,97 @@
+@charset "UTF-8";			
+			
+body {
+    background: rgb(37,34,89);
+    background: linear-gradient(90deg, rgba(37,34,89,1) 0%, rgba(28,28,138,1) 35%, rgba(49,164,187,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Helvetica;
+}
+
+h1 {background: blue;}
+
+.container {
+    text-align: center;
+    background-color: white;
+    padding: 3em;
+    border-radius: 25% 10%;
+    transition: transform 1s ease; /* La transición se aplica a .container */
+    animation: entradaDesdeDerecha 1s ease-out;
+}
+
+/* Estilo adicional para la transición al hacer clic */
+.container.clicked {
+    transform: translateX(-100%); /* Mover hacia la izquierda al hacer clic */
+}
+
+/* Agrega la animación al cargar la página */
+@keyframes entradaDesdeDerecha {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20rem;
+    height: 13rem;
+    margin: 20px auto;
+}
+
+/* ... Otros estilos ... */
+
+
+#display img {
+    width: 20rem;
+    height: auto;
+}
+
+.register-input {
+	width:150px;
+	height:30px;
+	border-radius:5px;
+	margin: 10px;
+	box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+}
+
+.country-button {
+    margin: 1em;
+    padding: 1em 2em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.country-button:hover {
+    background-color: #45a049;
+}
+
+.country-button:active {
+    background-color: #3e8e41;
+}
+
+.register-button {
+	margin: 1em;
+    padding: 1em 1em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
