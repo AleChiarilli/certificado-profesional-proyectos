@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Etiquetas de agrupación</title>
+	<style>
+		body {
+			text-align: -webkit-center;
+		}
+	
+		fieldset {
+			width: 20em;
+			border-radius: 10%;
+		}
+		
+		#container {
+			display: flex;
+			justify-content: space-between;
+		}
+		
+		.visualizar {
+			margin-top: 50px;
+			visibility: visible;
+			background: pink;
+			width: 150px;
+			height: 80px;
+			border-radius: 25px;
+		}
+	</style>
+
+	<script>
+		function handlePurchase() {
+			var radiosTabaco = document.getElementsByName("tabacos");
+			
+			//alert("radiosTabaco ... " + radiosTabaco);
+			
+			var contador = 0;
+			var radioActual;
+			
+			
+			do {
+				
+				radioActual = radiosTabaco[contador];					// mejor radiosTabaco[contador++]
+				
+				if (radioActual.checked) {
+					alert(radioActual.id.toUpperCase() + " ... " +
+							radioActual.value + " ... " +
+								(radioActual.checked ? "ACTIVO" : ""));		// (evaluacion ? "cierto" : "falso")
+				}
+				
+				contador++;		// contador = contador + 1			pre: --contador     post: contador--
+				
+			} while(!radioActual.checked);								// radioActual.checked != true
+			
+		}
+	</script>
+</head>
+<body>
+	<h1>Cajetillas y precios</h1>
+	<fieldset>
+		<div id="container">
+			<label>Cajetilla Fortuna</label>
+			<input type="radio" name="tabacos" id="fortuna" value="fortuna_4,95 €">
+		</div >
+		<div id="container">
+			<label>Cajetilla Marlboro</label>
+			<input type="radio" name="tabacos" id="marlboro" value="marlboro_5,35 €">
+		</div>
+		<div id="container">
+			<label>Cajetilla Camel</label>
+			<input type="radio" name="tabacos" id="camel" value="camel_5,20 €">
+		</div>
+		
+		<div>
+			<button type="button" onclick="handlePurchase();">Seleccionar</button>
+		</div>
+	</fieldset>
+	
+	<div class="visualizar">
+		<span id="foto"></span>
+		
+		<span id="marca"></span>
+		
+		<span id="precio"></span>
+		
+	</div>
+	
+	<p>Las autoridades sanitarias advierten que fumar es perjudicial para la salud.</p>
+</body>
+</html>
