@@ -11,7 +11,7 @@
 		    container.classList.add('clicked');
 		    
 		    setTimeout(function () {
-		        window.location.href = "experience_form.html";
+		        window.location.href = "selectCountry.html";
 		    }, 500);
 		    
 		}
@@ -21,15 +21,15 @@
 			  var inputs = document.querySelectorAll('.register-input');
 			  
 			  // Crear un objeto para almacenar los datos
-			  var contactData = {};
+			  var experienceData = {};
 
 			  // Recorrer cada input y agregar su valor al objeto
 			  inputs.forEach(function(input) {
-			    contactData[input.id] = input.value;
+			    experienceData[input.id] = input.value;
 			  });
 
 			  // Almacenar el objeto en el localStorage
-			  localStorage.setItem('contactData', JSON.stringify(contactData));
+			  localStorage.setItem('experienceData', JSON.stringify(experienceData));
 			  
 		};
 		
@@ -38,25 +38,20 @@
 	</head>
 	<body>
 	    <div class="container">
-			<h1>Ingresa tus datos de contacto</h1>
+			<h1>Dónde trabajas actualmente</h1>
 			
 			<div class="form-container">
-				<form name="contact_data" action="" style="text-align:left;">
-					<label for="email">Email</label><br>
-					<input type="email" class="register-input" id="email" name="email" maxlength="30" autofocus required>
+				<form name="experience_data" action="" style="text-align:left;">
+					<label for="experience">Lugar de trabajo</label><br>
+					<input type="text" class="register-input" id="workplace" name="workplace" maxlength="30" autofocus required>
 					<br><br>
-					
-					<label for="phone">Número de teléfono</label><br>
-					<input type="number" class="register-input" id="phone" name="phone" maxlength="15" required>
+					<label for="experience">Fecha de comienzo</label><br>
+					<input type="date" class="register-input" id="start-date" name="start-date" required>
 					<br><br>
-					
-					<label for="address">Dirección</label><br>
-					<input type="text" class="register-input" id="address" name="address" maxlength="50"  required >
+					<label for="title">Cargo</label><br>
+					<input type="text" class="register-input" id="title" name="title" maxlength="20"required>
 					<br><br>
-					
-					<label for="postal_code">Código postal</label><br>
-					<input type="text" class="register-input" id="postal_code" name="postal_code" maxlength="6"  required >
-					<br><br>
+
 					
 					<input type="reset" value="Borrar" class="register-button"/>
 					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event), handleInputs();"/>

@@ -22,8 +22,8 @@
 			margin-top: 50px;
 			visibility: visible;
 			background: pink;
-			width: 150px;
-			height: 80px;
+			width: 400px;
+			height: 300px;
 			border-radius: 25px;
 		}
 	</style>
@@ -52,6 +52,21 @@
 				
 			} while(!radioActual.checked);								// radioActual.checked != true
 			
+			document.querySelector(".visualizar").style.visibility = "visible";
+			
+			
+			let queFoto 	= radioActual.id + ".jpg";
+			let queMarca	= radioActual.id.toUpperCase();
+			let quePrecio 	= radioActual.value + " €";
+			
+			
+			let cadena = "<img src='img/" + queFoto + "' alt='TABACO' title='PAQUETE DE TABACO'/><br><br>" +
+							"<span>" + queMarca + "</span>" +
+								"<span> <strong> " + quePrecio + " </strong> </span>";
+			
+			
+			// RELLENAR LA CAPA: 
+			document.querySelector(".visualizar").innerHTML = cadena;
 		}
 	</script>
 </head>
@@ -60,15 +75,15 @@
 	<fieldset>
 		<div id="container">
 			<label>Cajetilla Fortuna</label>
-			<input type="radio" name="tabacos" id="fortuna" value="fortuna_4,95 €">
+			<input type="radio" name="tabacos" id="fortuna" value="4.95">
 		</div >
 		<div id="container">
 			<label>Cajetilla Marlboro</label>
-			<input type="radio" name="tabacos" id="marlboro" value="marlboro_5,35 €">
+			<input type="radio" name="tabacos" id="marlboro" value="5.35">
 		</div>
 		<div id="container">
 			<label>Cajetilla Camel</label>
-			<input type="radio" name="tabacos" id="camel" value="camel_5,20 €">
+			<input type="radio" name="tabacos" id="camel" value="5.20">
 		</div>
 		
 		<div>

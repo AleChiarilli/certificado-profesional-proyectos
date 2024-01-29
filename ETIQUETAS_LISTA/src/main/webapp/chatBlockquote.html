@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>CHAT con BlockQuote</title>
+	<style>
+		#chat {
+			background: pink;
+			height:35em;
+		}
+		
+		#enterText {
+			background: gray;
+		}
+	</style>
+	<script>
+		
+	</script>
+</head>
+<body>
+	<section id="chat">
+		<blockquote>
+			<p>JUAN:</p>
+			<blockquote align="right">
+				<p>ANA:</p>
+			</blockquote>
+		</blockquote>
+	</section>
+	
+	<section id="enterText">
+		<label>Juan Says:</label>
+		<input type="text" id="juan" name="participantes">
+		<button onclick="sendJuan">send</button>
+		
+		<br><br>
+		
+		<label>Ana Says:</label>
+		<input type="text" id="ana" name="participantes">
+		<button onclick="sendAna">send</button>
+	</section>
+</body>
+</html>
