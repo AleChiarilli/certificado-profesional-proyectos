@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			#mundo {			
+				width:50vw;
+				height:50vh;
+				background-color:black;				
+			}
+		
+			body {
+				background-color: black;
+			}
+		
+			img {
+					width: 60%;
+					height:auto;
+			}
+		
+		</style>
+		
+		
+		<script type="text/javascript">
+		
+			function f_juicioFinal() {
+				setTimeout(f_destruccion, 1000);
+			}
+			
+			
+			function f_destruccion() {
+				//alert("BOOOMMM !!!");
+				
+				//document.getElementById("boton").opacity = "0.1";
+				//document.getElementById("boton").disabled = "true";
+				
+				document.getElementById("boton").style.display = "none";
+				
+				document.getElementById("mundo").innerHTML = 
+					"<img src='img/explosion.gif'/>"
+			}
+			
+		
+		</script>
+		
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+									
+			<div id="mundo" style="margin:50px;">
+				<img src="img/planetaTierra.jpg"/>
+			</div>
+
+			<br/><br/><br/>
+
+			<button id="boton" onclick="f_juicioFinal();">
+				- DESTRUIR (temporizador 1 seg) -
+			</button>			
+
+		</div>
+		
+	</body>
+
+</html>
