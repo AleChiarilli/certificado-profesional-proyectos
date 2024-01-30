@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+
+		<title>Botón File Customizado</title>
+		
+		<style>
+		
+			input[type="file"] {					/* SELECTOR - PARA NO VISUALIZAR EL BOTÓN DE FICHERO */
+			  display: none;
+			}
+			
+			
+			label {									/* SIMPLE EFECTO VISUAL AL PONER CURSOR SOBRE EL LABEL */
+			  cursor: pointer;						/*	... SE VE UNA MANO EN LUGAR DEL CURSOR NORMAL */
+			}
+			
+			
+			button {
+				margin-top: 25px;
+				width: 275px;
+				height: 90px;
+				font-size: 18px;
+				font-weight: bolder;
+				border-radius: 25px;
+				background-color: yellow;
+			}
+
+
+			fieldset {
+				width: 500px;
+				height: 300px;
+				border: 5px solid green;
+				border-radius: 30px;
+				margin-bottom: 80px;
+			}
+			
+			
+			#capaNombreFichero {
+			  color: red;
+			}
+
+		</style>
+		
+		
+		
+		<script type="text/javascript">
+		
+			function f_actualizarCapaFichero() {
+
+				// ESCRIBIR EL NOMBRE DEL FICHERO SELECCIONADO EN LA CAPA DE TIPO SPAN
+				//		(sólo es para ver su nombre).
+				
+				var ficherosSeleccionados = document.getElementById("campoFile").files; 
+			
+				
+				
+				// COMPROBAR SI SE HA SELECCIONADO ALGÚN FICHERO:
+					
+				if(ficherosSeleccionados.length == 0) {
+					alert("!! ERROR. NO HAS SELECCIONADO NINGUN FICHERO !!");
+					return false;
+				}		
+				
+				
+				// OK, FICHERO DETECTADO. ENVIAR AL SERVIDOR:
+				var nombreFichero = ficherosSeleccionados[0].name;
+				
+				//alert("NOMBRE DEL FICHERO SELECCIONADO ... " + nombreFichero);				
+				
+				document.getElementById("capaNombreFichero").innerText = nombreFichero; 			
+				return true;
+				
+			}
+			
+		</script>		
+				
+	</head>
+
+
+
+	<body>
+	
+		<div align="center">
+			
+			<h1> SUBIDA DE FICHEROS AL SERVIDOR </h1>
+			
+			
+			<br/><br/>
+				
+			
+			<form action="pagina2.jsp" method="post" enctype="multipart/form-data"
+					onsubmit = "return f_actualizarCapaFichero();">
+					
+				<fieldset>
+				
+					<label for="campoFile">
+				
+				    	PULSA PARA SELECCIONAR EL FICHERO <small> (sólo imágenes) </small>
+				    
+				    	<br/>
+				    			     	
+				     	<img src="img/subirFichero.png" alt="nube" title="PULSA PARA SUBIR FICHERO"/>
+				     	
+				     	<br/>
+				     
+				     
+				     	<!-- MEDIANTE EL TIPO MIME DEL ATRIBUTO accept SE PUEDE LIMITAR EL TIPO DE
+				     			FICHEROS A SUBIR ... EN ESTE CASO SÓLO IMÁGENES -->
+				     			
+				    	<input type="file" accept="image/*" id="campoFile"
+				    		onchange="f_actualizarCapaFichero();"/>
+				    
+				    	<br/>
+				    
+				    	<span id="capaNombreFichero"></span>
+				    	
+				  	</label>
+				  	
+				</fieldset>
+		
+				
+				<button type="submit"> 
+					- ENVIAR AL SERVIDOR - 
+				</button>		
+		
+			</form>
+			
+		</div>
+		
+	</body>
+	
+</html>
