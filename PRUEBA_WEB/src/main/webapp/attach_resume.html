@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+<html lang="es">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Primera página web con JAVA y TOMCAT</title>
+	    <link rel="stylesheet" type="text/css" href="styles.css">
+	    <script>
+		function animateContainer() {
+			event.preventDefault();
+		    var container = document.querySelector('.container');
+		    container.classList.add('clicked');
+		    
+		    setTimeout(function () {
+		        window.location.href = "selectCountry.html";
+		    }, 500);
+		}
+		
+	    </script>
+	</head>
+	<body>
+	    <div class="container">
+			<h1>Házte notar con tu currículum</h1>
+			
+			<div class="form-container">
+				<form name="experience_data" action="" style="text-align:left;">
+					<label for="resume">Currículum</label><br>
+					<input type="file" class="register-input" id="resume" name="resume" required>
+					<br><br>
+					
+					<input type="reset" value="Borrar" class="register-button"/>
+					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event), handleInputs();"/>
+					
+				</form>
+			</div>
+	    </div>
+	</body>
 </html>

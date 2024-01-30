@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+			
+			#mensajes {
+				width: 90vw;				
+				height: 50vh;
+				overflow-y: scroll;
+				border: 3px dotted blue;
+			}
+			
+			
+			#control {
+				width: 95vw;
+				height: 30vh;
+				border: 4px solid blueviolet;
+			}
+			
+			.enRojo {
+				color:red;
+			}
+
+			.enVerde {
+				color:green;
+			}
+					
+		</style>
+		
+		
+		<script type="text/javascript">
+		
+			const LONGITUD_MINIMA_MENSAJE = 3;
+			const arrayClasesColor = ["enRojo", "enVerde"];
+			
+			
+			var cajaNuevoMensaje;
+			var capaMensajes;
+			
+			var contador = 0;
+		
+			
+			function f_inicio() {
+				cajaNuevoMensaje = document.getElementById("nuevoMensaje");
+				capaMensajes = document.getElementById("mensajes");
+			}
+			
+			
+			function f_posicionarFoco() {
+				cajaNuevoMensaje.focus();
+				// puedo añadir funcionalidad el día de mañana !!!
+			}			
+			
+			
+			function f_borrarCajaNuevoMensaje() {				
+				cajaNuevoMensaje.value = "";
+				f_posicionarFoco();
+			}
+			
+			
+			function f_borrarCajaNuevoMensajeConfirmar() {
+				
+				if(cajaNuevoMensaje.value.length == 0) {
+					f_posicionarFoco();
+					return;
+				}
+				
+				var siNo = confirm("¿ESTAS SEGURO DE QUE QUIERES BORRAR?");
+				
+				if (siNo) {
+					f_borrarCajaNuevoMensaje();
+				}
+				
+				f_posicionarFoco();				
+			}
+
+			
+			function f_validarMensaje() {
+				
+				var mensaje = cajaNuevoMensaje.value;
+				
+				mensaje = mensaje.trim();	 // borra blancos a los extremos
+				
+				var longitud = mensaje.length;
+				
+				if(LONGITUD_MINIMA_MENSAJE > longitud) {
+					alert("ERROR. DEBES ESCRIBIR COMO MINIMO " +
+							LONGITUD_MINIMA_MENSAJE + " CARACTERES.");
+
+					return;
+				}
+				
+				return mensaje;				
+			}
+			
+			
+			
+			function f_enviarMensaje() {
+				
+				var mensaje = f_validarMensaje();
+				
+				
+				if(!mensaje) {
+					f_posicionarFoco();
+					return;
+				}
+
+				
+				///////////// PAR IMPAR /////////////
+				
+				contador++;
+				
+				// IMPAR --> PREGUNTA	... RESTO != 0		... true
+				// PAR ----> RESPUESTA	... RESTO = 0		... false
+				
+				// var parImpar = (contador%2 == 0) ? "RESPUESTA" : "PREGUNTA";
+				
+				// var parImpar = (contador %2 == 0) ? true : false;
+				
+				var claseColorAplicar;
+				
+				
+				if(contador %2 != 0) {
+					// PREGUNTA
+					claseColorAplicar = arrayClasesColor[0]; 
+					
+				} else {
+					// RESPUESTA
+					claseColorAplicar = arrayClasesColor[1];
+				}
+				
+				
+				var total = capaMensajes.innerHTML; 
+				
+				mensaje = total + "<blockquote class='" + claseColorAplicar +"'>" +
+							contador + ": " + mensaje + "</blockquote>";
+								
+				capaMensajes.innerHTML = mensaje + "<br/>";
+				
+				f_borrarCajaNuevoMensaje();				
+
+			}
+			
+			function f_borrarChat() {
+				capaMensajes.innerHTML = "";
+				contador = 0;
+			}
+			
+			
+		</script>
+		
+		
+	</head>
+
+
+	<body onload="f_inicio();">
+	
+		<div align="center">
+			
+			<h1> - CHAT BLOCKQUOTE - </h1>
+			
+			<div id="mensajes">
+			</div>
+			
+			
+			<br/><br/>
+			
+			
+			<div id="control">
+			
+				<br/><br/>			
+			
+				<label id="usuario">USUARIO: </label>
+				
+				<input type="text" id="nuevoMensaje" value=""
+							size="100" maxlength="103"
+							placeholder="ESCRIBE AQUI TU MENSAJE (10 caracteres mínimo)"
+							autofocus/>
+				
+							
+				<br/><br/>
+				
+				
+				<button onclick="f_borrarCajaNuevoMensajeConfirmar();">
+					BORRAR TEXTO
+				</button>
+				
+							
+				<button onclick="f_enviarMensaje();">
+					ENVIAR MENSAJE
+				</button>
+				
+				<button onclick="f_borrarChat();">
+					BORRAR MENSAJE
+				</button>
+			
+			</div>
+
+		</div>
+		
+	</body>
+
+</html>

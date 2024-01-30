@@ -1,70 +1,104 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>CHAT con BlockQuote</title>
-		<style>
-			#chat {
-				background: pink;
-				height: 35em;
-				overflow-y: scroll;
-			}
-			
-			#enterText {
-				background: gray;
-			}
-		</style>
-		<script>
-			function sendJuan() {
-				var juanMessage = document.getElementById('juan').value;
-				if (juanMessage !== "") {
-					addMessage('JUAN', juanMessage);
-					document.getElementById('juan').value = "";
-				}
-			}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CHAT con BlockQuote</title>
+    <style>
+        #chat {
+            background: pink;
+            height: 35em;
+            overflow-y: scroll;
+        }
 
-			function sendAna() {
-				var anaMessage = document.getElementById('ana').value;
-				if (anaMessage !== "") {
-					addMessage('ANA', anaMessage, true);
-					document.getElementById('ana').value = "";
-				}
-			}
+        #enterText {
+            background: gray;
+        }
 
-			function addMessage(sender, message, alignRight) {
-				var chatSection = document.getElementById('chat');
-				var blockquote = document.createElement('blockquote');
-				var pSender = document.createElement('p');
-				pSender.textContent = sender + ':';
-				var pMessage = document.createElement('p');
-				pMessage.textContent = message;
+        .enRojo {
+            color: red;
+        }
 
-				blockquote.appendChild(pSender);
-				blockquote.appendChild(pMessage);
+        .enVerde {
+            color: green;
+        }
+    </style>
+    <script>
+        const arrayClasesColor = ["enRojo", "enVerde"];
+        let contador = 0;
 
-				if (alignRight) {
-					blockquote.setAttribute('align', 'right');
-				}
+        function addMessage(sender, message, alignRight) {
+            const chatSection = document.getElementById('chat');
+            const blockquote = document.createElement('blockquote');
+            const pSender = document.createElement('p');
+            pSender.textContent = sender + ':';
+            const pMessage = document.createElement('p');
+            pMessage.textContent = message;
 
-				chatSection.appendChild(blockquote);
+            blockquote.appendChild(pSender);
+            blockquote.appendChild(pMessage);
 
-			}
-		</script>
-	</head>
-	<body>
-		<section id="chat">
-		</section>
-		
-		<section id="enterText">
-			<label>Juan Says:</label>
-			<input type="text" id="juan" name="participantes">
-			<button onclick="sendJuan()">Send</button>
-			
-			<br><br>
-			
-			<label>Ana Says:</label>
-			<input type="text" id="ana" name="participantes">
-			<button onclick="sendAna(""home.html)">Send</button>
-		</section>
-	</body>
+            if (alignRight) {
+                blockquote.setAttribute('align', 'right');
+            }
+
+            chatSection.appendChild(blockquote);
+
+            // Scroll to the bottom of the chat
+            chatSection.scrollTop = chatSection.scrollHeight;
+        }
+
+        function sendMessage(user) {
+            const messageInput = document.getElementById(user);
+            const message = messageInput.value.trim();
+
+            if (message !== "") {
+                addMessage(user.toUpperCase(), message, user === 'ana');
+                messageInput.value = "";
+            }
+        }
+
+        function clearInputConfirm(user) {
+            const messageInput = document.getElementById(user);
+
+            if (messageInput.value.length === 0) {
+                messageInput.focus();
+                return;
+            }
+
+            const confirmDelete = confirm(`¿ESTÁS SEGURO DE QUE QUIERES BORRAR EL MENSAJE DE ${user.toUpperCase()}?`);
+
+            if (confirmDelete) {
+                messageInput.value = "";
+                messageInput.focus();
+            }
+        }
+
+        function clearChat() {
+            const chatSection = document.getElementById('chat');
+            chatSection.innerHTML = "";
+            contador = 0;
+        }
+    </script>
+</head>
+<body>
+    <section id="chat"></section>
+    
+    <section id="enterText">
+        <label>Juan Says:</label>
+        <input type="text" id="juan" name="participantes">
+        <button onclick="sendMessage('juan')">Send</button>
+        <button onclick="clearInputConfirm('juan')">Clear</button>
+        
+        <br><br>
+        
+        <label>Ana Says:</label>
+        <input type="text" id="ana" name="participantes">
+        <button onclick="sendMessage('ana')">Send</button>
+        <button onclick="clearInputConfirm('ana')">Clear</button>
+
+        <br><br>
+
+        <button onclick="clearChat()">Clear Chat</button>
+    </section>
+</body>
 </html>
