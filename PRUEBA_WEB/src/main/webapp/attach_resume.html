@@ -2,7 +2,7 @@
 <html lang="es">
 	<head>
 	    <meta charset="UTF-8">
-	    <title>Primera página web con JAVA y TOMCAT</title>
+	    <title>Comparte tu cv</title>
 	    <link rel="stylesheet" type="text/css" href="styles.css">
 	    <script>
 		function animateContainer() {
@@ -11,7 +11,7 @@
 		    container.classList.add('clicked');
 		    
 		    setTimeout(function () {
-		        window.location.href = "selectCountry.html";
+		        window.location.href = "success.html";
 		    }, 500);
 		}
 		
@@ -22,14 +22,20 @@
 			<h1>Házte notar con tu currículum</h1>
 			
 			<div class="form-container">
-				<form name="experience_data" action="" style="text-align:left;">
-					<label for="resume">Currículum</label><br>
-					<input type="file" class="register-input" id="resume" name="resume" required>
+				<form name="experience_data">
+					<label for="resume">
+						<img alt="Sube tu cv" src="imagenes/upload.png" style="width:75px; height:75px; align-self: center; cursor:pointer;">
+					</label><br>
+					<!-- MEDIANTE EL TIPO MIME DEL ATRIBUTO accept SE PUEDE LIMITAR EL TIPO DE
+				     			FICHEROS A SUBIR ... EN ESTE CASO SÓLO IMÁGENES -->
+					<input type="file" accept="image/*" id="resume" name="resume" required>
 					<br><br>
 					
-					<input type="reset" value="Borrar" class="register-button"/>
-					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event), handleInputs();"/>
+					<div>
+						<input type="reset" value="Borrar" class="register-button"/>
+						<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event), handleInputs();"/>
 					
+					</div>					
 				</form>
 			</div>
 	    </div>

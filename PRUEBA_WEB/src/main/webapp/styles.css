@@ -95,8 +95,7 @@ body {
     display: inline-block;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+input[type="file"] {					/* SELECTOR - PARA NO VISUALIZAR EL BOTÓN DE FICHERO */
+			  display: none;
+			  cursor: pointer;
+			}
