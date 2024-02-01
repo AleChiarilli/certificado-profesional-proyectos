@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+
+			body {
+				background-color:black;			
+			}
+
+
+			h1 {
+				color:green;
+				font-size:50px;
+				font-weight:bolder;
+				text-shadow:5px 5px 5px yellow;
+			}
+		
+		
+			figure {							/* CONTENEDOR DE LA IMAGEN - MODO RELATIVO */
+	 			width:200px;					/*  ESTÁ POSICIONADO - PERMITE USAR top, right ... etc */
+	 			border:2px solid olive;
+	 			border-radius:25px;
+	 			display:inline-block;
+	 			background-color:green;
+	 			position:relative;
+			}
+		
+			
+			.carta {
+ 				margin:8px;
+ 				width:180px;
+ 				height:auto;
+ 				border-radius:150px;
+				z-index:1;
+				opacity:1;
+				position:relative;
+				transition-duration:1s;
+			}
+
+
+			.cartaOculta {
+ 				margin:8px;
+ 				width:180px;
+ 				height:auto;
+ 				border-radius:150px;
+			
+				z-index:0;
+				opacity:0;
+				position:absolute;
+				top:30px;
+				transition-duration:8s;
+			}
+
+
+			.panel {
+				padding:30px;
+				width:80%;
+				border:2px solid lime;
+				border-radius:25px;
+				background-color:#90EE90;
+			}
+		
+		</style>
+		
+		
+		<script type="text/javascript">
+		
+			const cuantasCartas = 3;
+		
+			
+			function f_iniciar() {
+				
+				f_colocarCartasBosque();
+				
+				f_colocarCartasOcultas();
+				
+				f_colocarCartaOro();
+				
+			}
+			
+			
+			
+			function f_colocarCartasBosque() {				
+				var cartas = document.getElementsByName("bosque");
+				
+				for(var i=0; i<cartas.length; i++) {
+					cartas[i].src = "img/bosque.jpg";
+					
+					with(cartas[i].style) {
+						opacity = 1;
+						zIndex = 1;
+					}
+				}				
+			}
+			
+
+			
+			function f_colocarCartasOcultas() {				
+				var cartas = document.getElementsByName("ocultas");
+				
+				for(var i=0; i<cartas.length; i++) {
+					cartas[i].src = "img/raro.jpg";
+					
+					with(cartas[i].style) {
+						opacity = 0;
+						zIndex = 0;
+					}
+					
+				}				
+			}
+			
+			
+						
+			function f_colocarCartaOro() {				
+				var aleatorio = parseInt(Math.random() * cuantasCartas + 1);	// [1..3]				
+				//alert("ALEATORIO ... " + (aleatorio));				
+				
+				var queCartaOculta = "c" + aleatorio + "_Oculta";			// cx_Oculta
+				//alert("QUE CARTA OCULTA ... " + queCartaOculta);
+				
+				var cx_Oculta = document.getElementById(queCartaOculta);
+				
+				cx_Oculta.src = "img/oro.jpg";				
+			}
+		
+		
+			
+			function f_girarCarta(queCartaElegiste) {				
+
+				with(queCartaElegiste.style) {
+					opacity = 0;
+					zIndex = 0;		
+				}
+						
+				
+				var cartaOculta = document.getElementById(queCartaElegiste.id + "_Oculta");
+				
+				with(cartaOculta.style) {
+					opacity = 1;
+					zIndex = 1;							
+				}
+
+			}
+		
+		</script>		
+				
+	</head>
+
+
+	<body onload="f_iniciar();">
+	
+		<div align="center">
+		
+			<h1> ELIGE UNA CARTA </h1>
+		
+				
+			<div class="panel">
+
+				<!-- PRIMERO EL ABSOLUTO, LUEGO EL RELATIVO -->
+			
+				<figure>
+					<img id="c1_Oculta" name="ocultas" src="img/raro.jpg" class="cartaOculta"/>
+					<img id="c1" name="bosque" src="img/bosque.jpg" class="carta" onclick="f_girarCarta(this);"/>
+				</figure>
+	
+	
+
+				<figure>
+					<img id="c2_Oculta" name="ocultas" src="img/raro.jpg" class="cartaOculta"/>
+					<img id="c2" name="bosque" src="img/bosque.jpg" class="carta" onclick="f_girarCarta(this);"/>
+				</figure>
+	
+		
+	
+				<figure>
+					<img id="c3_Oculta" name="ocultas" src="img/raro.jpg" class="cartaOculta"/>
+					<img id="c3" name="bosque" src="img/bosque.jpg" class="carta" onclick="f_girarCarta(this);"/>
+				</figure>
+
+			</div>
+
+
+			<div style="margin-top:50px;">
+			
+				<button onclick="f_iniciar();">
+					- REINICIAR JUEGO -
+				</button>
+			
+			</div>
+
+		</div>
+		
+	</body>
+
+</html>

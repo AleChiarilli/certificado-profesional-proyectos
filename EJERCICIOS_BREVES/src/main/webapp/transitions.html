@@ -1,0 +1,131 @@
+
+<!-- 
+		TRANSICIONES:
+			https://guidacode.com/2017/css/css-transition-property-duration/
+-->
+
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>	
+		
+		<style type="text/css">
+			
+			body {
+				background: rgb(176,174,238);
+				background: radial-gradient(circle, rgba(176,174,238,1) 0%, rgba(29,30,31,1) 100%);			
+			}
+			
+			figure {
+				margin-top:25px;
+				padding:15px;		
+				border:2px solid green;
+				border-radius:30px;
+				width:550px;
+				height:550px;
+				background-color:white;				
+			}
+		
+		
+			img {
+				margin-top:75px;
+				width:400px;
+				height:auto;
+				transition-duration:1.5s;
+			}
+		
+		
+			p {
+				color:red;
+				font-size:30px;
+				font-weight:bolder;
+				text-shadow: 0px 0px 25px lime;
+			}
+			
+		</style>
+		
+		
+		<script type="text/javascript">
+
+			const arrayImagenes =  [
+									"MARIO KART 8",
+									"SMASH BROS",
+									"SPLATOON",
+									"SUPER MARIO BROS",
+									"ZELDA WINDWAKER",
+									"SUPER MARIO MAKER"
+									];			
+		
+			var conmutador = false;
+			
+			
+			function f_cambiarImagen() {
+				
+				var capaImagen = document.getElementById("imagen");				
+				//alert("CAPA IMAGEN ... " + capaImagen.src);
+				
+				
+				// DEBES UTILIZAR: 	window.getComputedStyle(elemento).propiedad;
+				var opacidad = window.getComputedStyle(capaImagen).opacity;
+				//alert("OPACIDAD ... " + opacidad);
+				
+				var tamaño = window.getComputedStyle(capaImagen).width;
+				//alert("TAMAÑO ... " + tamaño);
+				
+				
+				// EL CAMBIAR LA IMAGEN ACTUAL POR OTRA NO ESTABLECE NINGUNA TRANSICIÓN, PERO LAS
+				//	ROTACIONES, CAMBIO DE TAMAÑO, OPACIDAD ... ETC, SÍ.
+				
+				// GIRAR LA IMAGEN, HACERLA OPACA LA IMAGEN Y REDUCIR/AUMENTAR SU TAMAÑO:
+				
+				// laCapa.style.transform = "rotate(" + valorActualRotacion + "deg)";	// "rotate(360deg)"	
+					
+				if(opacidad == 1) {
+					capaImagen.style.opacity="0";
+					capaImagen.style.width="5px";
+					capaImagen.style.marginTop="200px"; // AJUSTAR EL MARGEN SUPERIOR SEGÚN REDUCE TAMAÑO.
+					capaImagen.style.transform = "rotate(720deg)";					
+					
+				} else if (opacidad == 0) {
+					capaImagen.style.opacity="1";
+					capaImagen.style.width="400px";
+					capaImagen.style.marginTop="75px";
+					capaImagen.style.transform = "rotate(0deg)";
+										
+					// POST-INCREMENTAL (CARRUSEL).
+					capaImagen.src = "img/" + arrayImagenes[conmutador++] + ".jpg";	
+
+					// RESET AL LLEGAR AL FINAL DEL ARRAY.
+					if(conmutador == arrayImagenes.length) {
+						conmutador = 0;
+					}
+				
+				}
+				
+			}
+			
+		</script>
+			
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<figure id="marco" onclick="f_cambiarImagen();">			
+				<img src="img\SUPER MARIO MAKER.jpg" id="imagen"/>			
+			</figure>
+			
+			<p>CONSOLA WII-U</p>
+			
+		</div>
+		
+	</body>
+	
+</html>
