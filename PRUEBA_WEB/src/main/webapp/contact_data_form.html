@@ -42,21 +42,25 @@
 			
 			<div class="form-container">
 				<form name="contact_data" action="" style="text-align:left;">
-					<label for="email">Email</label><br>
-					<input type="email" class="register-input" id="email" name="email" maxlength="30" autofocus required>
-					<br><br>
+					<fieldset>
+						<legend>Datos de contacto:</legend>
+						<label for="email">Email</label><br>
+						<input type="email" class="register-input" id="email" name="email" maxlength="30" autofocus required>
+						<br><br>
+						
+						<label for="phone">Número de teléfono</label><br>
+						<input type="number" class="register-input" id="phone" name="phone" maxlength="15" required>
+						<br><br>
+						
+						<label for="address">Dirección</label><br>
+						<input type="text" class="register-input" id="address" name="address" maxlength="50"  required >
+						<br><br>
+						
+						<label for="postal_code">Código postal</label><br>
+						<input type="text" class="register-input" id="postal_code" name="postal_code" maxlength="6"  required >
+						<br><br>
+					</fieldset>
 					
-					<label for="phone">Número de teléfono</label><br>
-					<input type="number" class="register-input" id="phone" name="phone" maxlength="15" required>
-					<br><br>
-					
-					<label for="address">Dirección</label><br>
-					<input type="text" class="register-input" id="address" name="address" maxlength="50"  required >
-					<br><br>
-					
-					<label for="postal_code">Código postal</label><br>
-					<input type="text" class="register-input" id="postal_code" name="postal_code" maxlength="6"  required >
-					<br><br>
 					
 					<input type="reset" value="Borrar" class="register-button"/>
 					<input type="submit" value="Siguiente" class="register-button" onclick="animateContainer(event), handleInputs();"/>

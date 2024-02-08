@@ -32,17 +32,19 @@
 	<body>
 		<div class="container">
 			<form action="final/paginaFinal.html" method="get" >
-			<label for="usuario">Usuario:</label>
-			<input class="register-input" style="margin-right: 25px;" id="usuario" type="text" name="usuario" size="30" maxlength="31" autofocus required/>
-			<br><br>
-			
-			<label for="password">Password:</label>
-			<input class="register-input" id="password" type="password" name="password" size="8" maxlength="8" required/>
-			<button onclick="verPassword(event)" class="ver-password-button">👀</button>
-			<br><br>
-			
-			<input type="reset" value="Borrar" class="register-button"/>
-			<input type="submit" value="Acceder" class="register-button" onclick="animateContainer(event)"/>
+				<fieldset>
+				<legend>Acceso</legend>
+				<label for="usuario">Usuario:</label>
+				<input class="register-input" style="margin-right: 25px;" id="usuario" type="text" name="usuario" size="30" maxlength="31" autofocus required/>
+				<br><br>
+				
+				<label for="password">Password:</label>
+				<input class="register-input" id="password" type="password" name="password" size="8" maxlength="8" required/>
+				<button onclick="verPassword(event)" class="ver-password-button">👀</button>
+				<br><br>
+				</fieldset>
+				<input type="reset" value="Borrar" class="register-button"/>
+				<input type="submit" value="Acceder" class="register-button" onclick="animateContainer(event)"/>
 			</form>
 		</div>
 

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		<style type="text/css">
+			h1 {
+				color:red;
+				text-shadow:5px 5px 10px orange;
+				margin-top:50px;
+			}
+		
+			hgroup {
+				border:5px solid red;
+				margin-top:100px;
+			}
+		
+			address {
+				margin-top:30px;
+			}
+		
+			.boton {
+				margin-right: 60px;
+			
+			    border-radius: 4px;
+			    border: solid 1px #20538D;
+			    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+			    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+			    background: #F479BA;
+			    color: #F11;
+			    padding: 12px 15px;
+			    text-decoration:none;			
+			}			
+			
+			.cabecera {
+			 	background-color: white;
+			 	border:3px solid red;
+			 	border-radius:25px;
+				width:750px;
+				height:200px;
+			}
+			
+			.navegador {
+				margin-top:10px;
+			}
+			
+			.principal {
+				margin-top:30px;
+			 	background-color:pink;
+			 	border:1px solid orange;
+			 	border-radius:15px;
+				width:75%;				
+				margin-left:5%;
+				height:1000px;
+				float:left;			
+			}
+			
+			.aUnLado {
+				margin-top:30px;
+			 	background-color:cyan;
+			 	border:1px solid blue;
+			 	border-radius:15px;
+				width:17%;				
+				margin-right:2%;
+				height:1000px;
+				float:right;
+				padding-top:15px;					
+			}
+			
+			#menus {
+			 	margin-left:50px;
+			}
+
+			#pizzaOfertaDia {
+				appearance:textfield;
+			}
+			
+			#imagenBusqueda {
+				margin-top:15px;
+			 	background-color:white;
+			 	border:1px solid black;
+			 	border-radius:25px;
+				width:80%;
+				/*height:auto;*/
+				padding:3px;
+				display:none;					
+			}
+		</style>
+		<script type="text/javascript">
+		
+			function f_busqueda(valor) {
+								
+				document.getElementById("imagenBusqueda").style.display = "none";
+				
+				var imagen;		// undefined ... LA VARIABLES EXISTE PERO ESTÁ INICIALIZADA (ningún valor).		
+				//alert("IMAGEN ... " + imagen);
+				
+				switch(valor) {
+				
+					case "COCACOLA":						
+					case "NESTEA":
+					case "LIMON":
+					case "NARANJA":	
+						imagen = "bebidas";
+						break;						
+						
+						
+					case "BARBACOA":						
+					case "HAWAIANA":
+					case "PEPPERONI":
+					case "PEPERONI":
+					case "ARGENTINA":										
+						imagen = "pizzas";
+						break;
+						
+						
+					case "ENSALADA":
+					case "VEGETAL":						
+					case "VEGANO":
+					case "FRESCO":
+						imagen = "menus";
+						
+				}
+
+				if(imagen) {	
+					
+					/* 					
+					var control = document.getElementById("imagenBusqueda");					
+					control.style.display = "block";
+					control.innerHTML = "<img src='" + imagen + "'/>";					
+ 					*/					
+					
+					with(document.getElementById("imagenBusqueda")) {						
+						innerHTML = "<img src='img/busquedas/" + imagen + ".png' style='width:100px;' />";
+						style.display = "block";
+						addEventListener("click", function() {window.location.href = "paginas/" + imagen + ".jsp?valor=" + valor});
+ 					}
+				}
+			}
+
+			
+		</script>		
+		
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<header class="cabecera">
+			
+				<div style="float:left; margin-left:60px;"> 
+					<img src="img/logoPizzeria1.jpg"/>
+				</div>
+				
+				<div style="float:left; margin-top:25px;">
+					<h1> PIZZERIA WEB </h1>
+				</div>
+				
+				<div style="float:left;">
+					<img src="img/logoPizzeria1.jpg"/>
+				</div>
+
+			</header>
+			
+			
+			<br/>
+			
+			
+			<nav class="navegador">
+			
+				<a href="paginas/menus.jsp" id="menus" class="boton">
+					MENUS
+				</a>
+				
+				<a href="paginas/pizzas.jsp" id="pizzas" class="boton">
+					PIZZAS
+				</a>
+				
+				<a href="paginas/bebidas.jsp" id="bebidas" class="boton">
+					BEBIDAS
+				</a>
+			
+			</nav>
+			
+			
+			
+			<!-- CAPA DEL CENTRO O PRINCIPAL -->
+			
+			<div style="background-color:blue;">
+						
+				<main class="principal">
+				
+					<section class="ofertaDia">
+	
+						<header>
+							<h2> OFERTA DEL DIA </h2>
+						</header>
+					
+						<br/>			
+					
+						<article>				
+							<figure>
+								<img src="img/pizzas/pizzaOferta.png" style="width: 300px; "/>						
+								<figcaption> BARBACOA X3 </figcaption>
+							</figure>					
+						</article>
+						
+						
+						
+						<article>
+						
+							<form id="formularioPedido" action="paginaPagar.html"></form>		
+	
+	
+								<label>COMPRAR </label>
+								
+								<input type="number" name="pizzaOfertaDia" id="pizzaOfertaDia" 
+										value="1"									
+										size="1"
+										min="1" max="3" step="1"
+										form="formularioPedido"
+										required
+										autofocus/>									
+	
+								<br/><br/>
+	
+								<!-- 
+								<input type="text" name="pizzaOfertaDia" id="pizzaOfertaDia" 
+										value="1"									
+										size="3" maxlength="1"
+										form="formularioPedido"
+										pattern="[1-3]{1}"
+										required
+										autofocus/>
+	 							-->
+										
+								<button type="submit" form="formularioPedido">
+									AÑADIR
+								</button>		
+	
+	
+										
+						</article>
+					
+					</section>
+					
+					<br/>
+					
+					<section class="escaparate">
+					
+					
+					</section>
+					
+				</main>
+				
+				
+				<!-- CAPA DEL LATERAL DERECHO -->
+				<aside class="aUnLado">
+				
+					<label> BUSCAR: </label>
+					
+					<input type="search" value="" size="10" maxlength="10"
+						id="busqueda"
+						placeholder="¿te ayudo?"
+						list="busquedas"
+						oninput="f_busqueda(this.value);"/>
+						
+					<datalist id="busquedas">
+						<option>COCACOLA</option>
+						<option>NESTEA</option>
+						<option>LIMON</option>
+						<option>NARANJA</option>
+	
+						<option>BARBACOA</option>
+						<option>HAWAIANA</option>
+						<option>PEPPERONI</option>
+						<option>PEPERONI</option>
+						<option>ARGENTINA</option>
+						
+						<option>ENSALADA</option>
+						<option>VEGETAL</option>
+						<option>VEGANO</option>
+						<option>FRESCO</option>
+						<option>ARGENTINA</option>
+						
+					</datalist>
+					
+					
+					<div id="imagenBusqueda"></div>				
+				
+				</aside>
+			
+			</div>
+			
+			
+			
+			
+			
+			<footer>
+				
+				<hgroup>
+				
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3034.4322479256016!2d-3.665612599999999!3d40.4878238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422953b2eff025%3A0xf5f0ad68aa874d74!2sAv.%20de%20Manoteras%2C%2032%2C%20Hortaleza%2C%2028050%20Madrid!5e0!3m2!1ses!2ses!4v1707119457361!5m2!1ses!2ses" 
+							width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" 
+								referrerpolicy="no-referrer-when-downgrade"></iframe>			
+			
+					<address> C/ MANOTERAS 32 - 617887766 - 28080 MADRID </address>
+				
+				</hgroup>
+				
+			</footer>
+		
+		</div>
+		
+		
+	</body>
+
+</html>
+
+
+
+
+<!-- 
+	https://www.dongee.com/tutoriales/como-poner-google-maps-en-mi-pagina-web/
+ -->
+				
