@@ -41,29 +41,30 @@
 	                var contenido = "";
 	                contenido += "<table>";
 	                contenido += "<colgroup>" +
-                    				`<col style='background-color: rgb(${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))})'></col>` +
+	                                "<col></col>" +
 	                                "<col/>" + 
-	                                `<col style='background-color: rgb(${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))})'></col>` +
+	                                "<col></col>" +
 	                                "</colgroup>";
 	
 	                // HEADER
 	                contenido += "<tr>";
 	                for (let c = 1; c <= cuantasColumnas; c++) {
-	                    contenido += "<th>H" + c + "</th>";
+	                    contenido += `<th style='background-color: rgb(${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))})'> H` + c + "</th>";
 	                }
 	                contenido += "</tr>";
-	
+
+	                
 	                // BODY
 	                for (let r = 1; r <= cuantasFilas; r++) {
 	                    contenido += "<tr>";
 	                    for (let c = 1; c <= cuantasFilas; c++) {
-	                        contenido += "<td>B" + r + "<sub>" + c + "</sub></td>";
+	                        contenido += `<td style='background-color: rgb(${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))}, ${Math.floor((Math.random() * 256))})'>B` + r + "<sub>" + c + "</sub></td>";
 	                    }
 	                    contenido += "</tr>";
 	                }
-	
+	                
 	                // CAPTION
-	                contenido += "<caption style='caption-side:bottom; margin-top:15px;'> TABLA COLGROUP - COL </caption>";
+	                contenido += "<caption style='caption-side:bottom; margin-top:15px; '> TABLA COLGROUP - COL </caption>";
 	                contenido += "</table>";
 	
 	                document.getElementById("tablero").innerHTML = contenido;
