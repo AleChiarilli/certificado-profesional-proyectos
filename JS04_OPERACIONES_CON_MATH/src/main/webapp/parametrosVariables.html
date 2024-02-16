@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		
+		<script type="text/javascript">
+		
+			
+			function f_sumar(... datos) {
+								
+				// RECIBIMOS A LA ENTRADA ALGO COMO UN STRING:  "2,3,8,5,6.5"
+				//	QUE CORTAMOS EN PIEZAS SUELTAS CON split, QUEDANDO:
+				//	["2","3","8","5","6.5"]				
+				datos = datos.toString().split(",");
+				
+			
+				// UNA VEZ TENEMOS LAS PIEZAS SUELTAS PERO TODAS JUNTAS DENTRO
+				//	DE UN ARRAY (porque split devuelve un array), LAS CONVERTIMOS
+				//	UNA POR UNA EN SUS NÚMEROS CORRESPONDIENTES Y LOS GUARDAMOS 
+				//	EN OTRO ARRAY ... usar map
+				
+				//  ["2","3","8","5","6.5"]	 -- AL HACER MAP --> [2,3,8,5,6.5]
+				
+				const datosNumericos = datos.map( (x) => +x );	// +x TRANFORMA EL STRING EN NÚMERO +"2" ... 2
+				
+				f_sumador(datosNumericos);				
+				
+			}
+		
+		
+						
+			function f_sumador(datosNumericos) {
+				
+				let sumaTotal = 0;
+				
+				
+				for(numero of datosNumericos) {
+					alert("FOR - NUMERO: " + numero + " ---> TIPO: " + typeof(numero));										
+					sumaTotal += numero;
+				}
+				
+				alert("*** LA SUMA TOTAL ES ... " + sumaTotal);
+				
+			}	
+		
+		</script>		
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+		
+			<h1> PARÁMETROS VARIABLES </h1>
+			
+			<button onclick="f_sumar(2,3,8,5,6.5);">
+				SUMAR DATOS ESPECÍFICIOS
+			</button>
+
+		</div>
+		
+	</body>
+
+</html>

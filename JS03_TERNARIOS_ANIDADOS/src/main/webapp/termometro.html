@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		
+		<script type="text/javascript">
+		
+			function f_mostrarInicio() {
+			
+				var controlTermometro = document.getElementById("termometro");
+				
+				var cajaPantallaNumerica = document.getElementById("pantallaNumerica");
+			
+				cajaPantallaNumerica.innerHTML = controlTermometro.value;
+				
+			}
+			
+			
+			// DEFINIR LA FUNCIÓN CON UNA LAMBDA DE JAVASCRIPT (normalmente llamada función ARROW o FLECHA):
+			//
+			//	... es igual que hacer: 	function f_ajustar() {xxx}
+			
+			const f_ajustar = (valor) => {
+										
+										const controlTermometro = document.querySelector("#termometro");
+										
+										controlTermometro.value = valor;
+																		
+
+										const cajaPantallaNumerica = document.querySelector("#pantallaNumerica");
+										
+										cajaPantallaNumerica.innerHTML = valor;
+										
+								
+										////////////////// COLOR PANTALLA NUMÉRICA /////////////////
+										
+										let color;
+										
+										if(valor < 11) {
+											color = "blue";												
+												
+										} else if(valor < 20) {
+											color = "cyan";
+												
+										} else if(valor < 36) {
+											color = "orange";
+											
+										} else {
+											color = "red";
+										}
+										
+										
+										cajaPantallaNumerica.style.backgroundColor = color;
+										
+										
+										///////////////////////// MENSAJES /////////////////////////
+										
+										// [-20 .. 10] 	MUCHO FRÍO			|
+										// [ 11 .. 19]				FRÍO	|
+										// ---------------------------------------------------------
+										// [ 20 .. 35]						|	CALOR
+										// [ 36 .. 50]						|	 	MUCHOCALOR
+										
+										let mensaje = (valor<20) 	? 
+															( (valor<11) ? "MUCHO FRIO" : "FRIO" )
+																	:
+															( (valor<36) ? "CALOR" : "MUCHO CALOR" );			
+										
+										
+										document.querySelector("#pantallaMensajes").innerHTML = mensaje;															
+										
+									};
+			
+		</script>
+				
+	</head>
+	
+		
+	<body onload="f_mostrarInicio();">
+	
+		<div align="center">
+			
+			<h1> TEMPERATURA: METER - RANGE - TERNARIO </h1>
+			
+			<br/><br/><br/>
+			
+			<!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter -->
+			
+			<div style="width:150px; height:150px; margin:0px; 
+							border:2px solid red; border-radius:25px;">
+			
+				<meter id="termometro" value="25" min="-20" max="50" low="20" high="35" optimum="22"
+						style="margin-top:50px; transform:rotate(-90deg);"></meter> 
+			
+			</div>
+			
+			
+			
+			<!-- USAR EVENTO onmousemove (ratón) Y onchange (teclado) PARA PODER VISUALIZAR 
+					CONTINUAMENTE LOS CAMBIOS -->
+
+			<div id="pantallaNumerica" style="width:50px; padding:10px; border-radius:25px;
+										margin-top:15px; font-size:1cm; color:yellow;
+											background-color:orange;"></div>
+
+								
+								
+			<input type="range" id="selector" value="25" min="-20" max="50" step="1" 
+						style="margin-top:20px;"
+							onmousemove="f_ajustar(this.value);"
+								onchange="f_ajustar(this.value);"/>
+			
+
+
+
+
+			<div id="pantallaMensajes" style="width:600px; height:40px; padding:15px; border-radius:25px;
+										margin-top:30px; font-size:1cm; color:blueviolet;
+											background-color:azure;">
+			
+				CALOR
+			</div>
+
+			
+			
+		</div>
+		
+	</body>
+	
+</html>
