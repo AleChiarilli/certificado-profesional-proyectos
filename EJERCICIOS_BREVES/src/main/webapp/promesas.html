@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+			
+			#pantalla {
+				color:red;
+				font-size:1cm;
+			}
+				
+		</style>
+	
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<div id="pantalla"></div>
+			
+			
+			<script type="text/javascript">
+			
+				/*
+				
+				const promesaFETCH = fetch("ficheros/elTiempo.txt");
+				
+				alert("PROMESA DEL FETCH ... " + promesaFETCH);
+				// PROMESA DEL FETCH ... [object Promise]
+				
+				*/
+				
+				
+				/////////////////////////////////////////////////////////////////
+				
+				/*
+				const callback = (response) => {
+												return response.text();
+								};
+				
+								
+				promesaFetch.then( callback	);					
+				*/
+				
+				/////////////////////////////////////////////////////////////////
+				
+
+				
+				
+				/////////////////////////////////////////////////////////////////
+				
+				/*
+				promesaFetch.then( (response) => {
+													return response.text();
+												}
+								);
+				*/
+				
+				/////////////////////////////////////////////////////////////////
+
+				
+
+				/////////////////////////////////////////////////////////////////
+				
+				/*
+				const promesaTEXT = promesaFETCH.then( response => response.text() );
+					
+				alert("PROMESA DEL TEXT = " + promesaTEXT);
+				
+				//promesaTEXT.then( (data) => alert("EL FICHERO DICE ... \n\t" + data) );
+				
+				promesaTEXT.then( (data) => {
+												alert("EL FICHERO DICE ... \n\t" + data);
+												
+												document.getElementById("pantalla").innerHTML = data;
+													
+											}					
+								)
+				
+				*/
+				/////////////////////////////////////////////////////////////////
+				
+				
+				
+				
+				///////////// TODO DEL TIRÓN /////////////////////
+				
+				/*
+				fetch("ficheros/elTiempo.txt")
+					.then(response => response.text())
+						.then(data => document.getElementById("pantalla").innerHTML = data);
+				*/
+				
+				fetch("ficheros/elTiempo.txt")
+					.then(response => response.text())
+						.then(data => document.getElementById("pantalla").innerHTML = data);
+				
+				
+				
+				
+				
+				
+			</script>
+			
+			
+
+		</div>
+		
+	</body>
+
+</html>

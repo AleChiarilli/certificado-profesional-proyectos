@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		<script>
+			
+		</script>
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<h1> SWITCH CASE - Fall Through </h1>
+
+			
+			
+			<script type="text/javascript">
+			
+				const cerveza = {
+										marca: "MAHOU",
+										precio: 0.55
+							
+				};
+				
+				/*
+				alert("PROPIEDAD marca ... " + cerveza.marca);			// DOT NOTATION:	 	objeto.propiedad
+				alert(">> PROPIEDAD marca ... " + cerveza["marca"]);	// BRACKET NOTATION:	objeto["propiedad"]
+				
+				alert("PROPIEDAD precio ... " + cerveza.precio);
+				alert(">> PROPIEDAD precio ... " + cerveza["precio"]);
+				*/
+				
+				
+				const notas = {
+						alex: 8,
+						ivan: 9,
+						carlos: 10
+				}
+				//////////////////////////////////
+				
+				
+				for (nota in notas) {
+					alert("La nota de " + nota + "es " + notas[nota])
+				}
+				
+				
+				for(indice in cerveza) {
+					alert("[" + indice + "] = " + cerveza[indice]); // [marca] = MAHOU
+				}
+			
+
+				for(indice in cerveza) {
+					alert(">>> INDICE PROPIEDAD DEL OBJETO: " + Object.keys(cerveza)); // [marca] = MAHOU
+				}
+				
+				
+			</script>
+			
+			<div style="margin-top:80px">hola</div>
+
+
+		</div>
+		
+	</body>
+
+</html>
