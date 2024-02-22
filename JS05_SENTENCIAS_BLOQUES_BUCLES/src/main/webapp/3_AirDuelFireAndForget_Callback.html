@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+
+			body {
+				background-color:black;				
+				background-image:url("../img/airDuel.jpg");
+				background-size:cover;
+			}
+
+			.screen {
+				color:white;
+				font-size:25px;		
+			}
+
+			.boton {
+				width:300px;
+				height:50px;
+				font-size:16px;
+				font-weight:bolder;
+				border-radius:25px;
+				color:brown;
+				background-color:orange;				
+			}
+
+
+			.destroyed {
+				color:lime;
+				font-size:50px;
+				font-family:impact;
+			}
+
+			
+			.failed {
+				color:red;
+				font-size:55px;
+				font-family:impact;
+				text-shadow:5px 5px 5px yellow;
+			}
+
+		</style>
+
+
+
+		<script type="text/javascript">
+		
+			// START:
+			function f_start() {
+				
+				document.getElementById("boton1").style.display = "none";
+				
+				mision(searchDestroy);
+				
+			}
+		
+			
+			
+			// PRIMARY FUNCTION (it uses the callback function):
+			const mision = (callback) => {
+				
+				//alert("CALLBACK NAME ... " + callback.name);
+				
+				if (callback.name === "searchDestroy") {
+					
+					with(document.getElementById("screen")) {
+						
+						innerHTML =  "1 - SEARCHING" + "<br/>";
+						
+						innerHTML += "2 - TARGET ADQUIRED" + "<br/>";
+						
+						innerHTML += "<mark> 3 - !!! FIRE !!! </mark>" + "<br/>";
+						innerHTML += "<mark style='text-decoration:underline; font-size:12px;'>" + 
+										"CALLBACK INVOCATION </small>" + "<br/>";
+						
+						callback(true);			// INVOQUE THE CALLBACK FUNCTION (it got an internal 3 seconds delay) BUT ...
+												// ... DO NOT WAIT FOR RESPONSE AND PROCEDE WITH NEXT SENTENCES (ASYNCHRONOUS MODE).
+												//
+												// !!! NOT STOP FUN !!!.
+																	
+						innerHTML += "4 - LEAVE COMBAT ZONE AND WAIT ... " + "<br/>"; 					
+					}
+					
+					return;
+				}
+				
+				
+				document.getElementById("display").innerHTML = "FLYING IN A SUNNY AND HAPPY DAY WITH NO PROBLEMS";
+				
+			};
+			
+			
+			
+			// CALLBACK:
+			const searchDestroy = (fireYesNo) => {
+				
+				if(fireYesNo) {
+					setTimeout(destroyedYesNo, 3000);
+				}
+				
+			};
+			
+			
+			
+			// DELAY FUNCTION (3 seconds later) - CALLED FROM CALLBACK FUNCTION:
+			const destroyedYesNo = () => {
+				
+				const fullScale = 100;	//  [1..100]
+				
+				const destroyed	= "<p class='destroyed'> !!! BINGO - TARGET DESTROYED !!! </p>";
+				const failed	= "<p class='failed'> !!! OBJETIVE FAILED - GO AWAY !!! </p>";
+				
+				
+				// [1..50] false	[51..100] true.				
+				let bingo = (parseInt(Math.random() * fullScale) + 1) > 50;		// 50% 
+				
+				
+				//alert( "BINGO ??? ... " + bingo );
+				document.getElementById("screen").innerHTML += (bingo ? destroyed : failed);
+
+				
+				
+				if(bingo) {
+					document.getElementById("screen").style.transitionDuration = "1s";
+					document.getElementById("screen").style.transform = "rotate(-360deg)";					
+					
+				} else {
+					document.getElementById("screen").style.transitionDuration = "2s";
+					document.getElementById("screen").style.transform = "rotateX(360deg)";					
+					//document.getElementById("screen").style.transform = "rotate(360deg)";
+					
+				}
+				
+				
+				document.getElementById("boton2").style.display = "block";
+				
+			};			
+			
+		</script>		
+				
+	</head>
+	
+		
+	<body>
+	
+		<!--  PROCESAMIENTO DEL CUERPO DE LA FUNCIÓN PRINCIPAL QUE SE COMPONE DE UN CONJUNTO DE
+				LÍNEAS QUE SE EJECUTARÁN UNA DETRÁS DE OTRA (SÍNCRONAS), PERO QUE LLEGADO UN 
+				DETERMINADO MOMENTO HARÁ USO, INVOCARÁ A UNA FUNCIÓN DE CALLBACK, LA CUAL SE 
+				EJECUTARÁ EN MODO ASÍNCRONO, ES DECIR, PARALELAMENTE AL FLUJO DE LAS LÍNEAS ANTERIORES,
+				"A SU BOLA" COMO SE SUELE DECIR EN NUESTRO MUNDO, DE FORMA QUE NO BLOQUEA A LAS QUE
+				VIENEN A CONTINUACIÓN SEGÚN EL CÓDIGO DEL PROGRAMA.
+				
+				EL FUNCIONAMIENTO DE LA ASÍNCRONIA LOGRADO POR DICHA CALLBACK , ES BÁSICAMENTE QUE UNA
+				VEZ BUSCADO Y LOCALIZADO EL OBJETIVO, SE DISPARÁ UN MISIL CONTRA EL MISMO E INMEDIATAMENTE
+				NOS RETIRAMOS DE LA ZONA DE COMBATE PARA EVITAR CONVERTIRNOS NOSOTROS MISMOS EN PRESA (ES
+				LO QUE CON LOS MISILES DE LARGO ALCANCE SE DENOMINA COMO "FIRE AND FORGET" O BIEN UN
+				"DISPARA Y OLVÍDATE" ... PUEDEN LANZARSE A VARIOS KILÓMETROS DE DISTANCIA DEL OBJETIVO).
+				
+				OBSERVA CÓMO EL SISTEMA CONTINUA CON LA EJECUCÓN DEL RESTO DE OPERACIONES (OPERACIÓN 4)
+				TRAS EFECTUAR EL DISPARO (OPERACIÓN 3) EN LUGAR DE QUEDARSE A LA ESPERA DE VER SI HA
+				ACERTADO Ó FALLADO, ALGO QUE SABREMOS APROXIMADAMENTE 3 SEGUNDOS MÁS TARDE Y DE AHÍ,
+				DE ESE TIEMPO DE RETARDO, QUE LO LLAMEMOS MODO O FUNCIONAMIENTO ASÍNCRONO, PORQUE NO
+				ESPERAMOS RECIBIR LA RESPUESTA JUSTO A CONTINUACIÓN DE HABER HECHO LA PREGUNTA (invocar
+				a la función de CallBack), SINO QUE LO DEJAMOS PENDIENTE Y CONTINUAMOS CON EL RESTO 
+				DE OPERACIONES ... NO NOS PARAMOS, NO NOS BLOQUEAMOS O LO QUE ES LO MISMO:
+				<<< YO SIGO, NO ME ESPERO NI POR TÍ NI POR NADIE >>>
+				
+				
+				FLUJO DEL PROGRAMA (1 + 2 + 4 LÍNEAS SÍNCRONAS PURAS)	(3 TAMBIÉN SÍNCRONA, PERO QUE LANZA UNA ASÍNCRONA: LLAMAR A CALLBACK):
+			
+				1 - SEARCHING					-	BUSCANDO				+ SÍNCRONO.
+				2 - TARGET ADQUIRED				-	OBJETIVO LOCALIZADO 	+ SÍNCRONO.
+				
+				3 - !!! FIRE !!!				-	DISPARAR				+ SÍNCRONO >>> QUE LANZA UN ASÍNCRONO (RETARDO == ESPERA RESPUESTA).
+				
+				4 - LEAVE COMBAT ZONE AND WAIT	- 	RETIRARSE Y ESPERAR		+ SÍNCRONO.
+					
+					A LOS 3 SEGUNDOS SE RECIBE LA RESPUESTA DE LA CALLBACK (ASÍNCRONA POR RETARDO) INDICANDO SI SE HA 
+						ACERTADO EL DISPARO O NO.
+ 				
+		-->
+	
+	
+		<div align="center">
+			
+			<div style="visibility:hidden; margin-top:300px;"></div>
+		
+			
+			<button id="boton1" onclick="f_start();" class="boton">
+				!! LET START YOUR MISSION !!
+			</button>
+
+		
+			<br/>	
+		
+			
+			<div id="screen" class="screen"></div>
+		
+			
+			<br/>
+		
+			
+			<button id="boton2" onclick="window.location.href='';" class="boton" style="display:none;">
+				!! FLY ONE MORE TIME !!
+			</button>			
+
+		</div>
+		
+	</body>
+	
+</html>

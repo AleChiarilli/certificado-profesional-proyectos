@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>WEB</title>
+		
+		<script type="text/javascript">
+		
+			// CALLBACKS: una función que actua como parámetro de entrada a otra y que se ejecuta en el interior de esta.
+			
+
+			// PODEMOS UTILIZAR console.log EN LUGAR DE LOS HABITUALES alert() PARA MOSTRAR EL MENSAJE DE SALIDA, PERO ESTE 
+			// 	SE MOSTRARÁ EN LA CONSOLA DEL GESTOR JAVASCRIPT DEL NAVEGADOR (TECLA F12 - PESTAÑA "consola").
+			
+			
+			//console.log("INICIO");
+			//alert("INICIO");
+			
+			
+			// DEFINIR LA FUNCIÓN QUE ACTUARÁ DE CALLBACK (se pueden crear todas las que se necesite) AL MODO TRADICIONAL O CON UN ARROW:
+			function f_felicitar() {
+				return ("FELICIDADES ... ");
+			}
+			
+			//var callback = () => { return ("FELICIDADES ... "); };
+			
+			
+			// CREAR LA FUNCIÓN QUE HARÁ USO DE LA ANTERIOR CALLBACK Y A LA QUE PODEMOS AÑADIR MÁS PARÁMETROS:
+			//		Es aconsejable que la función de callback ocupe el último lugar en la cadena de parámetros de aquella que la utiliza.
+			function f_felicitarQuien(quien, callback) {
+				alert( callback() + quien + " EN EL DIA DE TU CUMPLEAÑOS" );
+			}	
+			
+			// LLAMAR A LA FUNCIÓN PRINCIPAL QUE A SU VEZ INVOCARÁ A LA DE CALLBACK (secundaria o interna por composición):
+			//		Pasamos el cuerpo de la función callback, luego no indicar paréntesis para ella.
+			f_felicitarQuien("JUAN", f_felicitar);
+			
+			
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+			
+			// DEFINIREMOS 2 FUNCIONES DE CALLBACK DE MANERA QUE LA PRINCIPAL, SU FUNCIONALIDAD, SE BASA EN
+			//		EL FUNCIONAMIENTO INDIVIDUAL DE ESTAS (composición de objetos / reutilización de código / centralización).
+			
+			// ESTA VEZ HAREMOS USO DE LAS ARROWS EN LUGAR DEL MODO TRADICIONAL CON function:
+			
+			// ESTUDIAR CADA FUNCIÓN POR SEPARADO Y AL FINAL, JUNTARLAS EN LA CONTENEDORA O PRINCIPAL (lo que hace es la suma de operaciones
+			//		de las anteriores).
+			
+			var f_maximo = (x,y) => { return Math.max(x,y); };		// DE LOS 2 PARÁMETROS DE ENTRADA DEVUELVE EL DE MAYOR VALOR.
+			alert( "MAXIMO DE (2, 3) ... " + f_maximo(2, 3) );
+			
+			
+			var f_cuadrado = (z) => { return Math.pow(z,2); };		// DEVUELVE EL VALOR CUADRÁTICO DEL PARÁMETRO DE ENTRADA.
+			alert("CUADRADO DE (3) ... " +  f_cuadrado(3) );
+			
+						
+			var f_cuadradoDelMaximo = (x, y, callback1, callback2) => { return callback1( callback2(x,y) );  };  // DEVUELVE EL CUADRADO DEL VALOR MÁS GRANDE.
+			alert( "CUADRADO DEL MAXIMO (7, 5) ... " + f_cuadradoDelMaximo(7, 5, f_cuadrado, f_maximo) ); // LA z ES EL VALOR DEVUELTO POR f_maximo(7,5).
+			
+			// ASÍ, EN LUGAR DE UNA GRAN FUNCIÓN QUE IMPLEMENTE TODO EL CÓDIGO, CREAMOS VARIAS MÁS PEQUEÑAS Y ESPECIALIZADAS EN UNA
+			//		ÚNICA TAREA. EL DISEÑO RESULTANTE ES MÁS MANTENIBLE Y REUTILIZABLE.
+			
+		</script>
+		
+		
+		
+	</head>
+
+
+	<body>
+
+		<div align="center">
+
+			<h1> FUNCIONES CALLBACKS EN JAVASCRIPT </h1>
+
+		</div>
+		
+	</body>
+	
+</html>

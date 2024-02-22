@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>WEB</title>
+		
+		<script type="text/javascript">
+		
+			// PROMISES: Una PROMESA es un OBJETO JavaScript que puede ofrecer 2 respuestas a través de sus funciones internas resolve y reject de forma 
+			//							similar a como lo haría un elemento ternario o una sentencia condicional if-else y que se emplea para situaciones de ASINCRONISMO
+			//							o dicho de otra forma, cuando no deseamos detener la ejecución del programa en espera de que el sistema responda a una determinada
+			//							solicitud. También se contempla la posibilidad de ofrecer una respuesta 
+			
+			// resolve y reject son los nombres de las funciones callback del objeto Promise (podemos emplear otros nombres, pero es mejor utilizar los estándar)
+			
+
+		
+			// SI NO INDICO LAS LLAVES TRAS LA FLECHA (DEFINCIÓN DE LA FUNCIÓN EN 1 SÓLA LÍNEA) SE PRODUCIRÁ UN return IMPLÍCITO, CON
+			//	LO QUE EL OBJETO Promise DEFINIDO QUEDARÁ DISPONIBLE ... ver este mismo ejemplo unas líneas más abajo en el que se
+			//	hace uso de las llaves y que obliga a utilizar un return para obtener el Promise creado).
+			
+			var promesa = () =>	 new Promise( (resolve, reject) => 	{	// DEFINICIÓN DEL CÓDIGO DEL OBJETO PROMESA, QUÉ HACE Y
+																				//	QUE PUEDE UTILIZAR LAS CALLBACKS RECIBIDAS POR
+																				//	PARÁMETRO (utilizar los nombres estándar): 
+																				//		resolve - simboliza que SÍ se ha cumplido.
+																				//		reject	- simboliza que NO se ha cumplido.
+			
+																	// ESTE CÓDIGO ES PROPIO DEL OBJETO Promise Y SE APOYA EN LAS
+																	//	FUNCIONES CALLBACKS (código externo) RECIBIDAS PARA REALIZAR
+																	// 	UNA DETERMINADA TAREA (en bases de datos, son los DAO's del
+																	//	patrón FACADE-DAO, los que realmente hacen el trabajo de
+																	//	solicitar/modificar/enviar información a la base de datos,
+																	//	limitándose la fachada simplemente a ordenarles que lo hagan.
+																	//	Se puede hacer una analogía con los mismos pensando en que la
+																	//	promesa (fachada) le pedirá a las callbacks recibidas (dao's)
+																	//  que hagan una determinada tarea.
+																	
+																	var nota = parseInt(Math.random() * 11); // [0..10]
+																	
+																	alert("TU NOTA ... " + nota);
+
+																	if(nota >=5) {
+																		// HACER EN CASO AFIRMATIVO (se ha cumplido el if - examen aprobado).
+																		resolve("LA PROMESA SE EVALUA AFIRMATIVAMENTE - SI  \n\n  !! EXAMEN APROBADO !!");
+																		
+																	} else {
+																		// HACER EN CASO NEGATIVO (no se cumple el if - examen suspenso).
+																		reject("LA PROMESA SE EVALUA NEGATIVAMENTE - NO  \n\n  -- EXAMEN SUSPENSO --");
+																	}
+														
+															}
+														);
+												
+																		
+
+																				
+				var promesa2 = () => { // SI SE DEFINE COMO FUNCIÓN, DEBEMOS UTILIZAR UN return PARA DEVOLVER EL OBJETO PROMESA.	 
+
+										return new Promise( (resolve, reject) => 	{
+											
+												var nota = parseInt(Math.random() * 11); // [0..10]
+												
+												alert("TU NOTA ... " + nota);
+
+												if(nota >=5) {
+													resolve("LA PROMESA SE EVALUA AFIRMATIVAMENTE - SI  \n\n  !! EXAMEN APROBADO !!");
+													
+												} else {													
+													reject("LA PROMESA SE EVALUA NEGATIVAMENTE - NO  \n\n  -- EXAMEN SUSPENSO --");
+												}
+									
+											}
+										);
+									
+
+									};
+																				
+																				
+																				
+																				
+			// var promesa = () => new Promise( (resolve, reject) => { } );		
+			
+			
+			
+			//alert("CODIGO DE LA PROMESA ... " + promesa);
+			
+			//  Funciones internas then, catch y finally de la promesa.
+			
+			
+			// EVALUAR SI LA PROMESA SE HA CUMPLIDO O SI NO SE HA CUMPLIDO:				
+			//promesa().then( (respuesta) => alert(respuesta) ).catch( (respuesta) => alert(respuesta) );
+			
+			promesa2().then( (respuesta) => alert(respuesta) ).catch( (respuesta) => alert(respuesta) );
+			
+			// EVALUAR SI LA PROMESA SE HA CUMPLIDO O SI NO SE HA CUMPLIDO Y EJECUTAR LA CONDICIÓN FINALLY (válido si la evaluación es afirmativa o negativa).
+			//promesa().then( (respuesta) => alert(respuesta) ).catch( (respuesta) => alert(respuesta) ).finally(alert(" !!! TANTO SI ES SI, COMO SI ES NO !!! "));
+			
+			
+			
+			
+			
+			// UNA "PROMESA" ES ALGO QUE SE HARÁ EN EL FUTURO, NO EN EL PRESENTE ACTUAL ... DE CARA A JAVASCRIPT SE PERMITE CONTINUAR CON
+			//		EL RESTO DEL CÓDIGO SIN TENER QUE ESPERAR A QUE LA PROMESA SE EJECUTE Y FINALICE, YA SEA DE FORMA AFIRMATIVA O NEGATIVA.
+			//	
+			//	PODEMOS HACER USO DE LA FUNCIÓN setTimeOut(funcion/codigo, tiempo mseg) PARA SIMULAR UN RETARDO EN LA RESPUESTA Y VER
+			//		COMO LA PROMESA NO DETIENE LA EJECUCION NORMAL DEL PROGRAMA.
+			
+		</script>
+	</head>
+
+
+	<body>
+
+		<div align="center">
+
+			<h1> OBJECTOS PROMISE EN JAVASCRIPT </h1>
+
+		</div>
+		
+	</body>
+	
+</html>

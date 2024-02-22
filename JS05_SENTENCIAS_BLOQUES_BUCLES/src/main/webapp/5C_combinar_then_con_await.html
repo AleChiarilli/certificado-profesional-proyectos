@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			p {			
+				width:800px;
+				height:100px;
+				background-color:yellow;
+				border:2px solid orange;
+				border-radius:25px;
+				color:red;
+				font-size:32px;
+				padding:30px;	
+			}
+			
+		</style>
+				
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<br/>
+			
+			<div id="pantalla"></div>
+			
+			<br/>
+			
+			
+			<script type="text/javascript">
+			
+				async function f_asincrona() {
+					
+					alert("1. OBTENER PROMESA FICHERO.");
+					
+					let promesaTexto;
+					
+					await fetch("../ficheros/fichero_1.txt")
+				    				.then( (response) => {
+				    							alert("2. OBTENER PROMESA TEXTO.");
+				    							promesaTexto = response.text();
+				    							alert("PROMESA TEXTO " + promesaTexto + 
+				    									" ... TIPO = " + typeof(promesaTexto) );
+				    						}				    						
+				    					);
+
+					// DEVOLVERLA.
+					return promesaTexto;
+					
+				}
+				
+				
+				
+				/////////////////////////////////////////////////////////////////
+				
+				
+				
+				const inicio = async () => {
+				
+					alert("0. INICIO.")
+					
+					// SIN EL await NO SE DETIENE Y APARECE "3. FIN DE PROGRAMA" ANTES
+					//		QUE "2. OBTENER Y DEVOLVER PROMESA-TEXTO."
+					//
+					//	SECUENCIA:		0 -> 1 -> [3] -> [2] ... orden incorrecto
+					//
+					// const texto = f_asincrona();
+				
+					
+					// // // // // // // 	
+					
+					
+					// CON EL await CUALIFICANDO LA FUNCIÓN, LA SECUENCIA SERÁ:
+					//					0 -> 1 -> 2 -> 3
+					// ... QUE ES PRECISAMENTE LO QUE BUSCAMOS.
+					
+					
+					// ESPERAR A QUE LA FUNCIÓN f_asincrona() NOS DEVUELVA LA RESPUESTA (ES TEXTO, NO UNA PROMISE).
+					const texto = await f_asincrona();
+				
+					alert("TEXTO ... " + texto + " tipo = " + typeof(texto) );
+					
+					document.getElementById("pantalla").innerHTML = "<p>" + texto + "</p>";					
+					
+					alert("3. FIN DE PROGRAMA.");
+				
+				}
+
+								
+				// RUN:
+				inicio();
+				
+				
+			</script>
+			
+		</div>
+		
+	</body>
+	
+</html>

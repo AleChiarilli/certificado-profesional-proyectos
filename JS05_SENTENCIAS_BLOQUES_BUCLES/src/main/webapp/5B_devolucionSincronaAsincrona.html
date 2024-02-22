@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> DEVOLUCIÓN DE UNA FUNCIÓN SINCRONA Y ASÍNCRONA (async) </h1>
+			
+			<br/><br/>
+			
+			<script type="text/javascript">
+			
+				function f_sincrona() {				// FUNCIÓN SÍNCRONA.
+					return 123;					
+				}
+			
+				// LO MISMO CON NOTACIÓN DE ARROW (FLECHA - LAMBDA):
+				const f_sincronaArrow = () => { return 123; };
+				
+				
+				/////////////////////////////////////////////////////////////////////
+				
+				
+				 async function f_asincrona() {		// FUNCIÓN ASÍNCRONA (indica async).	
+					return 123;					
+				}
+				
+				// LO MISMO CON NOTACIÓN DE ARROW (FLECHA - LAMBDA): 
+				const f_asincronaArrow = async () => { return 123; };
+				
+				
+				
+				
+				alert("1. INVOCAR SINCRONA ARROW ... " + typeof(f_sincronaArrow()) +
+						"\n ... Devuelve un number.");
+				 
+				alert("2. INVOCAR ASINCRONA ARROW ... " + typeof(f_asincronaArrow()) +
+						"\n ... Devuelve un Object (Promise).");
+				
+				
+				
+			</script>
+						
+			
+		</div>
+		
+	</body>
+	
+</html>
