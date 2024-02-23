@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			button {
+				width:200px;
+				height:50px;
+				padding:10px;
+				border-radius:25px;
+			}
+		
+		</style>
+		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+
+			<h1> - FETCH PARA SOLICITUD DE RECURSOS EXTERNOS - </h1>
+			
+			
+			<script type="text/javascript">
+			
+				const f_procesar = (response) => {
+					
+					alert("STATUS DEL FICHERO DEVUELTO ... " + response.status);
+					
+				}
+			
+			
+				const f_solicitar = (queFichero) => {
+					
+											alert("SOLICITAR ... " + queFichero);
+			
+											// SOLICITO EL FICHERO PERO NO SE CUÁNDO ME LO DARÁN O SI
+											//	LLEGARÁN A DÁRMELO ... DE AHÍ QUE SEA UNA PROMESA Y QUE 
+											//	ÉSTA SE CUMPLA O NO.
+											
+											const promesa = fetch("../ficheros/" + queFichero);
+				
+											alert("PROMESA = " + promesa);
+				
+											promesa											
+												//.then( (response) => alert("STATUS = " + response.status) )	// OK.
+												.then( (response) => f_procesar(response) );
+												
+												
+											/*
+												.catch( (response) => {
+																		if(response.status === "404") {
+																			alert(" NO ENCUENTRO EL FICHERO SOLICITADO !!! ");
+																		}
+																	  }
+														);
+											*/
+				
+				}
+
+			</script>
+
+
+			<br/><br/><br/>
+			
+			
+			<!-- ESTE FICHERO SÍ EXISTE ... STATUS = 200 -->
+			<button onclick="f_solicitar('fichero_1.txt')" style="background:lime; color:black;">
+				SOLICITAR FICHERO 1
+			</button>
+			
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+			
+			
+			<!-- ESTE FICHERO NO EXISTE ... STATUS = 404 -->
+			<button onclick="f_solicitar('fichero_2000.txt')" style="background:red; color:white;">
+				SOLICITAR FICHERO 2000
+			</button>
+						
+			
+		</div>
+		
+	</body>
+	
+</html>

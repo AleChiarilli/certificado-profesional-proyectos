@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			.perdedor, .ganador, .final {
+				font-size:30px;
+				font-weight:bolder;				
+			}
+
+			.perdedor {
+				color:blue;
+			}
+			
+			
+			.ganador {
+				color:red;
+			}
+			
+
+			.final {
+				font-size:60px;
+				color:blueviolet;	
+			}
+
+		</style>
+
+	</head>
+	
+
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> CALLBACKS declarando una función (su nombre) </h1>
+			
+			<span style="color:red;"> ROJO ... GANAS </span> 	
+			&nbsp;&nbsp;&nbsp; 
+			<span style="color:blue;"> AZUL ... PIERDES </span>
+
+			<br/><br/>
+
+
+			<script type="text/javascript">
+			
+				const RANGO = 10;
+			
+				// CALLBACK == RETROLLAMADA == UTILÍZALA TODAS LAS VECES QUE TE HAGA FALTA (vuelve a llamarla)
+			
+				// CALLBACK O FUNCIÓN A SER REUTILIZADA (la volveremos a llamar cuando nos haga falta)
+				function f_generarAleatorio() {
+					
+					var aleatorio = parseInt(Math.random() * RANGO + 1); // [1 .. RANGO] 
+					
+					if (5 > aleatorio) {
+						document.write("<p class='perdedor'>" + aleatorio + "<p/>");
+						aleatorio *= -1;	// NEGATIVO ... restará dinero.
+	
+					} else {
+						document.write("<p class='ganador'>" + aleatorio + "<p/>"); // POSITIVO ... sumará dinero.	
+					}
+					
+					return aleatorio;
+					
+				}
+			
+				
+				
+				// EL CONSUMIDOR DE LA ANTERIOR CALLBACK (la parte de código que genera el aleatorio 
+				//		no la hace él, pero la necesita para decidir si ganas o pierdes)
+				function f_juego(veces, callback) {
+					
+					dinero = 0;
+					
+					for (let i=1; i<=veces; i++) {
+						
+						let aleatorio = callback();
+						
+						/*
+						alert(i + "ª VEZ, HA SALIDO EL  ... " + aleatorio + "\n\n" + 
+								((0>aleatorio) ? "PIERDES" : "GANAS") );
+						*/
+						
+						dinero += aleatorio;
+					}
+					
+					//alert("DINERO FINAL ... " + dinero);
+					
+					document.write("<p class='final'>DINERO FINAL: " + dinero + "</p>");
+					
+				}
+				
+					
+				
+				// LA PRUEBA FINAL (esta función recibe 2 parámetros: veces y la propia función callback que usará/consumirá):				
+
+				f_juego(3, f_generarAleatorio);
+
+			
+			</script>
+
+						
+		</div>
+		
+	</body>
+	
+</html>

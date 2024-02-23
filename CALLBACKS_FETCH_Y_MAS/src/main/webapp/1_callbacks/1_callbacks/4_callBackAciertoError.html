@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+			
+			div.pantalla {				
+				width:300px;
+				height:200px;
+				background-color:yellow;
+				border:3px solid red;
+				border-radius:25px;
+				margin:25px;
+				padding:25px;
+				color:blue;
+				font-size:20px;
+				font-weight:bolder;							
+			}
+		
+			span {
+				color:red;
+				font-size:60px;
+				font-weight:bolder;
+			}	
+
+		</style>
+		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+
+			<!-- VISOR -->
+			<div id="pantalla" class="pantalla"></div>
+			
+			
+			
+			<script type="text/javascript">
+
+			const CARAS_DADO 	= 6;
+			const TERMINAR		= 6;
+
+			var informacionJugadas = "";			
+			
+			
+			
+			function f_principal(veces, callback) {
+			
+				if(veces < 3) {
+					alert("ERROR: EL JUEGO DEBE REALIZAR AL MENOS 3 TIRADAS");
+					return;
+				}
+			
+				var dinero = 0;
+				
+				for(let i=1; i<=veces; i++) {
+				
+					let dado = parseInt(Math.random() * CARAS_DADO + 1);
+				
+					// NO PUEDES SACAR NINGUNA VEZ EL PROHIBIDO (EL JUEGO SE INTERRUMPE).
+					if(TERMINAR === dado) {
+						callback(false, null);	// llamada a la función callback (false, null): false -> pierdes.
+						return;
+					}
+				
+					
+					dinero += dado;
+					
+					//document.write("TIRADA: " + i + " ---> " + dado + "€." + "<br/><br/>")
+				
+					informacionJugadas += "TIRADA Nº: " + i + " ---> " + dado + "€." + "<br/><br/>";
+					
+				}
+				
+				
+				
+				// SI NO SALIÓ EL NÚMERO CON EL QUE TERMINAR EL JUEGO:
+
+					
+				// OBJETO JAVASCRIPT (encapsula información que recibira la callback):
+				var bolsaDinero = {
+								mensaje: "!!! HAS GANADO EL PREMIO !!!",
+								dinero: dinero
+				};
+
+				
+				callback(true, bolsaDinero);	// llamada a la función callback (true, objeto):
+												//		true -> ganas.
+												//		objeto -> mensaje + cuánto dinero has ganado. 
+					
+			}
+			
+			</script>
+			
+			
+			
+			
+			<script type="text/javascript">
+			
+				// FUNCIÓN CALLBACK A SER UTILIZADA POR LA FUNCIÓN PRINCIPAL PRESENTADA CON ANTERIORIDAD:
+				const callback = (exito, bolsaDinero) => {
+					
+									var cajaPantalla = document.getElementById("pantalla");
+					
+									// PIERDES (exito es false y bolsaDinero será null):
+									if(!exito) {
+										//alert("!!! NO HAS LLEGADO AL FINAL - SIN PREMIO !!!");
+										cajaPantalla.innerHTML = "- SIN PREMIO -";
+										return;
+									}
+									
+									// GANAS (exito es true y bolsaDinero contendrá un objeto):
+									//alert(bolsaDinero.mensaje + "\n" + bolsaDinero.dinero);
+									
+									with(cajaPantalla) {
+										innerHTML += informacionJugadas;
+										innerHTML += "<span>" + bolsaDinero.dinero + " €.</span>";
+									}
+				}; 	
+					
+				
+				
+				// INICIAR JUEGO:
+				f_principal(3, callback);
+			
+			</script>
+			
+			
+			<br/><br/>
+			
+			
+			<button onclick="window.location.href=''"> VOLVER A JUGAR (recargar página) </button>
+			
+		</div>
+		
+	</body>
+	
+</html>

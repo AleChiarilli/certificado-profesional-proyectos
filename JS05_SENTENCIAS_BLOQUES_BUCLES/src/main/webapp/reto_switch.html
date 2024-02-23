@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			.cabecera {
+				color:red;
+				font-size:1cm;
+				font-weight:bolder;
+			}
+			
+			
+			.supremo {
+				color:olive;
+			}
+			
+			.avanzado {
+				color:blueviolet;
+			}
+
+			.normal {
+				color:brown;
+			}
+
+
+			#pantalla {				
+				font-size:22px;
+				width:600px;
+				min-height:200px;
+				background-color:#FFE0B7;
+				border-radius:25px;
+				padding:15px;
+				margin-top:20px;
+			}
+			
+		</style>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<!-- PANTALLA DE VISUALIZACIÓN DE RESULTADOS -->
+			<div id="pantalla"></div>
+			
+			
+			<script type="text/javascript">
+			
+				const CAJA_PANTALLA = document.getElementById("pantalla");
+			
+				
+				var contador = 0;
+				
+			
+				function f_mostrarEnPantalla(texto, claseCSS) {
+					
+					
+					
+					// <p class='cabecera'> TIPO DE COCHE </p>
+					
+					/*
+					CAJA_PANTALLA.innerHTML += "<p" +
+												( (contador++ == 0) ? " class='cabecera'" : "" ) +
+													">" + texto + "</p>";
+					*/
+					
+					
+					if(claseCSS) {					
+						CAJA_PANTALLA.innerHTML += "<p class='" + claseCSS + "'>" + texto + "</p>";
+						return;
+					}
+					
+					CAJA_PANTALLA.innerHTML += "<p>" + texto + "</p>";
+					
+				}
+			
+			</script>
+			
+			
+			
+			
+			<script type="text/javascript">
+			
+				const MODELOS 		= ["LIMOUSINE", "DEPORTIVO", "UTILITARIO"];
+				const COMPLEMENTOS 	= ["MINIBAR", "LLANTAS ALEACION", "MP3 STEREO"];
+				
+				const ALEATORIO = parseInt(Math.random() * MODELOS.length);
+				
+				const QUE_MODELO = MODELOS[ALEATORIO]; // [0..2]
+				
+
+				f_mostrarEnPantalla(QUE_MODELO, "cabecera");
+				
+				
+				
+				/////////////////////////////////////////
+				
+				
+				
+				switch(QUE_MODELO) {
+				
+					case MODELOS[0]:	// MINIBAR.
+						f_mostrarEnPantalla(COMPLEMENTOS[0], "supremo");
+
+					
+					case MODELOS[1]:	// LLANTAS ALEACIÓN.
+						f_mostrarEnPantalla(COMPLEMENTOS[1], "avanzado");
+
+				
+
+					case MODELOS[2]:	// MP3 STEREO.
+						f_mostrarEnPantalla(COMPLEMENTOS[2], "normal");
+						break;
+						
+						
+					default:
+						f_mostrarEnPantalla("ERROR, EL MODELO SELECCIONADO NO ES VÁLIDO");						
+
+				}
+			
+			</script>
+
+		</div>
+		
+	</body>
+
+</html>

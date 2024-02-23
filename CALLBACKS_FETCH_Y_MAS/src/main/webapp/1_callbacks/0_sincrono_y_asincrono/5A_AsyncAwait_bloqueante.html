@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			.principal {
+				color:red;
+				font-size:bolder;
+			}
+		
+		
+			#pantalla {
+				color:blue;
+				font-size:22px;
+				background-color:yellow;
+				border:3px solid red;
+				border-radius:25px;
+				width:750px;
+				height:200px;
+				padding:10px;
+			}
+			
+		</style>
+				
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> ASYNC / AWAIT - CÓDIGO BLOQUEANTE </h1>
+
+
+			<!-- CAPA EN LA QUE SE MOSTRARÁ LA RESPUESTA DEL SERVIDOR OBTENIDA POR FETCH -->			
+			<div id="pantalla"></div>
+			
+			
+			<script type="text/javascript">
+
+				// SYNC - AWAIT: USO DE PROMESAS EN MODO SÍNCRONO:
+				//
+				//	* NO SE HACE USO DE then.
+				//	* SU EJECUCIÓN ES BLOQUEANTE.
+				//
+				// El sync establece un contexto asíncrono (bolsa) en el que se 
+				//	podrá hacer uso de la cláusula await para exigir al sistema
+				//	que una determinada operación se haya completado antes de
+				//	poder continuar con el flujo de ejecución del programa (como
+				//	si se tratase de un modo síncrono, pero en el que podemos 
+				//	hacer uso de elementos asíncronos como son las promesas).
+				//
+				//	AVISO: !!! NO PUEDE HACERSE USO DE await FUERA DE UN CONTEXTO async !!!.
+				
+				//	sync 	... contexto asíncrono.
+				//	await	... orden de espera.
+				
+				// Empleando promesas (conjuntamente con fetch para solicitar un
+				// 	determinado recurso del servidor) y su método then:
+					
+				// Fetch es el equivalente al uso de AJAX pero basándose en promesas,
+				//	para que el código resultante sea más sencillo.
+
+				
+					/*
+				
+					const cajaPantalla = document.getElementById("pantalla"); 
+					
+				
+					// UTILIZANDO ASINCRONÍA NO BLOQUEANTE ... then == "YO SIGO, NO TE ESPERO":
+				
+					fetch("../ficheros/fichero_1.txt")
+						.then( respuesta => respuesta.text() )
+					 		.then( datos => {
+					 							alert(datos);
+					 							cajaPantalla.innerHTML += "[1] - FICHERO: " + datos;
+					 					}
+					 			);
+
+					
+					// *** NO ESPERAR A QUE LA LÍNEA ANTERIOR SE COMPLETE ... LANZAR EL FETCH Y SEGUIR.
+					
+					cajaPantalla.innerHTML += "<p><small>[2] - FIN DE LA PRUEBA - </small></p>";
+				
+					*/
+					
+					
+					
+					/* 
+
+						DADO QUE EL MÉTODO then ES "NO BLOQUEANTE", LA CAPA REALMENTE MOSTRARÁ: 
+						
+							[2] - FIN DE LA PRUEBA - 			... ésto debería verse lo último.
+							
+							[1] - FICHERO: !!! HOLA MUNDO !!!	... y ésto lo primero.
+							
+							
+						COMO PODEMOS OBSERVAR, APARECE ANTES LA OPERACIÓN [2] QUE LA [1] Y ES DEBIDO PRECISAMENTE
+						A QUE EL SISTEMA NO DETIENE LA EJECUCIÓN PRINCIPAL EN ESPERA DE QUE LA PROMESA SE HAYA
+						CUMPLIDO ... ÉSTO PUEDE LOGRARSE SI EN LUGAR DE UTILIZAR then HACEMOS USO DE await QUE
+						COMO YA SE HA INDICADO DEBE ESTAR DENTRO DE UN CONTEXTO ASÍNCRONO (bolsa async).
+
+					*/
+
+						
+					
+					// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+					
+					
+							
+					// UTILIZANDO ASINCRONÍA SÍ BLOQUEANTE ... await == "NO SIGO, ME PARO Y TE ESPERO HASTA QUE LLEGUES":
+					
+					const funcionAsincrona = async () => {		// async crea el contexto o bolsa asíncrona.	
+						
+							promesaFETCH = await fetch("../ficheros/fichero_1.txt");
+					
+							// *** ESPERAR A QUE SE COMPLETE LA LÍNEA ANTERIOR *** 
+					
+							
+							alert("¿promesaFETCH? ... " + promesaFETCH + " ... typeof = " + typeof(promesaFETCH));
+							// ¿promesaFETCH? ... [object Response] typeof = object
+							
+							
+							contenido = await promesaFETCH.text();
+
+							// *** ESPERAR A QUE SE COMPLETE LA LÍNEA ANTERIOR *** 
+							
+							
+							alert("¿contenido? ... " + contenido + " ... typeof = " + typeof(contenido));
+							
+							document.getElementById("pantalla").innerHTML += 
+													"<p>[1] - CONTENIDO DEL FICHERO : " + contenido + "</p>";
+
+
+							document.getElementById("pantalla").innerHTML += 
+													"<p>[2] - - - FIN DE LA PRUEBA - - - </small></p>"																				 
+					
+					};
+					
+					
+					// EJECUTAR LA FUNCIÓN ASÍNCRONA:					
+					funcionAsincrona();
+					
+					
+					// IMPORTANTE:
+					//	EL AWAIT BLOQUEA DENTRO DE LA FUNCIÓN ASÍNCRONA, PERO NO FUERA DE ELLA. ASÍ,
+					//	SI DESCOMENTAMOS LA SIGUIENTE LÍNEA Y A PESAR DE SER LA ÚLTIMA, VEREMOS QUE
+					//	LA CAPA LA MUESTRA LA PRIMERA:
+						
+					/*
+					
+										 * * * FLUJO PRINCIPAL (no lo bloquea) * * *
+										 
+									[1] - CONTENIDO DEL FICHERO : !!! HOLA MUNDO !!!
+				
+									[2] - - - FIN DE LA PRUEBA - - - 	
+					
+					*/
+					
+					
+					document.getElementById("pantalla").innerHTML += 
+						"<p class='principal'> * * * FLUJO PRINCIPAL (no lo bloquea) * * * </p>"																				 
+								
+			</script>	
+			
+		</div>
+		
+	</body>
+	
+</html>

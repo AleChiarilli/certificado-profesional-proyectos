@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			#pantalla {
+				color:brown;
+				font-size:60px;
+				font-weight:bolder;
+				font-family:impact;
+				border:3px solid red;
+				border-radius:25px;
+				width:75%;
+				padding:20px;
+				margin-top:30px;				
+			}
+
+
+			.azul {			
+				color:blue;
+				font-size:35px;
+			}
+
+
+			.rojo {
+				color:red;
+				font-size:35px;		
+			}
+
+		</style>
+				
+	</head>
+	
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> PETICIONES ASÍNCRONAS CON FETCH ... buscar </h1>
+			
+			
+			<br/><br/>
+			
+			
+			<div id="pantalla"></div>
+					
+			<!-- 
+
+				FETCH: 	Es un sistema más actual para realizar peticiones asíncronas contra el 
+						servidor y se basa en el uso de promesas sobre el protocolo HTTP.
+						
+						Básicamente se trata de indicarle como parámetro de entrada al objeto
+						fetch de JavaScript, qué URL (recurso) deseamos solicitar (crea la
+						promesa) y más tarde, pasarle en el then la oportuna función callback
+						con la que queremos consumir la promesa devuelta.
+							
+							const promesa = fetch("fichero_1.txt");		// OBTENER LA PROMESA.
+							
+							promesa.then( callback(response) );			// USAR/CONSUMIR LA PROMESA.
+																		
+								// La función callback empleada para consumir la promesa recibirá
+								// un parámetro  response y que contendrá la información que dicha
+								// promesa entrega a la callback (función recibida como parámetro).
+			
+			
+			
+							... o de forma directa, sin usar la constante para almacenar el objeto
+									de tipo promesa (hacemos un "usar y tirar"):
+			
+							fetch("fichero_1.txt").then( callback(response) );
+			
+								FETCH DEVUELVE UN OBJETO PROMESA.
+								DICHO OBJETO PROMESA SE CONSUME, SE UTILIZA LLAMANDO/INVOCANDO A SU MÉTODO then(x),
+									EL CUAL RECIBIRÁ COMO PARÁMETRO DE ENTRADA UNA FUNCIÓN CALLBACK QUE APORTARÁ EL
+									CÓDIGO A SER EJECUTADO Y QUE A SU VEZ, RECIBIRÁ INFORMACIÓN DE LA PROMESA
+									MEDIANTE SU PARÁMETRO DE ENTRADA response.
+									
+			
+			
+			 -->
+
+
+			<script type="text/javascript">
+			
+				/*
+				
+				const promesa = fetch("../ficheros/fichero_1.txt");
+				alert("0. PROMESA = " + promesa);
+				
+				const respuesta = promesa.then( response => response.text());
+				alert("1. RESPUESTA = " + respuesta);
+								
+				respuesta.then( datos => alert("2. DATOS = " + datos) );		
+				
+				*/
+				
+			</script>
+			
+			
+			<!--  
+				Es posible crear un objeto de configuración para el fetch y pasárselo como
+				parámetro a continuación del recurso que se desea solicitar al servidor:
+				
+					const config = {
+										method: "get",
+										
+									};
+				
+				
+					const promesa = fetch("../ficheros/fichero_1.txt", config);
+			
+			
+				LA PETICIÓN SE BASA EN EL PROTOCOLO HTTP: HyperText Transport Protocol.
+					
+					Propiedades a definir:
+					
+ 					* method 		Por defecto es get (podemos usar post, put, delete ... etc).
+					* headers 		Salvo que se le indiquen, no se envía ninguna {}.
+					* body 			El contenido o cuerpo que puede ser de distintos tipo: String, FormData, Blob ... etc.
+					* credentials 	Credenciales. Por defecto es omit pero también puede ser same-origin e include.			
+			
+			
+				También podemos crear un grupo de cabeceras de tipo simple (1 nombre = 1 valor) mediante el objeto headers
+				y su método set("nombreCabecera", "valorCabecera"):
+					
+					const cabeceras = new Headers();					
+					
+					cabeceras.set("Content-Type", "application/json");
+					cabeceras.set("Content-Encoding", "br");
+			
+			
+			
+				Una cabecera es básicamente un parámetro que se añade a la petición y que es utilizado 
+				para establecer una configuración entre el cliente y el servidor. 
+				
+				Disponemos de los siguiente métodos para trabajar con ellas:
+					
+					* has("nombreCabecera") : boolean			... Comprueba si la cabecera existe.
+					* get("nombreCabecera") : string			... Obtiene el valor de la cabecera.
+					* set("nombreCabecera", "valorCabecera")	... Crea/reemplaza(si ya existe) la cabecera con el valor indicado.
+					* append("nombreCabecera", "valorCabecera") ... Añade un valor más a la cabecera indicada (cabeceras de valor múltiple).
+					* delete("nombreCabecera") 					...	Elimina/borra la cabecera indicada. 
+			
+				set crea una nueva cabecera si no existe ya o bien, borra la ya existente y crea una nueva en su lugar.
+				
+				append crea una nueva cabecera si no existe ya o bien, añade un nuevo valor a la ya existente (sería otra
+					cabecera con el mismo nombre de la anterior de igual forma que podemos tener parámetros de valor múltiple
+					en la petición entrante). Así, con el mismo nombre encontraremos varios valores.
+			
+			
+				Un bucle FOR-OF es adecuado para recorrer todas las cabeceras consultando su nombre y su valor, ya que se trata de un
+				elemento de tipo iterable (obtenerlas de headers.entries() ya que devuelve las parejas clave-valor / key-value):
+				
+					for ( [key, value] of headers.entries() ) {
+					
+  							alert("NOMBRE_CABECERA = " +  key +  " ... VALOR_CABECERA = " + value);
+  					
+  					}
+			
+			 -->
+
+			 
+			 
+			 <!--  EL FETCH SE UTILIZA COMÚNMENTE EN LA SIGUIENTE FORMA:
+			 
+			 fetch("RECURSO_SOLICITADO_AL_SERVIDOR", config)
+  				.then(response => response.text())
+  					.then(data => {
+    									/* PROCESAMIENTO DE LOS DATOS DEVUELTOS */
+  								 	}
+  			 );
+
+				DONDE EL OBJETO response TIENE UNA SERIE DE PROPIEDADES Y MÉTODOS:
+
+				- [1] LAS PROPIEDADES DEL RESPONSE -
+					
+					response.xxx
+
+ 					* status 		... el código de estado de la respuesta (100-599).
+					* statusText 	... texto aclarativo del código anterior.
+					* ok 			... es true si el código de estado fue 2xx (2 y lo que sea ... datos recibidos correctamente).
+					* headers 		... el conjunto de cabeceras de la respuesta.
+					* url 			... la url, el recurso solicitado al servidor.
+
+				En el objeto XMLHttpRequest (negociador AJAX) tenemos algo similar con:
+					negociador.status
+					negociador.statusText
+
+
+				Así, se puede comprobar fácilmente si la respuesta se recibió sin problemas:
+				
+					fetch("../ficheros/fichero_1.txt")
+  						.then(response => {
+    											if (response.ok) {
+      												return response.text();
+      											}
+  											}
+  						);
+
+
+				- [2] LOS MÉTODOS DEL RESPONSE -
+				
+					response.yyy()	
+				
+					*	text()				... 	devuelve un objeto promesa con el texto plano (normal) de la respuesta.
+					*	json() 				...		devuelve un objeto JSON (igual que usar JSON.parse() sobre el texto plano).
+					*	blob() 				...		devuelve un objeto BLOB (Binary Large OBject).
+					*	arrayBuffer() 		...		devuelve un objeto ArrayBuffer (buffer binario puro).
+					*	formData() 			...		devuelve un objeto FormData (datos de formulario).
+					*	clone() 			...		crea y devuelve un objeto clon de la respuesta actual.
+					
+					*	Response.error() 				...		devuelve un objeto Response con el error de red asociado.
+					*	Response.redirect(url, code) 	...		redirecciona a la url indicada (adicionalmente puede enviar un código de error).
+					
+
+ 			-->
+
+			<script type="text/javascript">
+
+				/*
+				fetch("../ficheros/fichero_1.txt")
+					.then( (response) => response.text())
+						.then( data => document.getElementById("pantalla").innerHTML = data);
+				*/
+				
+				
+				// OBTENEMOS UNA PROMESA QUE A SU VEZ DEVUELVE OTRA:
+					
+				// 		fetch = GENERA Y DEVUELVE LA PRIMERA PROMESA POR SI SÓLO.
+				//
+				//			return response.text() = INVOCAR EL MÉTODO text() SOBRE EL OBJETO response GENERA LA SEGUNDA PROMESA QUE
+				//										DEVOLVEMOS CON EL return.
+				//
+				//				data = ESTE PARÁMETRO RECIBIRÁ EL TEXTO DE LA ANTERIOR PROMESA Y LA FUNCIÓN DE CALLBACK DECLARADA
+				//						TRAS SU ARROW O FLECHA (=>) LO UTILIZARÁ PARA ESCRIBIR EN EL DIV DENOMINADO pantalla.
+				
+				
+				// NOTA: podemos elegir los nombres que queramos para los parámetros response y data ... ej) respuesta y datos.
+				
+				/*
+				fetch("../ficheros/fichero_1.txt")
+					.then( (response) => {
+										alert("STATUS = " + response.status);
+										return response.text();
+									}
+						)
+						.then( data => document.getElementById("pantalla").innerHTML = data);
+				
+				*/
+				
+				
+				// ALGO SIMILAR A LO ANTERIOR PERO GESTIONANDO EXPCEPCIONES CON THROW Y CATCH (es similar al tratamiento en Java):
+					
+					
+					/*
+					fetch("../ficheros/fichero_1.txt")
+						.then(response => {
+					    						if (response.ok) {				// COMPROBAR SI LA RESPUESTA LLEGÓ BIEN.
+					      							return response.text();
+					    						}
+					    						
+					    						throw new Error(response.status);	// SI NO FUE ASÍ, LANZAR EXCEPCIÓN - ERROR.
+					  					}
+						
+							)
+							.then(data => {
+					    					//alert("DATOS RECIBIDOS: " + data);		
+					    					document.getElementById("pantalla").innerHTML = data; // MOSTRAR LOS DATOS EN LA CAPA (div).
+					  					}
+					  			)
+					  		.catch(err => {										// CAPTURAR LA EXCEPCIÓN Y MOSTRAR EL ERROR.
+					    					//alert("ERROR: " + err.message);
+					    					document.getElementById("pantalla").innerHTML = err.message;
+					  					}
+					  			);
+					*/
+				
+			
+				// LO MISMO PERO ORDENANDO UN POCO MÁS EL CÓDIGO MEDIANTE LA EXTERNALIZACIÓN DE LA PARTE QUE COMPRUEBA SI LA 
+				//	RESPUESTA SE RECIBIÓ CORRECTAMENTE:
+					
+					
+					/*
+					const respuestaCorrectaSINO = (response) => {
+						
+														if(response.ok) {
+						  									return response.text();  
+					  									}
+						
+														throw new Error(response.status + 
+																			"<p class='azul'>" + response.url + "</p>" +
+																			"<p class='rojo'> !!! ESTE FICHERO NO EXISTE !!! </p>");
+					  
+													}
+					
+					
+					const imprimir = (message) => document.getElementById("pantalla").innerHTML = message;
+					
+					
+					
+					// SE GENERA UNA CADENA O SECUENCIA DE PROMESAS:
+					
+					//fetch("../ficheros/fichero_123.txt")	
+						
+					fetch("../ficheros/fichero_1.txt")						// SOLICITAR ../ficheros/fichero_123.txt, QUE NO EXISTE, 
+						.then(response => respuestaCorrectaSINO(response))		//	PARA COMPROBAR COMO RECIBIMOS "Error: 404" 
+					  		.then(data => imprimir(data))						//	EN LUGAR DE "!!! HOLA MUNDO !!!".
+					  		.catch(err => imprimir(err));
+					
+					*/
+					
+					
+				// PARA FINALIZAR, UNA ALTERNATIVA AL USO DE LOS MÉTODOS then, QUE SE BASA EN UTILIZAR LAS CLÁUSULAS
+				//	ASYNC Y AWAIT (await == esperar, sólo puede utilizarse dentro de un contexto asíncrono == async):
+
+
+					// Marcar la función solicitarFichero como de tipo ASÍNCRONO:
+						
+					const solicitarFichero = async (queFichero) => {
+						
+								// ESPERAR LA RESPUESTA CON await (bloquea la ejecución)
+								const respuesta = await fetch(queFichero);
+
+								// COMPROBAR SI FUÉ CORRECTA O NO.
+								//	EN CASO AFIRMATIVO DEVOLVER SUS DATOS.
+								if(respuesta.ok) {
+									const datos = await respuesta.text();
+									return datos;
+								}
+								
+								// EN CASO NEGATIVO, LANZAR UNA EXCEPCIÓN
+								throw new Error("EL FICHERO SOLICITADO NO EXISTE" + 
+													"<p class='azul'>" + respuesta.url + "</p>"); 
+				
+					};
+					
+					
+					// PROBAR:
+					const pruebas = async () => {
+						
+						// ELEGIR UNA OPCIÓN Y COMENTAR LA OTRA:
+						
+						const pruebaCORRECTA = await solicitarFichero("../ficheros/fichero_1.txt");						
+						// alert(pruebaCORRECTA); // "!!! HOLA MUNDO !!!"						
+						document.getElementById("pantalla").innerHTML = pruebaCORRECTA;
+						
+						
+						/*
+						try {							
+							// EL FICHERO SOLICITADO NO EXISTE, LUEGO GENERARÁ UN ERROR:
+							//		throw new Error("EL FICHERO SOLICITADO NO EXISTE", respuesta.status);
+							
+							await solicitarFichero("../ficheros/fichero_123.txt");
+							
+						} catch(error) {
+							document.getElementById("pantalla").innerHTML = error;
+						}
+						*/
+					}
+					
+					
+					pruebas();
+					
+					// En Java, métodos como notify() y notifyAll() en aplicaciones productor-consumidor, 
+					// únicamente pueden ser invocados desde un contexto SINCRONIZADO, el cual se designa
+					// con la palabra reservada synchronized, ya sea a nivel de bloque o de método (ésto
+					// se estudia en la parte de hilos, hebras o simplemente THREADS).					
+					
+			</script>
+			
+		</div>
+		
+	</body>
+	
+</html>

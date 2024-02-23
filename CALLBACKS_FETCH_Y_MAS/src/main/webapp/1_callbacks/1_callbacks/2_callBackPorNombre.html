@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			label, span {
+				font-size:40px;
+				font-weight:bolder;
+				
+			}
+			
+			label {
+				color:blue;
+			}
+			
+			span {
+				color:red;			
+			}
+			
+		</style>
+		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+	
+			<h1> FUNCIONES CALLBACK - creando una variable rellena por arrow</h1>	
+		
+
+			<script type="text/javascript">
+			
+				// CB1 DEVUELVE EL NOMBRE DEL EMPLEADO EN MAYÚSCULAS.
+				
+				/*				
+				// FORMA TRADICIONAL, SIN USAR ARROW PARA DECLARAR LA FUNCIÓN:
+				function callback_1(quien) {
+					return(quien.toUpperCase());				
+				}
+				*/
+				
+				// NOTACIÓN DE FLECHA O ARROW (es otra forma de definir funciones):
+				const callback_1 = (quien) => {
+					return(quien.toUpperCase());				
+				}
+				
+				// CONSTANTE QUE GUARDA LA FUNCIÓN x = (parámetros) => { cuerpo de la función };				
+				
+				
+				// CB2 DETERMINA EL DÍA DE TRABAJO DEL FIN DE SEMANA, SÁBADO O DOMINGO, ALEATORIAMENTE.
+				
+				/*
+				// FORMA TRADICIONAL, SIN USAR ARROW PARA DECLARAR LA FUNCIÓN:
+				function callback_2() {					
+					const finSemana = ["SABADO", "DOMINGO"];					
+					return finSemana[ parseInt(Math.random() * finSemana.length) ];					
+				}
+				*/
+				
+				
+
+				// NOTACIÓN DE FLECHA O ARROW:
+				const callback_2 = () => {					
+					const finSemana = ["SABADO", "DOMINGO"];					
+					return finSemana[ parseInt(Math.random() * finSemana.length) ];					
+				}
+				
+				
+				
+				
+				
+				// FUNCIÓN CLIENTE O PRINCIPAL, LA QUE HACE USO O CONSUME A LAS ANTERIORES CALLBACKS
+				
+				
+				function f_trabajar(callback_1, callback2) {
+				
+					// LA FUNCIÓN f_trabajar RECIBE LAS SUBFUNCIONES CALLBACK, SU DEFINICIÓN Y HACE USO
+					//		DE CADA UNA DE ELLAS ENVIÁNDOLAS PARÁMETROS, INFORMACIÓN QUE HA PROCESADO
+					//		POR SI MISMA ... f_trabajar pasa información a las callbacks y estas les
+					//		devuelven un resultado ... 
+					//					Es relación de uso y opcionalmente una simbiosis:
+					//										A le da a B (no a C).
+					//										B y C le devuelven a A.
+					
+					
+					var mensaje = ""
+					
+					// 1:
+					// DIRECTAMENTE, SIN HACER USO DE UN NOMBRE ALEATORIO:
+					//mensaje += callback_1("juan");
+					
+					// 2:
+					// CON UN ARRAY GENERADO POR f_trabajar() PARA OBTENER UN NOMBRE ALEATORIO:
+					const empleados = ["juan", "ana", "luis"];
+					
+					seleccionado = empleados[ parseInt(Math.random() * empleados.length) ]; // [0..2]	
+					
+					mensaje += "<label>" + callback_1(seleccionado) + "</label>"; // f_trabajar LE DA a callback_1 y ella le devuelve.
+					
+					mensaje += " tienes que trabajar el ";
+					
+					mensaje += "<span>" + callback_2() + "</span>"; // f_trabajar NO LE DA NADA a callback_2 y ella le devuelve.
+					
+					
+					var cajaAvisos = document.getElementById("avisos");
+					cajaAvisos.innerHTML = mensaje;
+					
+				}
+				
+			</script>			
+
+
+			<br/>
+			
+
+			<button onclick="f_trabajar(callback_1, callback_2);">
+				ENVIAR AVISO 
+			</button>
+						
+			<br/><br/>						
+
+
+			<div id="avisos"></div>
+
+
+		</div>
+		
+	</body>
+	
+</html>

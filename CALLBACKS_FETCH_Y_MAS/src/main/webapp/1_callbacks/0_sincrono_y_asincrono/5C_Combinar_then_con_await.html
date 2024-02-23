@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			/*TODO EN LA MISMA PANTALLA ... usar #pantalla{} en lugar de p{} */
+		
+			p {			
+				width:900px;
+				min-height:50px;
+				background-color:yellow;
+				border:2px solid orange;
+				border-radius:25px;
+				color:red;
+				font-size:30px;
+				font-weight:bolder;
+				padding:20px;	
+			}
+
+
+			span.mini {
+				color:brown;
+				font-size:22px;
+			}
+
+
+			p.recuperado {
+				color:blue;
+				background-color:cyan;
+				font-size:36px;
+				font-style:italic;
+			}
+			
+		</style>
+				
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<br/>
+			
+			<div id="pantalla"></div>
+			
+			<br/>
+
+			
+			
+			<script type="text/javascript">
+
+				// FUNCIÓN MARCADA COMO ASÍNCRONA (async) Y DEFINIDA SEGÚN EL ESTILO TRADICIONAL (NO ARROW):
+				async function f_asincrona() {
+
+				
+				///////////////////////////////////////////////////////////////////////////////////////////////////					
+				///////////////////////////////////////////////////////////////////////////////////////////////////					
+					
+					
+							// MUY IMPORTANTE ... SI PONGO O NO PONGO EL await ¿QUÉ NOS DEVUELVE EL FETCH?:
+								
+								// I) 	SI NO UTILIZAMOS await NOS DEVUELVE EL OBJETO PROMESA = [object Promise],
+								//			LO QUE NOS OBLIGABA A UTILIZAR 2 then SEGUIDOS, PUESTO QUE MANEJABAMOS
+								//			2 PROMESAS ... LA promesaFETCH Y DE ELLA LA promesaTEXT PARA FINALMENTE
+								//			OBTENER LOS DATOS (el texto contenido en el fichero recibido del servidor).
+
+																	
+									fetch("../ficheros/fichero_1.txt")				// PROMESA 1 == promesaFETCH.
+											.then( response => response.text() )		// PROMESA 2 == promesaTEXTO.
+												.then( data => alert("Texto del fichero: " + data) ); // los datos.
+									
+								
+								
+								// II)	SI UTILIZAMOS await NOS DEVUELVE DIRECTAMENTE EL OBJETO RESPONSE (response),
+								//			Y NO UNA PROMESA DE LA QUE SOLICITAR DICHO RESPONSE COMO EN EL EJEMPLO
+								//			ANTERIOR. ASÍ, CON await NO MANEJAMOS NINGUNA PROMESA.
+							
+				
+							const queEresSinAwait = fetch("../ficheros/fichero_1.txt");
+							alert("¿ QUÉ ERES SIN AWAIT ? ... dice: " + queEresSinAwait);
+							//
+							// -------------> ¿ QUÉ ERES SIN AWAIT ? ... dice: [object Promise]
+							
+												
+		
+							const queEresConAwait = await fetch("../ficheros/fichero_1.txt");
+							alert("¿ QUÉ ERES CON AWAIT ? ... dice: " + queEresConAwait);
+							//
+							// -------------> ¿QUÉ ERES CON AWAIT? ... dice: [object Response]
+							
+
+				///////////////////////////////////////////////////////////////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////////////////////////////////					
+					
+					var datosTexto;
+				
+							
+					alert("[1] OBTENER RESPONSE DEL FICHERO");
+					document.getElementById("pantalla").innerHTML += 
+											"<p> [1] OBTENER RESPONSE DEL FICHERO: fetch(url)" + "<br/>" + 
+												"<span class='mini'> - flujo o conexión al fichero - </span> </p>"; 
+					
+					
+												
+					// ESPERA (await) A OBTENER EL RESPONSE DEL FICHERO.					
+					await fetch("../ficheros/fichero_1.txt")
+				    				.then( (response) => {
+				    							alert("[2] LEER DEL RESPONSE: response.text()");
+				    							datosTexto = response.text();				    							
+				    							document.getElementById("pantalla").innerHTML += 
+	    											"<p> [2] LEER DEL RESPONSE: response.text() " + "<br/>" + 
+				    								"<span class='mini'> - lectura sobre el flujo del fichero - </span> </p>";
+				    						}
+				    					);
+
+					
+					// DEVOLVER LOS DATOS.
+					return datosTexto;
+					
+				}
+				
+				
+						
+				
+				// OTRA FUNCIÓN ASÍNCRONA (async) PARA PODER HACER USO DE await:
+				const inicio = async () => {
+				
+					alert(" [0] INICIO DE SOLICITUD - (ASYNC & AWAIT)")
+					document.getElementById("pantalla").innerHTML = "<p> [0] INICIO DE SOLICITUD - (ASYNC & AWAIT) </p>";
+					
+					// SIN EL await NO SE DETIENE EL FLUJO PRINCIPAL DEL PROGRAMA Y
+					// 	APARECERÍA EL " [3] FIN DE PROGRAMA" ANTES QUE EL 
+					//	" [2] OBTENER Y DEVOLVER PROMESA-TEXTO", ADEMÁS QUE DEVUELVE
+					//	UN OBJETO PROMISE EN LUGAR DEL OBJETO RESPONSE.
+					//
+					//	SECUENCIA:		[0] -> [1] -> [3] -> [2] ... orden incorrecto.
+					//
+					
+					
+					// CON EL await CUALIFICANDO LA FUNCIÓN, LA SECUENCIA SERÁ:
+					//					[0] -> [1] -> [2] -> [3] .. que es lo que queremos.
+
+					
+					
+					
+					
+					// ESPERAR A QUE LA FUNCIÓN f_asincrona() DEVUELVA LA RESPUESTA QUE, CON await,
+					//	SERÁ UN RESPONSE Y NO UNA PROMESA DE LA QUE SACAR ESE RESPONSE, COMO OCURRE
+					//	CUANDO NO INDICAMOS await.
+					
+										
+					// PROBAR A Y B:
+					
+					// A: con await
+					const recuperado = await f_asincrona(); 		// OBTENEMOS UN OBJETO RESPONSE.
+					
+					// B: sin await
+					//const recuperado = f_asincrona(); 			// OBTENEMOS UN OBJETO PROMESA.
+									
+
+					
+					
+					alert("RECUPERADO ... " + recuperado + " ---> tipo = " + typeof(recuperado));
+					
+					document.getElementById("pantalla").innerHTML += "<p class='recuperado'>" + recuperado + "</p>";					
+					
+					alert(" [3] FIN DE PROGRAMA");
+					document.getElementById("pantalla").innerHTML += "<p> [3] FIN DE PROGRAMA </p>";
+					
+				}
+
+								
+				// RUN - EJECUTAR:
+				inicio();				
+
+				
+
+				
+				/*
+				
+				// MANEJAR EL FETCH CON AWAIT: ESPERA (await) A OBTENER EL RESPONSE DEL FICHERO.					
+				await fetch("../ficheros/fichero_1.txt")
+			    				.then( response => alert("Texto del fichero = " + response.text()) );				
+				
+				*/
+				
+				
+			</script>
+			
+		</div>
+		
+	</body>
+	
+</html>

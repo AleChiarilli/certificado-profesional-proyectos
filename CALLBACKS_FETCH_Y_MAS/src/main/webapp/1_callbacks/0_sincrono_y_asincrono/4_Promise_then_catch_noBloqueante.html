@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+
+			body {
+				background-color:black;
+			}
+
+
+			h1 {
+				color:red;
+				font-size:2cm;
+				text-shadow: 5px 5px 5px yellow;
+			}
+
+
+			img {				
+				width:250px;
+				height:auto;
+				border-radius:25px;
+				margin:15px;
+			}
+
+		
+			#pantalla {
+				width:800px;
+				height:500px;
+				margin-top:10px;
+				border:5px solid orange;
+				border-radius:25px;
+			}
+
+
+			.numeros {
+				color:green;
+				font-size:0.7cm;
+			}
+
+		
+			.ganador {
+				color:lime;
+				font-size:1.5cm;
+			}
+
+
+			.perdedor {
+				color:red;
+				font-size:1.5cm;
+			}
+		
+		</style>
+		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+
+			<!-- PROMESAS: utilízalas para resolver la asincronía en vez de sólo emplear las funciones
+							de tipo CALLBACK con 2 parámetros de entrada y evaluar el sí o no se cumple
+							en base al booleano que constituye el primero de ellos (la información de 
+							respuesta estaría en el segundo, en forma de objeto):
+							
+						1) Crear la promesa ... objeto Promise de JavaScript, definiéndo en su
+							interior los 2 posibles estados de ejecución:
+							
+									RESOLVE		-> resuelta 	== ejecutada con éxito.
+									REJECT 		-> no resuelta 	== rechazada.
+						
+									* Pendiente es un tercer estado que indica que la promesa
+										 aún no ha sido procesada, que está en espera.		
+							
+							La promesa debe ser devuelta mediante una cláusula return en el 
+							caso de que el código de la función principal disponga de varias
+							línea. También es posible el recurrir al return implícito cuando
+							se trata de código de 1 sóla línea y utilicemos la notación de
+							flecha, prescindiendo también de las llaves que delimitan el 
+							cuerpo de la función {}.
+							
+							
+							A) ARROW NOTATION:
+							
+								const promesa = () => new Promise(reject, resolve) => { 
+																						código de la promesa. 
+																						};
+							
+							
+							B) FORMA TRADICIONAL:
+							
+								function f_promesa(resolve, reject) = { 
+																		return new Promise(resolve, reject) {
+																			código de la promesa.
+																		};
+																	};  
+
+
+			 			
+			 			2) Consumir la promesa mediante los metodos invocados sobre el objeto creado y devuelto:
+			 				NOTA: se escribe en varias líneas y tabuladas para que el código quede más claro, pero
+			 						en realidad sería:	promesa.then(CB_RESOLVE).catch(CB_REJECT).finally(CB_END)
+			 				
+			 					promesa
+			 							.then( pasar el CALLBACK que actuará de RESOLVE )
+			 								.catch( pasar el CALLBACK que actuará de REJECT )
+			 									.finally ( pasar el CALLBACK END que se ejecutará se acepte o se rechace la promesa)
+			 						
+			 						
+			 			LAS CALLBACKS PASADAS COMO PARÁMETROS AL CONSUMIR LA PROMESA FORMARÁN PARTE DEL CÓDIGO DE ÉSTA
+			 			Y SE ENCARGARÁN DE REALIZAR, POR DELEGACIÓN, UNA DETERMINADA TAREA DENTRO DE ELLA, COMO SI FUESEN
+			 			PARTE DE SU CÓDIGO INTERNO.
+			 				
+			 			ES SIMILAR AL HECHO DE TENER UNA FACHADA QUE CONTROLA A DIVERSOS DAO's PARA REALIZAR UNA OPERACIÓN
+			 			TRANSACCIONAL, COMO ES LA COMPRA DE UN LIBRO (reducir stock en 1 + alta en envíos + alta en cobros).
+			 			
+			 			TAMBIÉN PUEDE OBSERVARSE UNA SIMILITUD CON EL PATRÓN DE DISEÑO -STRATEGY- EN EL QUE LA CLASE PRINCIPAL,
+			 			Pato, TIENE POR COMPOSICIÓN INTERNA UN ATRIBUTO DE TIPO Volador (supertipo) Y QUE "RELLENAMOS" CON
+			 			UNA DE SUS IMPLEMENTACIÓN O COMPORTAMIENTOS, COMO SON VoladorSI Y VoladorNO.
+			 			CUANDO DICHA CLASE Pato INVOCA AL MÉTODO volar SOBRE SU ATRIBUTO Volador, SE PRODUCIRÁ EL ENLAZADO
+			 			TARDÍO, "LAZY-BINDING", ENLAZADO DINÁMICO O LA TAMBIÉN LLAMADA "RESOLUCIÓN DINÁMICA DE MÉTODOS", 
+			 			OBTENDREMOS LA VERSIÓN DE DICHO MÉTODO EN FUNCIÓN DEL OBJETO ELEGIDO. ASÍ, SI Volador SE CARGÓ CON
+			 			UN VoladorNO, LA INVOCACIÓN A volar() SOBRE Volador DEVOLVERÁ "NO VUELA", MIENTRAS QUE SI SE
+			 			UTILIZÓ VoladorSI, OBTENDREMOS "SÍ VUELA".
+			 			
+			 			ASÍ, LA CALLBACK INTRODUCIDA COMO PARÁMETRO EN LA FUNCIÓN PRINCIPAL, ACTÚA COMO EL ATRIBUTO Volador
+			 			DENTRO DE LA CLASE Pato EN EL PATRÓN STRATEGY.
+			 			
+			 			
+			 			
+			 			Cómo ya se ha indicado, una promesa es un objeto (Object) en JavaScript y como tal, dispone de los
+			 			siguiente métodos (resolve, reject y end son funciones pasadas como parámetros a la promesa):
+			 			
+			 				.then(resolve) 			... Ejecuta la función callback resolve cuando la promesa se cumple / acepta.
+							
+							.catch(reject) 			... Ejecuta la función callback reject cuando la promesa no se cumple / rechaza.
+							
+							.then(resolve,reject) 	... Método que unifica las dos anteriores invocaciones en el .then() de la promesa.
+							
+							.finally(end) 			... Ejecuta la función callback end siempre, tanto si se cumple como si se rechaza
+															la promesa.
+			 					
+						SOMOS NOSOTROS, LOS PROGRAMADORES LOS QUE EN FUNCIÓN DEL CÓDIGO ESCRITO EN LA FUNCIÓN PRINCIPAL, LA QUE 
+						CREA EL OBJETO PROMISE, QUIENES DECIDIMOS SI SE ACEPTA O SE RECHAZA LA PROMESA ... SIMPLEMENTE INDICAMOS
+						CON UN IF-ELSE SI SE LLAMARÁ A RESOLVE O A REJECT, ELIGIENDO LIBREMENTE LAS CONDICIONES QUE UNA VEZ
+						EVALUADAS DEVUELVAN UN true O UN false PARA EL MISMO.			 					
+			 					
+			 					
+			 			EN LA PRÁCTICA, LO HABITUAL ES PREOCUPARSE SÓLO POR EL QUÉ HACER (función callback resolve) CUANDO LA PROMESA
+			 			SE ACEPTA, SE CUMPLE, POR LO QUE SÓLO INDICAREMOS EL PARÁMETRO DE LA FUNCIÓN CALLBACK DEL RESOLVE:
+			 				
+			 				fetch("/robots.txt").then( callBackResolve(respuesta) );
+
+
+						LOS MÉTODOS DE LAS PROMESAS NO SON BLOQUEANTES, ES DECIR, SE SOLICITAN Y CUANDO SU RESPUESTA ESTÉ DISPONIBLE
+						SE ENTREGA, PERO NO DETIENEN LA EJECUCIÓN DEL FLUJO PRINCIPAL HASTA QUE ÉSTO SUCEDA ... EN LAS SIGUIENTES
+						"ASYNC/AWAIT" COMPROBAREMOS QUE ESTE TIPO DE ASINCRONIA SÍ RESULTA BLOQUEANTE, DETENIENDO EL PROCESAMIENTO
+						CENTRAL EN ESPERA DE LA RESPUESTA DE LA FUNCIÓN DE 	ASINCRONÍA.				 					
+			 -->
+			 
+			 
+
+
+
+
+
+
+			
+			<h1> PROMESAS - JAVASCRIPT </h1>
+
+			<!-- 
+					CAPA PARA MOSTRAR IMAGENES EN EL CUERPO DE LA PÁGINA Y MEJORAR LA EXPLICACIÓN
+			 
+					RECARGAR LA PÁGINA AL PULSAR SOBRE ELLA ... NUEVO JUEGO. 
+			 
+			-->
+			
+			<div id="pantalla" 
+					title="!! PULSA PARA JUGAR OTRA VEZ !!" 
+						onclick="window.location.href=''"></div>
+			
+			
+			
+
+			<!-- DEFINICIÓN DEL CÓDIGO JAVASCRIPT -->
+			
+			<script type="text/javascript">
+			
+				// IMPORTANTE:
+				//
+				//	a) 	La definición de una promesa, objeto Promise(resolve, reject), requiere de 2 flechas. La primera declara
+				//			la función cuyo código crea el objeto promesa y la segunda establece el código de la promesa en sí.
+				//
+				//	b)	Si dicho código se compone de 2 o más líneas tendremos que usar las llaves {} y en tal caso, será obligatorio
+				//			indicar un return para poder devolver el objeto promesa. Cuando sólo hay 1 línea, podemos prescindir
+				//			de las llaves y del return, ya que se hará uso de uno implícito.
+				//
+				//	En definitiva, si aparecen las llaves {} será obligatorio escribir un return.
+				
+			
+				
+				
+				// DEFINIMOS UNA CONSTANTE QUE ALMACENARÁ LA FUNCIÓN PRINCIPAL ENCARGADA DE CREAR Y DEVOLVER EL OBJETO
+				//	PROMESA (puede admitir información de entrada, parámetros que utlizará para constituir su flujo de control).
+				
+				// OBSERVA CON DETENIMIENTO EL CÓDIGO SIGUIENTE, YA QUE DEFINE UNA ESTRUCTURA ES BÁSICAMENTE SIEMPRE IGUAL Y
+				//	DE LA QUE PODEMOS HACER UN COPIA Y PEGA PARA LUEGO AJUSTARLA A LO QUE NECESITEMOS:
+				
+				const promesa = (datos) => {
+					
+										// CUERPO DE LA FUNCIÓN PRINCIPAL.
+										
+										// CREAR Y DEVOLVER EL OBJETO PROMESA (2 PARÁMETROS == 2 FUNCIONES CALLBACK RESOLVE Y REJECT):
+										return new Promise( 
+															(resolve, reject) => {
+																
+																// CUERPO DE LA PROMESA QUE USARÁ LAS CALLBACKS RECIBIDAS POR PARÁMETRO.
+																//
+																//	*** ESCRIBE AQUÍ TU CÓDIGO PARA LA PROMESA ***
+																//	*** PUEDES HACER USO DE LOS PARÁMETROS datos FUERA Y DENTRO
+																//			DEL CÓDIGO DE LAS CALLBACKS resolve Y reject ***
+																//
+
+															} 
+										);			
+				
+				};				
+				
+				
+				
+				
+				
+				// EJEMPLO PRÁCTICO:				
+				
+				// LA DEFINICIÓN Y USO DE PROMESAS EN JAVASCRIPT SE BASA EN 2 PARTES:
+				
+					
+				// <PARTE 1> 
+				//
+				// CREAR LA FUNCIÓN PRINCIPAL QUE INTERNAMENTE DEFINIRÁ EL OBJETO PROMESA QUE MÁS TARDE DEVOLVERÁ Y 
+				//	PODREMOS CONSUMIR O UTILIZAR.	
+					
+				// PASAMOS EL PARÁMETRO veces A LA FUNCIÓN PRINCIPAL (definida con notación arrow o de flecha) Y QUE HEMOS
+				//	LLAMADO promesaDADO (en mayúsculas la parte final para que se observe mejor, pero debería ser promesaDado).
+				//	
+				//	DICHA INFORMACIÓN LA UTILIZAMOS SÓLO PARA ESTABLECER EL NÚMERO DE VECES QUE TIRAREMOS EL DADO PARA VER SI
+				//	SUMAMOS DINERO O DEBEMOS DETENER EL JUEGO AL SALIR EL NÚMERO PROHIBIDO DEFINIDO INTERNAMENTE (6), PERO 
+				//	TAMBIÉN PODRÍA SER UTILIZADO POR LAS CALLBACKs O FUNCIONES EXTERNAS QUE DEBEREMOS PASAR O ENVIAR A LA
+				//	PRINCIPAL CUANDO HAGAMOS USA DE ELLA EN LA FORMA: 
+				//
+				//			promesaDADO(8).then(CB_RSOLVE).catch(CB_REJECT)	... 1 A 1 CON then(aceptar) Y catch(rechazar).
+				//
+				//			promesaDADO(8).then(CB_RESOLVE, CB_REJECT)		... ES MÁS FÁCIL INDICAR LAS 2 A LA VEZ EN UN then(x,y).
+				//				
+
+				
+				
+				
+				
+				/////////////////////////////////////// INICIO DE LA FUNCIÓN PRINCIPAL /////////////////////////////////////////////
+				
+				const promesaDADO = (veces) => {
+					
+					// CÓDIGO DE LA FUNCIÓN PRINCIPAL QUE ENTRE OTRAS COSAS, CREARÁ INTERNAMENTE UN OBJETO PROMESA.
+
+					/*
+					
+					alert("FUNCIÓN PRINCIPAL: promesaDADO \n" + 
+							"Define, Crea y Devuelve el objeto Promesa \n" +
+							"parámetro veces = " + veces
+					);
+					
+					*/
+
+					
+					/////////////////////////////////////// OBJETO PROMESA INTERNO ////////////////////////////////////////////					
+					
+					// DEFINICIÓN Y DEVOLUCIÓN (return y new) DEL OBJETO PROMESA QUE CREA ESTA FUNCIÓN PRINCIPAL Y QUE
+					//	HEMOS DECIDIDO LLAMAR promesaDADO. OBSERVAR CÓMO DICHO OBJETO JAVASCRIPT DENOMINADO Promise REQUIERE
+					//	A SU VEZ DE 2 PARÁMETROS DE ENTRADA (resolve y reject) Y QUE SIMBOLIZARÁN LAS FUNCIONES DE CALLBACK
+					//	RECIBIDAS AL TRATAR DE UTILIZARLO A TRAVÉS DE LA FUNCIÓN PRINCIPAL promesaDADO ... en Java sería similar
+					//	al uso de una clase interna o innerClass ... claseContenedora.claseContenida.metodoSolicitado().
+					
+					
+					// LOS PARÁMETROS DE ENTRADA reject Y resolve SIMBOLIZAN LAS 2 FUNCIONES CALLBACK QUE DEBEREMOS ENVIAR AL
+					//	CONSUMIR LA PROMESA DE LA FUNCIÓN PRINCIPAL:
+						
+					return new Promise( (resolve, reject) => {
+						
+							// CÓDIGO PROPIO DEL OBJETO PROMESA QUE COMO PODEMOS VER ESTÁ DENTRO DE LA FUNCIÓN PRINCIPAL (esta 
+							//	función principal actúa como una FACTORÍA, definiendo, creando y devolviendo su objeto promesa).
+					
+							const caras		= 6;	// Dado de 6 caras.
+							const prohibido	= 6;	// Número prohibido que provoca que se termine el juego (sale del bucle for).						
+							let dinero		= 0;	// Dinero ganado.
+					
+							/*
+							
+							alert("!!! VAMOS A JUGAR !!! \n\n" +
+									"\t TOTAL CARAS DEL DADO ... " + caras + "\n" +
+									"\t NUMERO PROHIBIDO ... " + prohibido + "\n" +
+									"\t VECES MÁXIMAS ... " + veces
+							);
+							
+							*/
+							
+							
+							// ARRAY PARA VER QUÉ NÚMEROS HAN SALIDO:
+								
+							const numeros = [];	
+							
+							
+							for(let i=1; i<=veces; i++) {
+								
+								let aleatorio = parseInt(Math.random() * caras) + 1;
+								
+								// SI QUEREMOS VERIFICAR QUE CON EL PROHIBIDO SE EJECUTARÁ EL REJECT EN LUGAR DEL RESOLVE ...
+								//	FORZAR POR CÓDIGO QUE EL NÚMERO ALEATORIO ES SIEMPRE EL PROHIBIDO:
+								//
+								// aleatorio = prohibido;
+								
+								
+								// COMPROBAR SI HA SALIDO EL NÚMERO PROHIBIDO Y SI ES ASÍ, TERMINAR EL BUCLE FOR.
+								//	la comprobación ha de hacerse !! SIEMPRE !! en base a la constante y no a la variable.
+								
+								if(prohibido == aleatorio) {
+									
+									break; 	// NOTA: NÚNCA DEBE USARSE EN UN LAZO LAS CLÁUSULAS break / continue, PERO PARA 
+											//			TRATAR DE ENTENDER CÓMO FUNCIONAN LAS PROMESAS SE ADMITIRÁ ... usa 
+											//			en su lugar un while con operadores de tipo AND (&&), OR (||) Y NOT (!).
+											
+								}
+								
+								
+								// SUMAR EL VALOR DEL DADO AL DINERO ACUMULADO. REPETIR MIENTRAS NO SALGA EL PROHIBIDO (salir = 6).
+								dinero += aleatorio;
+								
+								// AÑADIR AL ARRAY DE NÚMEROS.
+								numeros.push(aleatorio);
+								
+							}
+														
+							
+							
+							// COMPROBAR SI HEMOS O NO, GANADO DINERO Y EN BASE A ELLO, LLAMAR A LA CALLBACK RESOLVE O POR EL
+							//	CONTRARIO A LA CALLBACK REJECT.
+							
+							if(dinero > 0) {
+								// LA CALLBACK RESOLVE, SU CÓDIGO, SE INDICARÁ AL INVOCAR SOBRE LA FUNCIÓN PRINCIPAL (promesaDADO)
+								//	A SU MÉTODO then ... promesaDADO.then( callback(dinero) )
+																
+								//  AHORA MISMO NO SABEMOS CUÁL SERÁ NI QUE HARÁ DICHA CALLBACK QUE RECIBIREMOS EN UN FUTURO, CUANDO
+								//	SE "CONSUMA LA PROMESA", PERO ...
+								//		DE LO QUE SÍ TENEMOS TOTAL CERTEZA ES QUE SI HEMOS GANADO ALGO DE DINERO if(dinero>0) SE
+								//		LLAMARÁ A LA RESOLVE Y SE LE PASARÁ COMO INFORMACIÓN O PARÁMETRO DE ENTRADA LA VARIABLE
+								//		dinero QUE HEMOS CREADO MÁS ARRIBA. 
+								
+								//	EN LA SIGUIENTE LÍNEA DECIDIMOS LLAMAR A DICHA CALLBACK RESOLVE PORQUE HAS  GANADO DINERO
+								//		... CUMPLIR / ACEPTAR LA PROMESA == INVOCAR A LA CALLBACK RESOLVE.	
+							
+								//alert("ESTOS SON TUS NÚMEROS: \n\n\t" + numeros);
+								
+								//resolve("!! GANAS " + dinero + " euros !!"); 	// <----------- !!! AQUÍ TIENES LA LLAMADA A LA RESOLVE !!!
+
+
+								
+								// ERROR: SÓLO PODEMOS ENVIAR 1 PARÁMETRO A LA CALLBACK, EL RESTO SERÁN IGNORADOS:
+								//
+								// 2 PARÁMETROS (mensaje, numeros) ... el 2 parámetro (numeros) no llegará.
+								//
+								//resolve("!! GANAS " + dinero + " euros !!", numeros); 	// <----------- !!! AQUÍ TIENES LA LLAMADA A LA RESOLVE !!!									
+								
+								
+								
+								
+								// PARA ENVIAR MÁS DE 1 VALOR, DEBEMOS DEFINIR UN OBJETO (PAREJAS CLAVE-VALOR)
+								//	EN EL QUE ENCAPSULAR, ENCERRAR TODA LA INFORMACIÓN QUE NECESITEMOS:
+									
+								const objetoMultiRespuesta = {
+
+										// K-Key	:	V-Value
+										// 
+										// cada pareja clave:valor se separa de la siguiente con una coma, no con un punto y coma.
+										//
+										// el acceso al valor de la propiedad utiliza notación de punto ... nombreObjeto.nombrePropiedad
+										
+										mensaje : "!! GANAS " + dinero + " euros !!",
+										numeros : numeros
+										
+								};
+								
+								
+								/*
+								alert("OBJETO ... " + objetoMultiRespuesta);
+								alert("mensaje : " + objetoMultiRespuesta.mensaje);
+								alert("numeros : " + objetoMultiRespuesta.numeros);
+								*/
+								
+								
+								resolve(objetoMultiRespuesta);	// <----------- !!! AQUÍ TIENES LA LLAMADA A LA RESOLVE CON UN OBJETO MULTI-RESPUESTA !!!
+								
+								
+							} else {
+								// LA CALLBACK REJECT, SU CÓDIGO, LO QUE HACE SERÁ INVOCADA SOBRE LA FUNCIÓN PRINCIPAL MEDIANTE SU
+								//	MÉTODO catch ... promesaDADO.catch( callback(mensaje) )
+								
+								// COMO NO HAS GANADO NADA DECIMOS QUE SE RECHAZA LA PROMESA, POR LO QUE LLAMAREMOS A LA CALLBACK
+								//	REJECT Y LE PASAREMOS COMO PARÁMETRO DE ENTRADA UN MENSAJE INDICÁNDOLO.
+																
+								const consuelo = "NADA"; 
+								
+								reject(consuelo); 	// <----------- !!! AQUÍ TIENES LA LLAMADA A LA REJECT !!!
+								
+							} 
+
+
+							// COMO PUEDES APRECIAR, QUE SE LLAME A UNA U OTRA CALLBACK Y LA INFORMACIÓN QUE SE LES PASE, ES ALGO
+							//	QUE DECIDE LIBREMENTE EL PROGRAMADOR DEL CÓDIGO JAVASCRIPT. ASÍ, ESCRIBE LO QUE QUIERAS, LA MÁQUINA
+							//	OBEDECERÁ TUS ORDENES O LO QUE ES LO MISMO, EJECUTARÁ TU CÓDIGO (salvo que cometas errores).
+						
+						}
+					
+					);
+					
+					/////////////////////////////////////// FIN OBJETO PROMESA ///////////////////////////////////////////////////
+
+
+				};									
+
+				/////////////////////////////////////// FIN FUNCIÓN PRINCIPAL //////////////////////////////////////////////////
+				
+				
+				
+				// <PARTE 2> 
+				//
+				// CONSUMIR, UTILIZAR O INVOCAR EL OBJETO PROMESA DEFINIDO, CREADO Y DEVUELTO POR LA FUNCIÓN PRINCIPAL:
+				//
+				// AHORA VAMOS A EMPLEAR LA PROMESA DE LA FUNCIÓN PRINCIPAL Y A LA QUE DEBEREMOS PASARLE LAS FUNCIONES DE
+				//	CALLBACK RESOLVE Y REJECT, PARA QUE HAGA UN USO INTERNO DE ELLAS ... podemos pensar en una simbiosis 
+				//	entre el productor (la función principal) y el consumidor (quién hace uso de ella), puesto que el
+				//	productor entrega al consumidor el objeto promesa que ha creado y el consumidor, entrega al productor
+				//	las 2 funciones callback que requiere para poder funcionar ... !!! yo te doy y tu me das !!!.
+								
+				
+				
+				
+				
+				
+				// EL ALERT NOS DEVOLVERÁ EL CÓDIGO DE DEFINICIÓN DE LA FUNCIÓN PRINCIPAL.
+				
+				//alert (promesaDADO);
+				
+				/*
+				
+					(veces) => {
+										
+								// CÓDIGO DE LA FUNCIÓN PRINCIPAL QUE ENTRE OTRAS COSAS, CREARÁ INTERNAMENTE UN OBJETO PROMESA.
+					
+								alert(" !!! FUNCIÓN PRINCIPAL " + this.name + " QUE CREA Y DEVUELVE SU OBJETO PROMESA \n" +
+										"\t PARÁMETRO DE ENTRADA: VECES QUE SE TIRARÁ EL DADO = " + veces);				
+						
+								... RESTO DEL CÓDIGO ...
+								
+				*/
+				
+				
+				
+				// CONSUMIR LA PROMESA DEVUELTA POR LA FUNCIÓN PRINCIPAL:
+				// 		OBSERVAR CÓMO DEFINIMOS EN LÍNEA EL CÓDIGO DE LAS 2 FUNCIONES CALLBACK:
+				//
+				//				(*) 	PARA LA RESOLVE ... (dinero) => alert(dinero)
+				//
+				//				(*)		PARA LA REJECT .... (consuelo) => alert(consuelo)
+				
+				
+				// LOS PARÁMETROS dinero y consuelo SON ENVÍADOS POR EL CÓDIGO DE LA PROMESA EN
+				//	LA LÍNEA:
+					
+				//		resolve("HAS GANADO ... " + dinero + " euros."); 	// <----------- !!! AQUÍ TIENES LA LLAMADA A LA RESOLVE !!!
+				
+				
+				// ... Y EN LAS LÍNEAS:				
+				
+				//		const consuelo = "LO LAMENTO MUCHO, PERO NO HAS GANADO NADA"; 
+				// 		reject(consuelo); 	// <----------- !!! AQUÍ TIENES LA LLAMADA A LA REJECT !!!
+		
+				// TRAS EJECUTAR LA LÓGICA DE NEGOCIO ESTABLECIDA EN EL INTERIOR DEL CÓDIGO DE LA PROMESA (el objeto Promise creado).	
+					
+					
+				
+				/*	
+				promesaDADO(7)
+								.then( (dinero) => alert(dinero) )
+									.catch( (consuelo) => alert(consuelo) );
+				*/
+								
+								
+								
+				// dinero es el parámetro/valor de entrada a la RESOLVE mientras que consuelo es
+				//	el parámetro/valor de entrada a la REJECT, pero perfectamente podriamos haber
+				//	llamado a ambas de la misma forma y haber elegido simplemente la palabra respuesta,
+				// 	entendiendo que respuesta el el valor generado internamente por la promesa y que
+				//	ésta se lo pasa a las callback (no es la devolución de la callback, sino del objeto
+				// 	promesa hacia la callback que recibe como parámetro o función de entrada.
+					
+				
+				// Si lo ponemos todo en una línea (resulta más complejo que la forma anterior):
+					
+				//	promesaDADO(7).then( (respuesta) => alert(respuesta) ).catch( (respuesta) => alert(respuesta) );
+				
+				
+				
+				
+				
+				// ............................................................................
+				
+				
+				
+				
+				
+				// ... Y SI QUISIESEMOS ADEMÁS QUE CON LA RESPUESTA DE LAS CALLBACK MOSTRASEMOS UNA
+				//		IMAGEN EN PANTALLA ADEMÁS DEL TEXTO DE LAS DEVOLUCIONES:
+				//
+				// GUARDAMOS LAS CALLBACK COMO CONSTANTES PARA QUE EL CÓDIGO DE LA CONSUMICIÓN SEA
+				//	AÚN MÁS CLARO:
+					
+					
+					
+				// DEFINIR LAS NUEVAS FUNCIONES CALLBACK's RESOLVE Y REJECT ... observar como podemos
+				//	cambiar el código de una callback por otro para que haga cosas distintas y cómo
+				//	no tenemos que tocar para nada el código de la función principal y de su objeto
+				//	promesa interno ... ES UN POLIMORFIMO EN FUNCIÓN DE LAS CALLBACKS UTILIZADAS (una
+				//	bombilla azul da la luz azul, mientras que una bombilla roja, da la luz roja, pero
+				//	ambas comparten el mismo método ... iluminar(). Así, en función de la bombilla que
+				// 	coloquemos en el casquillo y trás pulsar el interruptor, tendremos la luz de un
+				//	color u otro, pero como decimos, el sistema es el mismo para ambas ... decide que
+				// 	pareja de funciones callback quieres utilizar, si las [azul_resolve + azul_reject]
+				//	o las [roja_resolve + roja_reject] y tendrás respuestas, comportamientos distintos
+				//	sin cambiar la función principal y su promesa interna).
+				
+				
+				
+				
+				// RECIBIRÁ 1 PARÁMETRO DE ENTRADA MULTI-RESPUESTA (objeto con parejas clave-valor).
+				//	ACCESO A SUS PROPIEDADES CON ... objetoRespuesta.nombrePropiedad:
+					
+				const f_RESOLVE = (respuestaDeLaPromesa) => {
+										
+					let cadenaNumeros = "";
+					
+					for(numero of respuestaDeLaPromesa.numeros) {
+						cadenaNumeros += numero + " ";
+					}
+					
+					with(document.getElementById("pantalla")) {
+						innerHTML += "<p class='ganador'>" + respuestaDeLaPromesa.mensaje + "</p>";
+						innerHTML += "<p class='numeros'>" + cadenaNumeros + "</p>";						
+						innerHTML += "<img src='../img/homerYuhu.png'/>";
+					}					 
+				
+				};
+				
+				
+				
+				// RECIBIRÁ 1 PARÁMETRO DE ENTRADA SIMPLE (el mensaje):
+				const f_REJECT = (respuestaDeLaPromesa) => {
+					
+					with(document.getElementById("pantalla")) {
+						innerHTML += "<p class='perdedor'>" + respuestaDeLaPromesa + "</p>";
+						innerHTML += "<br/>";
+						innerHTML += "<img src='../img/homerDoh.png'/>";						
+					}					 
+				
+				};	
+				
+				
+					
+					
+					
+				// CONSUMIR:					
+					
+				promesaDADO(7).then( f_RESOLVE ).catch( f_REJECT );
+				
+				
+			</script>
+			
+			
+			
+		</div>
+		
+	</body>
+	
+</html>

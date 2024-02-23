@@ -7,9 +7,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>DESARROLLO WEB</title>
-		<script>
-			
-		</script>
 	</head>
 
 
@@ -19,52 +16,81 @@
 			
 			<h1> SWITCH CASE - Fall Through </h1>
 
-			
-			
+
 			<script type="text/javascript">
 			
-				const cerveza = {
-										marca: "MAHOU",
-										precio: 0.55
-							
-				};
+				const nota = parseInt(Math.random() * 11); // [0..10]
 				
-				/*
-				alert("PROPIEDAD marca ... " + cerveza.marca);			// DOT NOTATION:	 	objeto.propiedad
-				alert(">> PROPIEDAD marca ... " + cerveza["marca"]);	// BRACKET NOTATION:	objeto["propiedad"]
-				
-				alert("PROPIEDAD precio ... " + cerveza.precio);
-				alert(">> PROPIEDAD precio ... " + cerveza["precio"]);
-				*/
+				var mensaje;
 				
 				
-				const notas = {
-						alex: 8,
-						ivan: 9,
-						carlos: 10
-				}
-				//////////////////////////////////
+				switch(nota) {
 				
 				
-				for (nota in notas) {
-					alert("La nota de " + nota + "es " + notas[nota])
-				}
+// 					case 0:
+// 						mensaje = "MUY DEFICIENTE";
+// 						break;				
 				
-				
-				for(indice in cerveza) {
-					alert("[" + indice + "] = " + cerveza[indice]); // [marca] = MAHOU
-				}
-			
 
-				for(indice in cerveza) {
-					alert(">>> INDICE PROPIEDAD DEL OBJETO: " + Object.keys(cerveza)); // [marca] = MAHOU
+// 					case 1:
+// 						mensaje = "MUY DEFICIENTE";
+// 						break;				
+
+						
+// 					case 2:
+// 						mensaje = "MUY DEFICIENTE";
+// 						break;				
+						
+					//ésto es un horrible. no se hace.
+					//deja que el switch trabaje por ti 
+						
+						
+						
+					case 0:
+					case 1:
+					case 2:
+						mensaje = "MUY DEFICIENTE";
+						break;
+
+						
+					case 3:
+					case 4:
+						mensaje = "INSUFICIENTE";
+						break;
+						
+						
+					case 5:
+						mensaje = "SUFICIENTE";
+						break;
+						
+						
+					case 6:
+						mensaje = "BIEN";
+						break;
+						
+						
+					case 7:
+					case 8:
+						mensaje = "NOTABLE";	
+						break;
+						
+						
+					case 9:
+					case 10:
+						mensaje = "SOBRESALIENTE";	
+						break;
+						
+						
+					default:
+						mensaje = "LA NOTA " + nota + " NO ES CORRECTA";
+					
 				}
 				
+			
+				alert("HAS SACADO: " + nota + " Y TIENES UN ... " + mensaje);
 				
+			
 			</script>
-			
-			<div style="margin-top:80px">hola</div>
-
 
 		</div>
 		

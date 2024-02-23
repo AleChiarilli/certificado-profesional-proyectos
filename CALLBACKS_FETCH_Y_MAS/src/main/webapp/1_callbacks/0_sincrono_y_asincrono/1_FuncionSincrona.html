@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			p {
+				color:orange;
+				font-size:40px;
+				font-weight:bolder;
+				font-family:impact;
+				font-style:italic;
+			}
+		
+			.pantalla {
+				color:red;
+				font-size:30px;
+				font-weight:bolder;
+				width:1200px;
+				height:130px;
+				padding:10px;
+				border:2px solid blue;
+				border-radius:25px;
+				background-color:aqua;
+			}
+			
+			.boton {
+				width:200px;
+				height:50px;
+			}
+		
+		</style>
+		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+		
+			<!--  
+					CÓDIGO SÍNCRONO O CÓDIGO BLOQUEANTE, YA QUE HASTA QUE LA LÍNEA ANTERIOR NO
+					HAYA SIDO EJECUTADA POR COMPLETO NO PODREMOS CONTINUAR CON LAS SIGUIENTES.
+					SI LO QUE SE SOLICITA ES UN RECURSO EXTERNO O EJECUTAR UNA TAREA QUE DEPENDA
+					DE ALGO QUE DEBA SUCEDER (A FUTURO), HASTA QUE NO ÉSTO NO OCURRA, EL SISTEMA
+					, EL FLUJO DE EJECUCIÓN DEL MISMO, QUEDARÁ BLOQUEADO SIN HACER NADA MÁS QUE
+					ESPERAR
+			-->	
+			
+			<h1> 1 - GENERAR Y MOSTRAR NÚMEROS - SIN CALLBACK </h1>
+			
+			
+			<div id="pantalla" class="pantalla"></div>
+			
+			
+			<script type="text/javascript">
+			
+				const RANGO			= 10;	// [1..10]
+				const NUMEROS 		= new Array();
+				const VECES 		= 10;
+				const PROHIBIDO		= 6;
+				
+
+				// 1. FUNCIÓN QUE SE ENCARGA DE HACERLO TODO EN MODO SECUENCIAL, PASO A PASO (no usa callback).
+				
+				function f_jugar() {
+				
+					let numero;
+					
+					while( (numero = parseInt(Math.random() * RANGO) + 1) != PROHIBIDO ) {
+						NUMEROS.push(numero);
+					}
+					
+					//alert("ARRAY NUMEROS (" + NUMEROS.length + ") \n" + NUMEROS);
+				
+					
+					let mensaje;
+					
+					if(NUMEROS.length > 0) {
+						mensaje = NUMEROS;
+						
+					} else {
+						mensaje = " - NADA - ";
+					}
+						
+					document.getElementById("pantalla").innerHTML = "<span>" + mensaje + "</span>";
+			
+					
+					// OTRAS OPERACIONES (HAY QUE ESPERAR A QUE SE COMPLETE TODO LO ANTERIOR - MODO SÍNCRONO = BLOQUEANTE).
+					document.getElementById("pantalla").innerHTML += "<p> !!! OTRAS OPERACIONES !!! </p>";
+					
+				}
+
+
+				
+				
+				
+				// 2. EJECUTAR LA FUNCIÓN:
+					
+				f_jugar();
+				
+				
+			</script>
+			
+			
+			<br/><br/><br/>
+			
+			
+			<button class="boton" onclick="window.location.href=''">
+				RECARGAR PÁGINA
+			</button>
+			
+		</div>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>WEB</title>
+		
+		<script type="text/javascript">
+
+			var capaMensajes;
+
+			// CREAR / DEFINIR LA PROMESA ... NO SE EJECUTARÁ HASTA QUE SEA INVOCADA.
+			
+			// Utilizamos la notación de flecha (arrow):
+			
+			// El objeto Promise requiere de 2 parámetros de entrada que son las funciones callback resolve y reject (emulan la situación de un ternario o sentencia condicional IF-ELSE) e irán
+			//		asociadas con las posteriores claúsulas then y catch a la hora de invocarla / consumirla.
+			var promesa = () => new Promise( (resolve, reject) => 	{
+
+											var nota = parseInt(Math.random() * 11); // [0..10]
+											
+											//alert("TU NOTA ... " + nota);
+																						
+											// LA NOTA ALEATORIA DETERMINARÁ SI LA PROMESA DEBE EJECUTAR / LLAMAR A LA CALLBACK resolve O LA CALLBACK reject.
+											// 	LO QUE DELIMITAN SUS PARÉNTESIS ES LA RESPUESTA ENTREGADA POR LAS MISMAS Y QUE MÁS TARDE SERÁ UTILIZADA
+											//		POR LAS CLAÚSULAS then / catch SOBRE LA INVOCACIÓN A LA PROMESA.
+											
+											if(nota >= 5) {			// SI APROBADO, EL RETARDO SERÁ DE 5 SEGUNDOS ANTES DE LLAMAR A resolve.
+												
+												let retardo = 5000;
+												
+												setTimeout ( () => {
+													
+																		// RESPUESTA DEL RESOLVE:
+																		resolve("<br/>" + 
+																								"<span style='color:lime'>TU NOTA:" + nota +" ... EXAMEN APROBADO</span>" + 
+																								"<br/>" + 
+																								"<label style='color:brown; font-size:15px;'> retardo = " + retardo + " mseg.</label>");
+																				 }, retardo);
+											
+												
+											// *** AVISO: SE HA PROGRAMADO PARA QUE SI ES SUSPENSO NO HAYA NINGÚN RETARDO.
+											
+											// RESPUESTA DEL REJECT:
+											} else {
+												reject("<br/><span style='color:red'>TU NOTA:" + nota + " ... EXAMEN SUSPENSO</span>");
+											}
+								
+									}
+				  );
+			
+			
+			
+			function f_inicio() {
+				capaMensajes = document.getElementById("mensajes");				
+				f_examinarse();				
+			}
+		
+							
+		
+			function f_examinarse() {
+		
+				capaMensajes.innerHTML = "<p> 1. REALIZAR DEL EXAMEN AHORA MISMO. </p>";
+					
+				capaMensajes.innerHTML += "<p> 2. TERMINAR Y ENTREGARLO ... <small style='color:red;'> LANZAR LA PROMESA - MODO ASINCRONO (NO ESPERO A QUE ME DIGAN LA NOTA) </small> </p>";
+
+				// LANZAR / CONSUMIR LA PROMESA Y EVALUAR LA RESPUESTA (then cuando es afirmativa / catch cuando es negativa):			
+				// promesa().then( (respuesta-resolve) => qué hacer 1 ).catch( (respuesta-catch) => qué hacer 2 );
+				promesa().then( (respuesta) => capaMensajes.innerHTML += respuesta ).catch( (respuesta) => capaMensajes.innerHTML += respuesta );
+				
+				// EL CÓDIGO SE SEGUIRÁ EJECUTANDO SIN ESPERAR A QUE LA PROMESA SE HAYA TERMINADO DE EVALUAR (se utilice o no retardo en sus funciones callback - resolve / catch).
+				capaMensajes.innerHTML += "<p> 3. SALIR DEL AULA Y ESPERAR A RECIBIR UN CORREO ELECTRÓNICO CON LA NOTA OBTENIDA. </p>";
+							
+			}			
+
+		</script>
+	</head>
+
+
+	<body onload="f_inicio();">
+
+		<div align="center">
+
+			<h1> OBJECTOS PROMISE EN JAVASCRIPT </h1>
+
+			<br/><br/><br/>
+
+			<!-- CAPA A MODO DE DISPLAY DONDE SE IRÁN VISUALIZANDO LOS PASOS DEL PROCESO Y SUS RESULTADOS -->			
+			<div id="mensajes" style="color:blue; font-size:25px;"></div>
+
+		</div>
+		
+	</body>
+	
+</html>
+
+
+
+<!-- 
+
+PRUEBA DE EJECUCIÓN CON APROBADO Y SUSPENSO:
+
+
+
+OBJECTOS PROMISE EN JAVASCRIPT
+
+
+
+1. REALIZACION DEL EXAMEN
+
+2. LANZAR LA PROMESA - ASINCRONIA
+
+3. FIN EXAMEN
+
+TU NOTA:6 ... EXAMEN APROBADO
+
+retardo = 2000 mseg.
+
+------------------------------------------
+
+
+OBJECTOS PROMISE EN JAVASCRIPT
+
+
+
+1. REALIZACION DEL EXAMEN
+
+2. LANZAR LA PROMESA - ASINCRONIA
+
+3. FIN EXAMEN
+
+TU NOTA:3 ... EXAMEN SUSPENSO
+
+ -->

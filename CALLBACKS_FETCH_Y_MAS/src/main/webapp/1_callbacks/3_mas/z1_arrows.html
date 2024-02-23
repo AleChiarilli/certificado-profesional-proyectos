@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>WEB</title>
+		
+		<script type="text/javascript">
+		
+			// ARROWS: otra forma de definir una función anónima, con y sin parámetros, que podemos guardar en una variable.
+			
+			
+			// 1A - SIN PARÁMETROS DE ENTRADA:
+				
+			// FORMA TRADICIONAL:
+				
+			var f1 = function() { alert("BUENOS DIAS");  };
+			
+			f1();
+			
+			
+			// CON ARROW ( flecha => )
+			
+			var f1_arrow = () => { alert("CON ARROW: BUENOS DIAS");  }; // se cambia la palabra function por la flecha => colocándose esta después de los paréntesis de parámetros
+
+			f1_arrow();
+		
+			
+			// EL CUERPO O DEFINICIÓN DE LAS PROPIAS FUNCIONES (no indicamos paréntesis ya que no queremos ejecutarlas sino ver su definición):
+			//alert(f1);
+			//alert(f1_arrow);
+			
+			
+			// 1B - CON PARÁMETROS DE ENTRADA:
+			
+			var f2 = function(x, y) { alert(x + " + " + y + " = " + (x+y)); };
+			
+			f2(10,30);
+			
+			
+			// CON ARROW ( flecha => )
+			
+			var f2_arrow = (x,y) => { alert("CON ARROW: " + x + " + " + y + " = " + (x+y)); };
+			
+			f2_arrow(10,30);
+
+			
+			//jalert(f2);
+			//alert(f2_arrow);
+
+			
+		</script>
+		
+		
+		
+	</head>
+
+
+	<body>
+
+		<div align="center">
+
+			<h1> FUNCIONES ARROWS EN JAVASCRIPT </h1>
+
+		</div>
+		
+	</body>
+	
+</html>

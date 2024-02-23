@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>DESARROLLO WEB</title>		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> DEVOLUCIÓN DE UNA FUNCIÓN SINCRONA Y ASÍNCRONA (async) </h1>
+			
+			<br/><br/>
+			
+			
+			<script type="text/javascript">
+			
+			
+				/////////////////////////////////////////////////////////////////////			
+			
+				function f_sincrona() {				// FUNCIÓN SÍNCRONA.
+					return 123;					
+				}
+			
+				// LO MISMO CON NOTACIÓN DE ARROW (FLECHA - LAMBDA):
+				const f_sincronaArrow = () => { return 123; };
+				
+				
+				/////////////////////////////////////////////////////////////////////
+				
+				
+				
+				
+				
+				/////////////////////////////////////////////////////////////////////				
+				
+				 async function f_asincrona() {		// FUNCIÓN ASÍNCRONA (indica async).	
+					return 123;					
+				}
+				
+				// LO MISMO CON NOTACIÓN DE ARROW (FLECHA - LAMBDA): 
+				const f_asincronaArrow = async () => { return 123; };
+				
+				
+				/////////////////////////////////////////////////////////////////////
+
+				
+				
+				// PRUEBAS DE USO:
+					
+								
+				alert("1. INVOCAR SÍNCRONA ... devuelve: " + typeof(f_sincronaArrow()) );  // number.
+								
+				
+				//-------------------------------------------------------------------------------------
+				
+				
+				alert("2. INVOCAR ASÍNCRONA ... devuelve: " + typeof(f_asincronaArrow()) );  // object (una promesa).
+
+				
+				//------------------------------------------------------------------------------------- 
+				
+				
+				const f_asincronaArrowAwait = async () => {
+					
+					const recuperado = await f_asincronaArrow();
+					
+					alert("3. INVOCAR ASÍNCRONA CON AWAIT ... devuelve: " + typeof(recuperado) ); // number, no object.
+					
+				};
+				
+				
+				f_asincronaArrowAwait();				
+				
+			</script>
+						
+			
+		</div>
+		
+	</body>
+	
+</html>
