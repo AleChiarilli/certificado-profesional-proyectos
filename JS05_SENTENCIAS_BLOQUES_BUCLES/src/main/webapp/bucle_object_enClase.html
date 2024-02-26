@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DESARROLLO WEB</title>
+
+    <style type="text/css">
+
+        #pantalla {
+            height: 400px;
+            width: 400px;
+            border-radius: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+
+        p {
+            padding: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div align="center">
+    <div id="pantalla">
+        <!-- Aquí se agregarán los párrafos generados por la función imprimirObjeto -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    const f_conversorObjeto =
+        (numeros) => {
+            const objeto = {
+                tuNumeros: numeros,
+                cuantosNumeros: numeros.length,
+                valorTotal: numeros.reduce((valor, total) => valor + total)
+            };
+
+            return objeto;
+        };
+
+    const PROHIBIDO = 6;
+
+    const numeros = [];
+
+    var dado;
+
+    while ((dado = parseInt(Math.random() * PROHIBIDO) + 1) != PROHIBIDO) {
+        numeros.push(dado);
+    }
+
+    const objeto = f_conversorObjeto(numeros);
+
+    function imprimirObjeto(objeto) {
+        var pantallaDiv = document.getElementById("pantalla");
+        var nuevoParrafo = document.createElement("p");
+        nuevoParrafo.textContent = "TUS NUMEROS: " + objeto.tuNumeros + ", CUANTOS NUMEROS: " + objeto.cuantosNumeros + ", VALOR TOTAL: " + objeto.valorTotal;
+        pantallaDiv.appendChild(nuevoParrafo);
+    };
+
+    imprimirObjeto(objeto);
+</script>
+
+</body>
+
+</html>

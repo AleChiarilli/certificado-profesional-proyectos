@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+		
+// 			let contador = 0;
+			
+// 			do {
+// 				// contador = 0;
+// 				// si la colocamos aquí adentro, se haría un bucle infinito
+// 				// así que la colocamos afuera
+// 				alert(++contador);
+// 				} while (contador <=3);
+			
+			var numerosPares = new Array();
+			
+			var numerosImpares = new Array();
+			
+			do {
+				let numeroGenerado = Math.floor(Math.random() * 101);
+				
+				numeroGenerado % 2 == 0? numerosPares.push(numeroGenerado) : numerosImpares.push(numeroGenerado);
+			
+			} while (numerosPares.length < 10 || numerosImpares.length < 10);
+			
+			
+			if (numerosPares.length == 10) {
+				alert("LOS PARES GANAN CON : " + numerosPares.length + "<br>" + numerosPares);
+				alert("LOS IMPARES PIERDEN CON : " + numerosPares.length + "<br>" + numerosImpares);
+				
+			} else if (numerosImpares.length == 10) {
+				alert("LOS IMPARES GANAN CON : " + numerosImpares.length + "<br>" + numerosImpares);
+				alert("LOS PARES PIERDEN CON : " + numerosPares. length + "<br>" + numerosPares);
+			}
+			
+			var arrayX = null;
+			console.log(arrayX);
+			
+		</script>
+	</head>
+	<body>
+	
+	</body>
+</html>
