@@ -1,0 +1,5 @@
+var superNintendo = {
+	nombre: "Super Nintendo",
+	precio: "500",
+	imagen: "https://upload.wikimedia.org/wikipedia/commons/3/36/SNES-Mod1-Console-Set.png"
+	}

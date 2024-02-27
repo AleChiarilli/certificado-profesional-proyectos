@@ -1,0 +1,5 @@
+var neogeo = {
+	nombre: "NEOGEO",
+	precio: "1200",
+	imagen: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Neo-Geo-CD-TopLoader-wController-FL.jpg"
+	}
