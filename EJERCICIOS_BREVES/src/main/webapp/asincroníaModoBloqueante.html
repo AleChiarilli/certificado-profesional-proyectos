@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+
+			button {
+				width:300px;
+				height:50px;
+				border-radius:25px;
+				border:4px solid blue;
+				color:blueviolet;
+				font-size:22px;
+				background-color:aqua;
+			}
+		
+		
+			input[type=radio] {
+				width:35px;
+				height:35px;
+				margin-left:50px;
+				margin-right:2px;				
+			}
+		
+		
+			label {
+				margin-right:40px;
+			}
+		
+		
+			p.salida {
+				color:blue;
+				font-weight:bold;
+				width:200px;
+				background-color:lime;
+				border:3px solid green;
+				border-radius:25px;
+				padding:20px;
+				margin:50px;				
+			}
+			
+					
+			p.fin {
+				color:red;
+				font-size:25px;
+				margin:15px;
+			}
+		
+		</style>
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> - USO DE fetch PARA LEER EL FICHERO EXTERNO - </h1>
+			<h2> MODO BLOQUEANTE: async - await fetch - CON y SIN RETARDO setTimeout(x)</h2>
+			
+						
+			<br/><br/>
+			
+			
+			<button id="boton" onclick="f_activarProceso(this);"> ACTIVAR PROCESO </button>
+
+
+			<br/><br/>
+
+
+			<p> RETARDO EN SEGUNDOS </p>
+			
+			<input type="radio" name="retardos" onclick="f_ajustarRetardo(0);" checked/> <label>0seg</label> 
+			<input type="radio" name="retardos" onclick="f_ajustarRetardo(3);"/> <label>3seg</label>
+			<input type="radio" name="retardos" onclick="f_ajustarRetardo(10);"/> <label>10seg</label> 			
+
+						
+			<br/><br/>
+			
+			
+			<div id="pantalla"></div>
+			
+			
+			<script type="text/javascript">				
+			
+				// RETARDO COMO ATRIBUTO O VARIABLE GLOBAL:
+				var retardo = 0;
+			
+			</script>
+			
+			
+			
+			
+			
+			<script type="text/javascript">
+			
+				// PARA EMPLEAR LA ASINCRONÍA EN MODO BLOQUEANTE DEBEMOS EN PRIMER LUGAR 
+				// ESTABLECER UN CONTEXTO DE TIPO ASÍNCRONO, LO QUE LOGRAREMOS MARCANDO
+				// UNA FUNCIÓN CON LA PALABRA async Y MANEJANDO EN SU INTERIOR EL FETCH.
+				
+				// EL FUNCIONAMIENTO ES CONTRARIO AL ANTERIOR CON fetch().then().then() YA
+				// QUE EN ESTE CASO DETENEMOS LA EJECUCIÓN DEL FLUJO PRINCIPAL HASTA QUE
+				// LA RESPUESTA DE LA PROMESA NO HAYA EVALUADA Y POR TANTO, PODAMOS DISPONER
+				// DE SUS DATOS ... es un comportamiento síncrono dentro de un mundo asíncrono.
+				
+				// PARA FORZAR AL SISTEMA A QUE SE DETENGA EN ESPERA DE DICHA RESPUESTA SE
+				// UTILIZARÁ LA PALABRA await JUSTO POR DELANTE DEL FETCH QUE QUEREMOS 
+				// INVOCAR PARA LEER EL FICHERO.				
+				
+				// ES OBLIGATORIO MARCAR LA FUNCIÓN CON async PARA PODER EMPLEAR EN SU INTERIOR
+				//	LA PALABRA await (contexto asíncrono):
+				async function f_awaitFetch() {
+					
+					const respuesta = await fetch("../ficheros/fichero_1.txt");		// <----------- AWAIT.
+					
+					// En este punto ya tenemos seguridad de disponer del objeto
+					//	respuesta sobre el fichero y del que invocaremos a su
+					//	método text(), para obtener los datos buscados con 
+					//	FETCH ... !!! PERO !!!, hemos perdido toda posibilidad
+					// 	de seguir ejecutando el resto de código como con el caso
+					//	anterior (con fetch.then.then), es decir, renunciamos a
+					//	la asincronía de ejecución paralela:
+					//
+					//  	"NO TE MUEVAS DE AHÍ HASTA QUE ACABES ... PERO ME QUEDO
+					//			CRUZADO DE BRAZOS O LO QUE ES LO MISMO, PERDIENDO EL
+					//			TIEMPO ... SÍ, PERO NO QUIERO QUE TE MUEVAS HASTA QUE
+					//			SE TERMINE.
+
+					
+					// IMPRIMIR PARA VER QUÉ MUESTRA:
+					//alert("RESPUESTA FETCH TRAS EL AWAIT: " + respuesta);
+				
+					// DICE: RESPUESTA FETCH TRAS EL AWAIT: [object Response] ... 
+					//			NOS DEVUELVE UN RESPONSE, NO UN PROMISE, LO QUE 
+					//			CLARAMENTE INDICA QUE LA PROMESA YA HA SIDO COMPLETADA,
+					//			EVALUADA Y QUE POR TANTO, YA TENEMOS LOS DATOS DE SU
+					//			SALIDA DISPONIBLES PARA PODER UTILIZARLOS.
+					
+					
+					// COGER LOS DATOS DE LA RESPUESTA MEDIANTE EL MÉTODO .text() Y
+					// FORZANDO NUEVAMENTE A QUE EL SISTEMA ESPERE A OBTENERLOS
+					// DEL RESPONSE ANTERIOR:
+					
+						
+					// *** PROBAR A QUITAR EL await SOBRE EL OBJETO RESPONSE Y COMPROBAR
+					//	COMO NOS DEVUELVE UNA PROMESA, UN:
+					//			"vale, te lo hago pero esperate A QUE ACABE",
+					//	EN LUGAR DE LOS DATOS CONTENIDOS EN EL FICHERO:
+					//			!!! HOLA MUNDO !!! ***
+					//					
+					const datos = await respuesta.text();		// <----------- AWAIT.	 
+					
+					//alert("DATOS DE LA RESPUESTA  ... " + datos);
+					
+					// OK, DICE ... "DATOS DE LA RESPUESTA  ... !!! HOLA MUNDO !!!"
+					
+					return datos;
+					
+				}
+
+				
+			
+				
+				
+				const ejecutar = async () => {
+					
+					// 1) LLAMAR A LA FUNCIÓN ASÍNCRONA (HAY QUE FORZAR AL SISTEMA A QUE
+					//		ESPERE POR LA RESPUESTA, LOS DATOS DE LA FUNCIÓN ASÍNCRONA
+					//		INVOCADA ... LOS BLOQUEOS DENTRO DE DICHA FUNCIÓN NO AFECTAN
+					//		FUERA).
+					//
+					//	  POR OTRA PARTE, PARA PODER HACER USO DE await, ESTE CÓDIGO TAMBIÉN
+					//		TIENE QUE ESTAR DENTRO DE UN CONTEXTO ASÍNCRONO, LUEGO HABRÁ QUE
+					//		VOLVER A CREAR OTRA FUNCIÓN MARCADA CON async ... esta vez
+					//		haremos uso de la lambda (notación arrow), para tener las 2
+					//		versiones o formas de declarar una función en JavaScript.
+					
+					// 		El modificador async va justo delante de los paréntesis que
+					//			constituyen la cadena de parámetros de entrada a la función.
+					
+					
+					// PROBAR A QUITAR EL await Y COMPROBAR COMO SE DEVUELVE UNA PROMESA EN
+					// LUGAR DE LOS DATOS DEL FICHERO, ADEMÁS DE QUE AL NO BLOQUEAR, EL ORDEN
+					// DE EJECUCIÓN NO ESPERA A TENER RESUELTA DICHA PROMESA:
+					
+					const contenidoFichero =  await f_awaitFetch();		// <----------- AWAIT.
+							
+					// alert("CONTENIDO DEL FICHERO ... " + contenidoFichero);
+
+
+					// MOSTRAR EN LA CAPA LOS DATOS LEÍDOS.
+					document.getElementById("pantalla").innerHTML += "<p class='salida'>" + contenidoFichero + "</p>";
+
+					
+					// 2) FINALIZAR PROGRAMA CON UN SIMPLE MENSAJE.
+					//document.getElementById("pantalla").innerHTML += "<p class='fin'>FIN DE PROGRAMA</p>";
+				
+										
+					// OJO, NO OLVIDAR USAR += EN LUGAR DE SÓLO = PORQUE MACHACARÁ EL 
+					//	POSIBLE CONTENIDO ANTERIOR DE LA CAPA CUYO ID ES "pantalla".
+					
+					return("!!! FUNCIÓN EJECUTAR COMPLETADA !!!");
+					
+				};
+				
+				
+				
+				
+				
+				const retardarSINO = async () => {
+				
+					// 1) LLAMAR A LA ANTERIOR FUNCIÓN ejecutar PARA DESENCADENAR TODO EL PROCESO
+					//		OPCIONES: CON Y SIN RETARDO.				
+											
+					if(retardo) {
+						// CON RETARDO:
+						
+						// LLAMANDO DIRECTAMENTE AL TEMPORIZADOR NO FUNCIONA:
+						//	
+						//await setTimeout(ejecutar, retardo);
+				
+						
+						/*
+						
+							// REVISAR AWAIT CON RETARDO TEMPORIZADOR:	https://es.javascript.info/async-await
+
+							async function f() {							
+							
+								let promise = new Promise((resolve, reject) => {
+							    									setTimeout(() => resolve("¡Hecho!"), 1000)
+							  									}
+														);						
+								
+								let result = await promise; // espera hasta que la promesa se resuelva (*)
+
+  								alert(result); 		// "¡Hecho!"
+
+							}
+
+						
+							// RUN:
+								
+							f();						
+						
+						*/	
+						
+						// SE REQUIERE ENCERRAR DICHO TEMPORIZADOR EN UNA PROMESA Y EVALUARLO MEDIANTE resolve,
+						//  QUE A SU VEZ RECIBIRÁ LA EJECUCIÓN DE LA FUNCIÓN QUE QUERAMOS LLAMAR, EN ESTE
+						//	CASO ejecutar() ... ahora SÍ hay que poner los paréntesis ().
+						
+						
+  						let promesaRetardo = new Promise( (resolve, reject) => {    														
+  																	setTimeout( () => resolve( ejecutar() ), retardo );
+  																	//setTimeout( () => resolve("!!! OK !!!"), retardo );
+  																}
+  														);
+						
+						//alert("PROMESA RETARDO ... " + promesaRetardo);
+
+  						let completada = await promesaRetardo; 	// ESPERAR A QUE LA PROMESA RETARDO SE HAYA TERMINADO.
+  						
+  						//alert("¿DEVOLUCIÓN? ... " + completada);
+						
+					} else {
+						// SIN RETARDO:
+						await ejecutar();						// ESPERA QUE TERMINE LA FUNCIÓN ejecutar.
+					}			
+					
+				
+					// 2) FINALIZAR PROGRAMA CON UN SIMPLE MENSAJE.
+					document.getElementById("pantalla").innerHTML += "<p class='fin'>FIN DE PROGRAMA</p>";
+				
+				};
+				
+				
+				
+				
+				
+				function f_ajustarRetardo(retardo) {
+					
+					this.retardo = retardo * 1000;		// VARIABLE GLOBAL = VALOR PARÁMETRO DE ENTRADA
+														// 3 ... 3 * 1000 milisegundos = 3 segundos.
+					
+					//alert("RETARDO = " + this.retardo);
+					
+					// REACTIVAR EL BOTÓN SI ESTUVIESE EN MODO DISABLED PARA VOLVER A PROBAR SIN TENER
+					//	QUE RECARGAR LA PÁGINA.
+					document.querySelector("#boton").style.opacity 	= "1";
+					document.querySelector("#boton").disabled 		= false;
+					
+					document.querySelector("#pantalla").innerHTML = "";
+					
+				}
+				
+				
+				
+				
+				function f_activarProceso(boton) {
+
+					//alert(boton.disabled);
+					
+					boton.style.opacity = "0.1";
+					boton.disabled 		= true;
+					
+					//alert(boton.disabled);
+					
+					
+					
+					// RUN:
+					//
+					retardarSINO();
+					
+					
+					/* RESPUESTA ... AHORA SÍ SIGUE EL ORDEN DESEADO, MOSTRÁNDOSE EL 
+						TEXTO "FIN DE PROGRAMA" EN ÚLTIMO LUGAR GRACIAS A LOS BLOQUEOS
+						ESTABLECIDOS CON await:
+							
+												!!! HOLA MUNDO !!!
+	
+												  FIN DE PROGRAMA						
+							
+					*/
+				
+				}
+				
+			</script>
+
+		</div>
+		
+	</body>
+	
+</html>
