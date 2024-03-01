@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+			
+			#pantalla {
+				margin:50px;
+				color:blue;
+			}
+			
+			.rojo {
+				color:red;
+				font-size:35px;
+				font-weight:bolder;
+			}
+		
+		</style>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			
+			<h1> OBJETOS JAVASCRIPT - PIZZERIA </h1>
+			
+			<div id="pantalla"></div>
+			
+			
+			<script type="text/javascript">
+				
+				// FUNCIÓN CON NOTACIÓN ARROW O DE FLECHA (LAMBDA):
+					
+				const imprimirPizzas = (pizzas) => {
+
+					const capaPantalla = document.getElementById("pantalla");
+					
+					capaPantalla.innerHTML += "<br/><hr/><br/>";
+					
+
+					for(pizza of pizzas) {
+						
+						capaPantalla.innerHTML += pizza.imprimir() + "<br/>";
+						
+					}
+					
+					
+					capaPantalla.innerHTML += "<br/><hr/><br/>";
+					
+				};
+			
+			</script>
+			
+
+			
+			<script type="text/javascript">
+			
+				// CONSTITUCIÓN DE OBJETOS EN JAVASCRIPT:
+					
+				// A) POR PAREJAS CLAVE-VALOR.
+				//		ESTA FORMA CREA EL OBJETO Y NADA MÁS (hay 1 y sólo 1 que es éste que ves):
+				
+				// AQUÍ TIENES EL OBJETO YA INSTANCIADO, NO TIENES QUE HACER NADA MÁS.
+					
+				const bebida = {
+									tipo: "COCACOLA",
+									cantidad: "50cl",
+									precio:2.20,
+									
+									imprimir: function() {
+										return this.tipo + " - " + this.cantidad + " - " + this.precio + "€";
+									}
+				
+								};
+			
+				/*
+				alert("BEBIDA ... " + bebida.imprimir());
+				*/
+				
+				
+				
+				
+				
+				
+				// B) MEDIANTE LO QUE SE DENOMINA COMO UNA FUNCIÓN DE CREACIÓN:
+				//		ESTA FORMA CONSTITUYE EL MOLDE LA PLANTILLA PARA CREAR OBJETOS DE ESTE TIPO Y
+				//			NECESITAREMOS INVOCAR A LA FUNCIÓN PARA OBTENERLOS (tienes que hacer new ... parecido
+				//			a lo que haríamos en Java con new Gato()):
+				
+				// MIENTRAS NO HAGAS USO O LLAMES A new, NO HAY OBJETO QUE VALGA.	
+				
+				function Pizza(tipo, tamaño) {
+					
+					
+					let PRECIOS = new Map();
+
+					PRECIOS.set("PEQUEÑA", 10);
+					PRECIOS.set("MEDIANA", 20);
+					PRECIOS.set("GRANDE", 30);
+										
+					
+					//alert(PRECIOS.get("PEQUEÑA"));
+					
+					this.tipo = tipo.toUpperCase();
+					
+					if(tamaño) {
+						this.tamaño = tamaño.toUpperCase();
+					
+					} else {
+						// TAMAÑO POR DEFECTO:
+						this.tamaño = "MEDIANA";
+					}
+					
+
+					// CONSULTAR PRECIO
+					this.consultarPrecio = function() {
+						return PRECIOS.get(this.tamaño);
+					}
+					
+					
+					
+					// TOSTRING:
+					this.imprimir= function() {
+													/*
+													if(this.tipo === "HAWAIANA") {
+														return "ARIEL DISFRUTA DE TU PIZZA: \n" + this.tipo +
+															" - " + PRECIOS.get(this.tamaño) + "€";
+													}
+													*/
+													
+													return this.tipo + " - " + this.consultarPrecio() + "€"; 
+												}
+					
+				}
+			
+				
+				/*
+				const pizza = new Pizza("hawaiana");
+				
+				alert("PIZZA ... " + pizza.imprimir());
+				*/
+
+				
+		
+				
+				
+			
+ 				var pizzasJUAN = [new Pizza("hawaiana","pequeña"), 
+									new Pizza("hawaiana"), 
+										new Pizza("hawaiana","grande")];
+				
+				
+				
+				
+				var pizzasARIEL = new Array();
+	
+				pizzasARIEL.push(new Pizza("HAWAIANA"));
+				pizzasARIEL.push(new Pizza("BARBACOA"));
+				pizzasARIEL.push(new Pizza("ARGENTINA"));
+				
+				
+				
+				
+				
+				imprimirPizzas(pizzasJUAN);
+				
+				///////
+				
+				imprimirPizzas(pizzasARIEL);
+				
+				
+			</script>
+
+
+
+			<script type="text/javascript">
+			
+				const CUANTAS_PIZZAS = 5;
+				
+				// ALEATORIAMENTE EL TIPO Y EL TAMAÑO ... IMPRIMIR ... ¿CUANTO DINERO?
+			
+				const PIZZAS = ["PEPERONI", "IBERICA", "VEGANA", "DIABOLA", "3QUESOS"];
+				const TAMAÑOS = ["PEQUEÑA", "MEDIANA", "GRANDE"];
+				
+				
+				
+				var misPizzas = new Array();
+				
+				let precioTotal = 0;
+				
+				
+				while(misPizzas.length < CUANTAS_PIZZAS) {
+					
+					let aleatorioPizzas = 
+							parseInt(Math.random() * PIZZAS.length); // [0..4]
+							
+					let aleatorioTamaños = 
+							parseInt(Math.random() * TAMAÑOS.length); // [0..2]
+					
+					
+							
+					let pizzaAleatoria = new Pizza(PIZZAS[aleatorioPizzas], TAMAÑOS[aleatorioTamaños]);
+					
+					let precio = pizzaAleatoria.consultarPrecio();
+							
+					
+					
+					misPizzas.push(pizzaAleatoria);
+					
+					precioTotal += precio;
+				}
+				
+				
+				imprimirPizzas(misPizzas);
+				
+				document.getElementById("pantalla").innerHTML += "<p class='rojo'> PRECIO TOTAL: " + precioTotal + "</p>";
+			
+			</script>
+			
+
+
+
+		</div>
+		
+	</body>
+
+</html>

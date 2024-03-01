@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			
+			<script type="text/javascript">
+			
+				const numeros = new Array(3);
+				
+				alert(numeros);
+				
+				
+				///////////
+				
+				
+				for (let i=0; i<numeros.length; i++) {
+					numeros[i] = (i+1) * 1000;
+				}
+				
+				alert(numeros);
+				
+			
+			</script>
+			
+			
+			
+			<script type="text/javascript">
+			
+				var frutas = ["TOMATE", "BABANA", "FRESA", "MELON", "MANGO", "PAPAYA", "LICHY","NABO"];
+			
+				alert("FRUTAS ORIGINALES... \n" + frutas);
+				
+				let eliminado = frutas.shift();		// MODIFICA EL ARRAY ORIGINAL // TOMATE
+				
+				alert("ELIMINADO ... " + eliminado);
+				
+				alert("FRUTAS SHIFT ... \n" + frutas);
+				
+				
+				
+				
+				
+				eliminado = frutas.pop();
+				
+				alert("ELIMINADO ... " + eliminado);		// NABO
+				
+				alert("FRUTAS POP ... \n" + frutas);
+				
+				
+				
+				
+				
+				eliminado = frutas.splice(4,2);		// BORRAR INICIANDO EN POSICIÓN 4 Y 2 ELEMENTOS (A LA DERECHA)				
+				
+				alert("ELIMINADO ... " + eliminado);	// PAPAYA Y LICHY
+				
+				alert("FRUTAS SPLICE-ELIMINAR ... \n" + frutas);
+				
+				
+				
+				
+				
+				frutas.splice(2,0,"SANDIA");
+				
+				alert("FRUTAS SPLICE-AÑADIR ... \n" + frutas);
+				
+				
+				
+				
+				
+				let posicionBABANA = frutas.indexOf("BABANA");
+				
+				alert("POSICION BABANA ... " + posicionBABANA);
+				
+								
+				delete( frutas[posicionBABANA] );
+				
+				alert("FRUTAS DELETE ... \n" + frutas);
+				
+				
+				frutas[0] = "XXX";
+				
+				alert("FRUTAS XXX ... \n" + frutas);
+
+			</script>
+			
+
+		</div>
+		
+	</body>
+
+</html>

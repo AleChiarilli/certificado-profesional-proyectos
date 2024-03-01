@@ -1,0 +1,616 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			img {
+				width:200px;
+				height:auto;				
+				margin:75px;
+			}
+
+			#mensaje {
+				color:red;
+				font-size:30px;
+				font-weigh:bolder;
+			}
+		
+		</style>
+				
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+
+			<h1> GRUPOS DE PROMESAS </h1>
+
+			
+			<script type="text/javascript">
+			
+				/*
+			
+				Partimos de que la operación asíncrona, una vez lanzada o solicitada, NO PODEMOS SABER CON
+				SEGURIDAD CUÁNTO TARDARÁ EN EJECUTARSE, ATENDERSE. A esta circunstancia se le suma que en
+				determinadas ocasiones debe darse el condicionante de que se solicitan no una, sino varias
+				operaciones asíncronas y que estas deben de ejecutarse en UN ORDEN CONCRETO.
+				
+				Así, ampliamos el concepto de asincronía individual a asíncronia en grupo donde intervienen
+				varias funciones.
+			
+				
+				El objeto Promise de JavaScript permite trabajar con grupos de promesas que como ya sabemos
+				son básicamente objetos que hacen uso de funciones asíncronas:
+					
+				Nota: el método map de los arrays ( miArray.map( (elemento) => {codigo_de_procesamiento} ) )
+						sólo sabe trabajar con funciones síncronas, por lo que no nos resultará útil el
+						tratar de guardar el grupo de promesas en dicho array y esperar a tener la respuesta
+						de cada una de ellas (una vez se evaluen, porque son funciones A FUTURO).
+																		
+						NO FUNCIONARÁ, no hará lo que queremos porque al final, lo que se nos devolverá no
+						es la evaluación de las promesas, los datos resultantes de su ejecución o consumición,
+						sino que obtendremos las propias promesas originales ... un ejemplo:
+						
+							la promesa sería: "Súmame 2 con 3".
+							
+							respuesta deseada/esperada: "El resultado es 5".
+							
+							respuesta real: "Súmame 2 con 3" (lo mismo que teníamos) ... map NO SABE TRABAJAR con
+																						funciones asíncrona (promesas).
+						
+						
+							
+							const promesa1 = fetch("../ficheros/fichero_1.txt");	// puede obtener cualquier tipo de
+							const promesa2 = fetch("../ficheros/fichero_1.txt");	//	fichero, pero utilizaremos un .txt	
+							const promesa3 = fetch("../ficheros/fichero_1.txt");	//	y será las 3 veces el mismo (por sencillez)
+	
+							const arrayPromesas = [promesa1, promesa2, promesa3];
+	
+							// ACTÚA COMO EL MÉTODO forEach AL QUE LE PASAMOS UNA CALLBACK. ASÍ, EN EL PARÁMETRO
+							//	DE ENTRADA A LA MISMA SE RECIBIRÁ (uno a uno en cada vuelta) CADA UNO DE LOS 
+							//	ANTERIORES OBJETOS promesa ALMACENADOS EN EL ARRAY Y QUE SERÁ PROCESADOS EN EL
+							//	CUERPO DE LA FUNCIÓN { xxx }. 
+							//
+							//	OBSERVAR IGUALMENTE COMO LA CALLBACK TIENE DECLARADA LA PALABRA async PARA ESTABLECER
+							//	EL OBLIGATORIO CONTEXTO ASÍNCRONO QUE UTILIZA EL await PARA ESPERAR A QUE EL
+							//	OBJETO PROMESA RECIBIDO DEL ARRAY SEA PROCESADO, CONSUMIDO Y PODER DEVOLVER SU 
+							//	RESPUESTA, SUS DATOS.
+								
+							
+							// RECORRER EL ARRAY EN MODO ASÍNCRONO Y ESPERAR A PROCESAR CADA UNA DE LAS PROMESAS
+							//	PARA PODER CONTINUAR ... ES UNA ASYNC-AWAIT:
+								
+							const respuestas = arrayPromesas.map(async (promesa) => {	 
+							  															return await promesa;										
+																					}
+																);
+							
+				*/
+
+
+				/*
+				
+				function f_asincronaAsyncAwait() {
+				
+				const promesa1 = fetch("../ficheros/fichero_1.txt");	// MISMO FICHERO POR SENCILLEZ PARA REALIZAR LA PRUEBA.
+				const promesa2 = fetch("../ficheros/fichero_1.txt");	
+				const promesa3 = fetch("../ficheros/fichero_1.txt");
+
+				const arrayPromesas = [promesa1, promesa2, promesa3];
+
+				// USO INCORRECTO DE MAP PUESTO QUE ESTAMOS TRABAJANDO CON PROMESAS (no las sabe tratar porque son asíncronas, es
+				//	decir, no se ejecutan en el mismo momento que las "coge", sino que es un "YA SE HARÁN CUANDO SE PUEDA" ... A FUTURO).
+				
+				// UTILIZAR return await promesa REALIZARÁ LAS SIGUIENTES OPERACIONES:
+				//
+				//		1. await solicita la ejecución de la promesa y espera a que esta finalice.
+				//
+				//		2. return devolverá el resultado de la ejecución de dicha promesa una vez finalizada.
+				
+				//		ASÍ, SERÁ UN:	DEVUELVE (EJECUTA Y ESPERA).
+				
+				const respuestas = arrayPromesas.map(async (promesa) => {	 
+				  															return await promesa;										
+																		}
+													);
+				
+				return respuestas;
+				
+				}
+				
+				
+				async function f_ejecutar() {
+					
+					alert( f_asincronaAsyncAwait() ); // <----- [object Promise],[object Promise],[object Promise]
+					
+					alert("!!! FIN DE PROGRAMA !!!");
+				}
+				
+				
+				// RUN:
+				f_ejecutar();
+						
+				
+				
+				// NOS DEVUELVE ... [object Promise],[object Promise],[object Promise]
+				// LAS PROMESAS ORIGINALES SIN EVALUAR, SIN CONSUMIR, NO LAS RESPUESTAS QUE DEVUELVEN.
+				//
+				// PARA RESOLVER ESTE INCOVENIENTE QUE TIENE EL .map() Y OTROS MÉTODOS QUE TRABAJAN CON
+				//	ARRAYS EN FORMATO SÍNCRONO, EL PROPIO OBJETO Promise TIENE UNA API ESPECÍFICA CON
+				// 	MÉTODO ESTÁTICOS (no se necesita instanciar el objeto para poder hacer uso del método):				
+				
+				*/	
+					
+			</script>
+			
+			
+			
+			
+			
+			<script type="text/javascript">
+
+				/*
+				
+				MÉTODOS ESTÁTICOS (de clase, no de instancia) QUE OFRECE EL OBJETO Promise DE JAVASCRIPT:
+					
+					// parámetro arrayPromesas ... le envíamos un array que contiene los objetos de tipo Promise.
+				
+					// parámetro valor ........... le envíamos una callback (el código de una función externa).
+					
+									
+				Promise.all(arrayPromesas) 			-> AND:			Cuando todas y cada una de las promesas se ha cumplido. 
+				
+				Promise.allSettled(arrayPromesas) 	-> AND SI O NO:	Es un "o todas se cumplen o todas se rechazan".
+				
+				Promise.any(arrayPromesas) 			-> OR:			Con la primera de las promesas cumplidas.
+				
+				Promise.race(arrayPromesas) 		-> AND SI O NO Y PRIMERA MANDA: Si la primera se acepta o la primera se rechaza.
+				
+				Promise.resolve(valor) 				-> Resuelve la promesa en base al valor (Object) pasado como parámetro.
+				
+				Promise.reject(valor) 				-> Rechaza la promesa en base al valor (Object) pasado como parámetro.
+			
+				*/
+			
+			</script>
+			
+			
+			
+			
+			
+			<!-- EJEMPLO ALL: -->
+			
+			<script type="text/javascript">
+			
+				async function f_promesasALL() {
+			
+					p1 = fetch("../ficheros/fichero_1.txt");
+					p2 = fetch("../ficheros/fichero_2.txt");
+		
+					
+					// GUARDAR LAS PROMESAS EN UN ARRAY QUE SERÁ ENVÍADO A Promise.all( arrayPromesas ):
+					const arrayPromesas = [p1, p2];
+					
+					// ESPERAR -AWAIT- A QUE SE EVALUEN, EJECUTEN TODAS LAS PROMESAS CONTENIDAS EN EL ARRAY.
+					//	SI NO HACEMOS USO DE DICHO MODIFICADOR, LO QUE OBTENDREMOS SERÁ UN Promise PENDIENTE,
+					//	AÚN NO EVALUADO Y AL TRATAR DE HACER respuestas[0].status NOS DARÁ UN ERROR YA QUE
+					//	SOLICITAMOS ALGO QUE TODAVÍA NO EXISTE, CONCRETAMENTE EL respuestas[0]:
+					//
+					//	Uncaught (in promise) TypeError: respuestas[0] is undefined
+					
+					const respuestas = await Promise.all( arrayPromesas );		// <----- AWAIT.
+
+					alert("respuestas ... " + respuestas);				//  [object Response],[object Response]
+					
+					alert("estados[0] ... " + respuestas[0].status); 	// 200 ... no necesito await para consultar
+					alert("estados[1] ... " + respuestas[1].status); 	// 200		la propiedad del status.			
+					
+					// SIN INDICAR await DEVOLVERÁ [object Promise], Y LO QUE REALMENTE QUEREMOS ES EL Response 
+					//	PARA PODER EXTRAER LOS DATOS LEÍDOS DE LOS FICHEROS CON FETCH ... ESTO SÓLO SERÁ POSIBLE
+					//	UNA VEZ QUE LA PROMESA SE HA EVALUADO, COMPLETADO O CONSUMIDO, YA QUE HASTA ENTONCES
+					//	ESTARÁ EN EL ESTADO !! PENDIENTE !! Y NO TENDREMOS DISPONIBLES LOS DATOS DE SU RESPUESTA.
+					
+					//	Imagina que quieres calentar un café en el microondas y que esta operación tarda a la
+					//	máxima potencia al menos 1 minuto. Hasta que no transcurra ese tiempo no podremos extraer
+					//	el vaso de su interior ya que está PENDIENTE de completar el actual proceso de calentado.
+					//
+					//	Una vez terminado, sonará la campana de aviso y podremos cogerlo, o lo que es lo mismo,
+					//	ya tendremos evaluada la promesa y podremos consultar los datos de su respuesta. Así,
+					// 	AWAIT hace que esperemos a que el proceso se complete (espera el minuto del microondas)
+					//	para a continuación ofrecernos la respuesta correspondiente (el vaso de café caliente).
+										
+					
+					alert("textos[0] ... " + await respuestas[0].text());	// !!! HOLA MUNDO !!!	// <----- AWAIT
+					alert("textos[1] ... " + await respuestas[1].text());	// !!! ADIOS MUNDO !!!	// <----- AWAIT
+										
+					// IMPORTANTE: SI NO INDICAMOS EL await NOS DEVOLVERÁ [Object Promise] EN LUGAR DEL
+					//				TEXTO LEÍDO DESDE EL FICHERO CON FETCH (hay que esperar a que termine
+					//				de leer los datos del flujo sobre el fichero).
+					
+					
+					
+					
+					
+					// LO MISMO USANDO then (no bloqueante) en lugar de await (bloqueante):
+					
+					/*
+					// PASO A PASO:
+					const nuevaP1 = fetch("../ficheros/fichero_1.txt");
+					const nuevaP2 = fetch("../ficheros/fichero_2.txt");				
+					const nuevasPromesas = [nuevaP1, nuevaP2]; 	
+					*/
+
+					/*
+					// DE UNA SÓLA VEZ:
+					const nuevasPromesas = [ fetch("../ficheros/fichero_1.txt"),
+												fetch("../ficheros/fichero_2.txt") ];
+						
+					
+					alert("NUEVAS PROMESAS ... " + nuevasPromesas);
+
+
+					// - REVISAR -
+					Promise.all(nuevasPromesas)
+					  				.then(respuestas => respuestas.map(respuesta => respuesta.text()))
+					  					.then(contenidos => contenidos.map(contenido => alert(contenido)));
+					*/
+					
+				}
+
+			</script>
+				
+				
+			
+			
+				
+			<!-- EJEMPLO ALL-SETTLED: -->
+				
+			<script type="text/javascript">
+								
+				async function f_promesasSETTLED() {	
+					
+					const arrayPromesas = [fetch("../ficheros/fichero_1.text"),
+											fetch("../ficheros/NO_EXISTO.text"),
+												fetch("https://google.com/index.css")];
+					
+					const respuestas = await Promise.allSettled(arrayPromesas);			// <----- AWAIT.
+					const objetosRespuesta = respuestas.map(resultado => resultado);
+
+					// .map(lambda) ... array de entrada .. array de salida según el código de la lambda.
+					
+					
+					alert("OBJETOS RESPUESTA ... \n " + objetosRespuesta);
+	
+					for(objeto of objetosRespuesta) {
+						
+						alert("STATUS: " + objeto.status + "\n" + 
+								"VALUE: " + objeto.value + "\n" +
+									"REASON: " + objeto.reason);
+					
+					}
+					
+					
+					/*
+					
+					OBJETOS RESPUESTA ... 
+					 [object Object],[object Object],[object Object]
+					
+					
+					 STATUS: fulfilled
+					 VALUE: [object Response]
+					 REASON: undefined
+					 
+					 STATUS: fulfilled
+					 VALUE: [object Response]
+					 REASON: undefined
+					
+					 STATUS: rejected
+					 VALUE: undefined
+					 REASON: TypeError: NetworkError when attempting to fetch resource.
+					
+					*/
+					 
+				}	
+
+			</script>				
+
+
+
+
+
+			<!-- EJEMPLO ANY: -->
+
+			<script type="text/javascript">			
+				
+				async function f_promesasANY() {
+					
+					// SOLICITAR LAS PROMESAS Y LUEGO ALMACENARLAS EN UN ARRAY (es más efectivo realizar ambas
+					//	operaciones de una sóla vez, tal y como hicimos en el ejemplo anterior).
+					
+					// OBSERVAR EL ORDEN ACTUAL AL SOLICITAR LOS FETCH's:
+					const promesa1 = fetch("../ficheros/fichero_2.txt");					
+					const promesa3 = fetch("../ficheros/NO_EXISTO.txt");
+					const promesa2 = fetch("../ficheros/fichero_1.txt");
+					
+					const lasPromesas 	= [promesa1, promesa2, promesa3];
+
+					// ESPERA A QUE EVALUE LAS PROMESAS.
+					const unaRespuesta = await Promise.any(lasPromesas);		// <----- AWAIT
+					
+					alert("LAS PROMESAS ... " + lasPromesas);
+					alert("UNA RESPUESTA ... " + unaRespuesta);
+					
+					// ESPERA A QUE OBTENGA LOS DATOS DE LA REPUESTA DE LA ANTERIOR
+					//	PROMESA YA EVALUADA (se elige la primera que fué satisfactoria == no rechazada).
+					
+					// OBSERVAR EL ORDEN DE LOS FETCH: fichero_2.txt, NO_EXISTO.txt (rechazado), fichero_1.txt POR
+					//	LO QUE OBTENDREMOS EN PANTALLA SERÁ:
+					//
+					//				DATOS FINALES ... !!! ADIOS MUNDO !!!
+					
+					const datosFinales = await unaRespuesta.text();		// <----- AWAIT
+					
+					alert("DATOS FINALES ... " + datosFinales);
+					
+				}	
+					
+			</script>
+
+
+
+
+
+			<!-- EJEMPLO RACE (la primera que se procese, ya sea aceptada o rechazada): -->				
+
+			<script type="text/javascript">			
+				
+				async function f_promesasRACE() {
+
+					const promesa1 = fetch("../ficheros/fichero_1.txt");
+					const promesa2 = fetch("../ficheros/fichero_2.txt");
+					const promesa3 = fetch("../ficheros/fichero_3.txt");
+					
+					
+					const lasPromesas = [promesa1, promesa2, promesa3];
+
+					const lasPromesasDesordenadas = new Array();
+		
+					
+					
+					while (lasPromesasDesordenadas.length < lasPromesas.length) {
+
+						let aleatorio = parseInt(Math.random() * lasPromesas.length);
+						//alert("ALEATORIO ... " + aleatorio);
+						
+						let elemento = lasPromesas[aleatorio];
+
+						// Includes() en JavaScript ... contains() en Java:
+						
+						if( ! lasPromesasDesordenadas.includes(elemento) ) {
+						
+							lasPromesasDesordenadas.push(elemento);	// AL AÑADIR EL ELEMENTO, EL TAMAÑO DEL ARRAY CRECE.
+						
+							alert("AÑADIR fichero_" + (aleatorio + 1) + ".txt" + "\n\n" + 
+										( (aleatorio + 1 == 3) ? "EL FICHERO NO EXISTE":"") );
+							
+						}
+						
+					}
+					
+					
+					alert("PROMESAS DESORDENADAS ... \n\n" + lasPromesasDesordenadas);
+					
+					const primeraEvaluada = await Promise.race(lasPromesasDesordenadas);		// <----- AWAIT
+					
+					alert("PRIMERA EVALUADA ... " + primeraEvaluada);
+
+					
+					const datosFinales = await primeraEvaluada.text();		// <----- AWAIT
+					
+					alert("DATOS FINALES: \n\n\t " + datosFinales);					
+					
+					/*
+						SI LA PRIMERA EVALUADA ES fichero_1.txt:
+								! ! ! HOLA MUNDO ! ! !
+						
+						SI ES fichero_2.txt:
+								! ! ! ADIOS MUNDO ! ! !							
+					
+						SI ES NO_EXISTO.txt:								
+							El código HTML de la página de error con 404
+								indicando recurso NO ENCONTRADO:
+						
+									<!doctype html><html lang="es"><head><title>Estado HTTP 404 – No encontrado</title><style type="text/css">body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>Estado HTTP 404 – No encontrado</h1><hr class="line" /><p><b>Tipo</b> Informe de estado</p><p><b>mensaje</b> El recurso requerido [&#47;Z_ASINCRONIA_JAVASCRIPT&#47;ficheros&#47;NO_EXISTO.txt] no se encuentra disponible</p><p><b>Descripción</b> El recurso requerido no está disponible.</p><hr class="line" /><h3>Apache Tomcat/10.1.18</h3></body></html>
+									
+					*/
+					
+				}
+					
+			</script>		
+
+
+
+
+
+			<h2> GANADOR / PERDEDOR </h2>
+
+			<!-- ELEMENTO PARA PINTAR LA IMAGEN (GANAS / PIERDES) -->			
+
+			<img id="imagen"/>
+
+			<p id="mensaje"> ... QUE TENGAS SUERTE ... </p>	
+
+			
+
+			<!-- EJEMPLO PROMESAS ESTÁTICAS: Promise.resolve(x) Y Promise.reject(y) -->
+
+			<script type="text/javascript">			
+
+				async function f_promesasESTATICAS() {
+				
+					/* 
+					
+						Gracias a los métodos estáticos: Promise.resolve() y Promise.reject() podemos DEVOLVER
+						UNA PROMESA cumplida o rechazada, respectivamente, sin necesidad de tener que crearla
+						por nuestra cuenta como cuando utilizabamos new Promise(CB_Resolve, CB_Reject).
+						
+					*/
+				
+										
+					// 0 == false	1 == true en JavaScript, no en Java (false / true únicamente).
+					
+					const premioSINO = parseInt(Math.random() * 2);		// [0,1]	
+					
+					// AWAIT - resolve y reject - métodos estáticos del objeto Promise:
+					
+					//alert("HA SALIDO EL ... " + premioSINO);	
+						
+				
+					
+					
+					/* 1)	MODO BLOQUEANTE CON ASYNC - AWAIT:
+					
+					try {
+						
+						// TERNARIO:
+						//				Recordar que await devuelve un objeto Response, la respuesta de la promesa cumplida o
+						//					si falló, el error correspondiente a la promesa rechazada.
+						//
+						//				Si no se hace uso de await devolverá la promesa en sí (pendiente, sin cumplir ni rechazar).
+						//
+						const respuestaPromesaEstatica = 
+							await ( premioSINO ? Promise.resolve(" !!! GANAS !!!") // OK, NO HAY NINGÚN ERROR.
+													: 
+													  Promise.reject(" --- PIERDES ---") // LANZA UN ERROR QUE DEBEMOS CAPTURAR. 
+									);
+					
+						// SI NO HUBO ERROR == NO SE LANZO EL MÉTODO ESTÁTICO Promise.reject("mensajeError"), EL
+						//	PROGRAMA SIGUE EJECUTANDO LA SIGUIENTE LÍNEA:
+						alert("OK, " + respuestaPromesaEstatica);
+					
+					} catch(error) {
+						// SI HUBO ERROR SE CAPTURARÁ EN EL CATCH Y EL PARÁMETRO DEFINIDO PARA EL CATCH CONTENDRÁ
+						//	INFORMACIÓN SOBRE DICHO ERROR:
+						alert("PUFFF," + error);
+					}
+
+				
+					*/					
+					
+
+					
+					
+					// 2)	MODO NO BLOQUEANTE CON then.catch (hace las veces del try-catch anterior):
+					
+					// PASOS A REALIZAR:
+					//	
+					// 		I) CREAR LA PROMESA Y GUARDARLA EN UNA CONSTANTE, PERO OJO, !!! NO SE EJECUTA POR SI SOLA !!!:
+					
+					
+
+					// RETARDO
+					const retardo = 3000;
+						
+					// GANASTE SI/NO:	
+					var ganadorSINO;
+					
+
+					// TERNARIO:
+					const promesaEstatica = 
+						( premioSINO ? Promise.resolve("GANAS") // OK, NO HAY NINGÚN ERROR.
+												: 
+												  Promise.reject("PIERDES") // LANZARÁ UN ERROR QUE DEBEMOS CAPTURAR. 
+								);
+										
+					
+					
+					
+					
+					// 		II) EJECUTARLA, CONSUMIRLA, INVOCARLA O LLAMARLA A TRAVÉS DE then/catch:						
+												
+					promesaEstatica.then( (respuesta) => {
+															// DENTRO DE ESTAS LLAVES, EL CÓDIGO SE EJECUTARÁ DE
+															//	FORMA SÍNCRONA, COMO SI FUESE UN TODO (LA ASÍNCRONIA
+															//	SE DÁ DESDE EL EXTERIOR CON RESPECTO A ESTE INTERIOR).
+															
+															//alert("MUY BIEN, HOY " + respuesta);
+															ganadorSINO = true;
+															setTimeout(f_pintar, retardo);															
+														} 
+															).catch( (error) => {
+									 												//alert("SE SIENTE, PERO ESTA VEZ " + error);
+									 												ganadorSINO = false;
+									 												setTimeout(f_pintar, retardo);
+									 											} 
+																					);
+					
+					
+					
+					// FUNCIÓN QUE PINTA LA IMAGEN EN PANTALLA:					
+					function f_pintar() {
+						
+						document.getElementById("mensaje").innerHTML =
+									ganadorSINO ? "MUY BIEN, HOY GANAS" : "SE SIENTE, PERO ESTA VEZ PIERDES";
+						
+						
+						
+						let queImagen = ganadorSINO ? "ganador" : "perdedor";
+						
+						document.getElementById("imagen").src = "../img/" + queImagen + ".jpg";						
+						
+					}
+					
+					
+					
+					// IMPORTANTE:
+					//
+					//	CUANDO HACEMOS USO DE FETCH Y NO QUEREMOS BLOQUEAR LA EJECUCIÓN DEL CÓDIGO PRINCIPAL,
+					//		HACEMOS USO DE then, SIENDO NECESARIOS 2 DE ELLOS EN CADENA:
+					//
+					//		EL PRIMERO OBTIENE EL OBJETO RESPUESTA DE LA PROMESA DEVUELTA POR EL FETCH E INVOCA
+					//			A SU MÉTODO text() EXTRAYENDO LOS DATOS DE LECTURA DEL CONTENIDO DEL FICHERO.
+					//
+					//		EL SEGUNDO CAPTURA DICHOS DATOS Y LOS EMPLEA PARA MOSTRARLOS EN PANTALLA CON UN
+					//			ALERT O ESCRIBIENDO EN UNA CAPA CON innerHTML.
+					//
+					
+					// EN ESTE EJEMPLO NO LEEMOS DE UN FETCH, POR LO QUE SÓLO NECESITAMOS UN then PARA CONSUMIR
+					//	O EJECUTAR LA PROMESA CREADA Y ALMACENADA EN LA CONSTANTE promesaEstatica.
+					
+				}
+				
+			</script>	
+				
+
+
+
+			<script type="text/javascript">					
+					
+				// RUN
+				
+				// f_promesasALL();
+				
+				// f_promesasSETTLED();
+				
+				// f_promesasANY();
+				
+				// f_promesasRACE();
+				
+				f_promesasESTATICAS();
+				
+			</script>
+
+			
+		</div>
+		
+	</body>
+	
+</html>
