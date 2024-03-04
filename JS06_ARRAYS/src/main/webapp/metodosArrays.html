@@ -84,15 +84,65 @@
 				
 				alert("POSICION BABANA ... " + posicionBABANA);
 				
-								
+
+				// NO ELIMINA LA POSICIÓN, SÓLO SU CONTENIDO (DEJA EL HUECO)
 				delete( frutas[posicionBABANA] );
 				
 				alert("FRUTAS DELETE ... \n" + frutas);
 				
 				
-				frutas[0] = "XXX";
 				
-				alert("FRUTAS XXX ... \n" + frutas);
+				// OJO, EL HUECO TE LO RESPETA, NO LO RELLENA CON EL NUEVO ELEMENTO DE UNSHIFT
+				//frutas.unshift("ALICATES"); // ALICATES,,FRESA,SANDIA,MELON,MANGO
+				//alert("FRUTAS - CON UNSHIFT ... \n" + frutas);
+
+				
+				
+				
+				// MACHACAMOS EL HUECO CON UN NUEVO ELEMENTO.
+				frutas[0] = "ALICATES";
+				
+				
+				// ALICATES,FRESA,SANDIA,MELON,MANGO
+				
+
+				// LAMBDAS - NOTACIÓN ARROW - FLECHA:
+				const filtro = 					
+								/* (x) => { return (x!== "ALICATES") }; */	// EN GENERAL ... paréntesis y return.
+								
+								x => x !== "ALICATES";	//boolean			// MODO REDUCIDO ... return implícito a la salida.
+				
+				
+								
+				// FUNCIÓN TRADICIONAL:				
+				function f_filtro(y) {
+										
+										
+										alert("ELEMENTO y = " + y + "\n\n --[SINO]--> " + (y !== "ALICATES"));
+										
+										return (y !== "ALICATES"); // devolver un booleano.
+										
+										/*
+										if(y !== "ALICATES") {		// devolver el elemento.
+											return y;
+										}
+										*/
+										
+				}								
+				
+								
+				// DISTINTAS OPCIONES DE UTILIZAR LA FUNCIÓN DE FILTRADO:				
+								
+				//frutas = frutas.filter( filtro );				
+
+				//frutas = frutas.filter(elemento => elemento !== "ALICATES");
+				
+				fruta = frutas.filter( f_filtro );
+				
+				
+				alert("FRUTAS FILTER ... \n" + frutas);
+
+				
 
 			</script>
 			
