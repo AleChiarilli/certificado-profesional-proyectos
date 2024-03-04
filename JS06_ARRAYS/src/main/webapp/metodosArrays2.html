@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Pallets de Manzanas</title>
+	</head>
+	<body>
+		<div id="pantalla">
+		</div>
+		
+		<div id="arregladas">
+		</div>
+		
+		<script type="text/javascript">
+			
+		const manzanasPorCaja = 4;
+		const cajasPorPallet = 5;
+		const tiposDeManzana = ["Colonia Tovar", "Reineta", "Golden", "Pink Lady", "Verde", "Old Sweet", "POCHA"];
+		
+		//GENERAR MANZANA
+		function manzanaGenerada() {
+			
+			var cualManzana = tiposDeManzana[Math.floor(Math.random() * tiposDeManzana.length)]
+			return cualManzana;
+		}
+		
+		
+		
+		//GENERAR CAJA DE MANZANAS
+		function generarCajaDeManzanas() {
+			var cajaDeManzana = [];
+			for (var i = 0; i < manzanasPorCaja; i++) {
+				cajaDeManzana.push(manzanaGenerada());
+			}
+			return cajaDeManzana;
+		}
+		
+		var cajaDeManzana = generarCajaDeManzanas();
+		
+		
+
+		//GENERAR PALLETS
+		function generarPalletDeManzanas() {
+			
+			var palletDeManzanas = [];
+			for (var i = 0; i < cajasPorPallet; i++) {
+				palletDeManzanas.push(generarCajaDeManzanas());
+			}
+			
+			return palletDeManzanas;
+		}
+		
+		var palletDeManzanas = generarPalletDeManzanas();
+		
+		
+		
+		// SEPARAR LAS MANZANAS POCHAS
+		var palletDeManzanasPochas = [];
+		var palletDeManzanasBuenas = [];
+		
+		for (let pallet of palletDeManzanas) {
+			pallet.includes("POCHA") ? palletDeManzanasPochas.push(pallet) : palletDeManzanasBuenas.push(pallet);
+		}
+		
+		console.log("PALLET DE MANZANAS POCHAS:");
+		console.log(palletDeManzanasPochas);
+
+		console.log("\nPALLET DE MANZANAS BUENAS:");
+		console.log(palletDeManzanasBuenas);
+		
+			
+		</script>
+	</body>
+</html>
