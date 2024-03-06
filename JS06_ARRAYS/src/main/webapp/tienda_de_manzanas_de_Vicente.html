@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			body {
+				color:lime;
+				background-color:grey;
+			}
+
+			h1 {
+				font-size:90px;
+				color:green;
+				text-shadow: 3px 3px 3px lime;
+				margin:50px;
+			}
+
+			h2 {
+				margin-top:60px;
+				margin-top:30px;
+			}
+
+			fieldset {
+				border:3px solid lime;
+				border-radius:35px;
+				width:50%;
+			}
+		
+			legend {
+				color:lime;
+				font-size:25px;
+				font-weight:bolder;
+				margin-left:35px;
+			}
+		
+			table {
+				border-collapse: separate;
+				border:8px solid blue;
+				border-radius:25px;					
+				margin:50px;
+				border-spacing:16px;
+				background-color:#FDF0AF;				
+			}
+
+			td {
+				color:green;
+				font-size:18px;
+				font-weight:bolder;
+				padding:30px 10px;
+				text-align:center;
+				border:3px solid red;
+				border-radius:15px;
+				width:150px;
+				height:30px;
+			}
+
+			p {
+				color:white;
+				margin-bottom:20px;
+			}
+
+
+			td.pocha {
+				background-color:yellow;				
+			}
+
+			td.buena {
+				background-color:lime;
+			}
+		
+		</style>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+
+			<h1> TIENDA DE MANZANAS </h1>
+
+			<div style="color: white">
+				<input type="range" min="1" max="20" step="1" value="2" id="cuantasCajas">
+				<div id="screenInputValue"></div>
+			</div>
+			<div id="pantalla"></div>
+
+
+			<script type="text/javascript">
+
+				// CONSTANTES:
+				
+				const MIN_MANZANAS		= 4;
+				const MIN_CAJAS 		= 10;		// BAJAMOS LOS LÍMITES PARA NO SATURAR LA PANTALLA.
+				const MIN_PALETS	 	= 1;
+			
+				const RANGO = 100;					// [1..100]
+				const PROBABILIDAD_POCHA = 25;		// [1..2] = POCHA 			[3..100] = BUENA
+				
+				var contadorPalet 		= 1;
+				var contadorLimpieza 	= 1;
+				var informe 			= "";
+				
+			</script>
+
+			<script>
+			
+				var rangoValor;
+		        // Espera a que el DOM esté completamente cargado
+		        document.addEventListener('DOMContentLoaded', function() {
+		            // Selecciona el elemento de rango
+		            var rango = document.getElementById("cuantasCajas");
+		            var rangoValor;
+		            // Agrega un evento mouseup al rango
+		            rango.addEventListener('mouseup', function(event) {
+		                // Obtiene el valor del rango
+		                var rangoValor = rango.value;
+		                // Muestra el valor del rango en el div
+		                document.getElementById("screenInputValue").innerHTML = `<p> Número de Pallets: ${rangoValor} </p>`;
+		                console.log(rangoValor);
+		                cuantosPalets = rangoValor;
+		            });
+		            
+		        });
+		    </script>
+
+			<script type="text/javascript">
+			
+				var contadorTotalManzanas = 0;
+			
+				
+				// GENERAR LAS MANZANAS (1..n):					
+				const generadorManzanas = (cuantasManzanas) => {
+					
+					const MANZANAS = ["REINETA", "GOLDEN", "VERDE DONCELLA", 
+														"ROYAL GALA", "PINK LADY"];
+				
+					
+					// EL ARRAY DE MANZANAS QUE DEVOLVERÁ LA FUNCIÓN
+					const lasManzanas = [];
+					
+					
+					// NO OLVIDES UTILIZAR let A LA HORA DE DEFINIR LA VARIABLE DEL ÍNDICE (let i=0)
+					for(let i=0; i<cuantasManzanas; i++) {
+						
+						let aleatorioPOCHA = parseInt( Math.random() * RANGO ); // [1..100]
+						
+												
+						if(aleatorioPOCHA <= PROBABILIDAD_POCHA) { // si <= 2 será POCHA.
+							
+							lasManzanas.push("POCHA");
+							
+						} else { // si > 2 será buena y uno de los tipos del array de manzanas.
+											
+							let aleatorio = parseInt( Math.random() * MANZANAS.length );
+							lasManzanas.push(MANZANAS[aleatorio]);
+						
+						}
+						
+						contadorTotalManzanas++;
+						
+					}
+
+
+					// ARRAY SIMPLE:
+					return lasManzanas;
+				
+				}
+			
+			</script>
+			
+			
+			
+			
+			
+			<script type="text/javascript">
+			
+				//GENERADOR DE CAJAS DE MANZANAS
+				const generadorCajas = (cuantasManzanas, cuantasCajas) => {
+					
+					const loteCajas = [];
+					
+					
+					for(let i=0; i<cuantasCajas; i++) {
+						
+						// ARRAY DE CAJAS, TENIENDO CADA CAJA UN ARRAY DE MANZANAS 
+						loteCajas.push( generadorManzanas(cuantasManzanas) );
+						
+					}
+					
+					// ARRAY DE ARRAYS:
+					return loteCajas;
+					
+				}
+				
+			</script>
+			
+			
+			
+			
+			
+			<script type="text/javascript">
+			
+				//GENERADOR DE PALETS
+				const generadorPalets = (cuantasManzanas, cuantasCajas, cuantosPalets) => {
+					
+					// CONDICIONES MÍNIMAS PARA EJECUTAR EL PROGRAMA:
+					if(cuantasManzanas < MIN_MANZANAS || 
+											cuantasCajas < MIN_CAJAS || 
+													cuantosPalets < MIN_PALETS) {
+						
+						alert("DEBES ELEGIR COMO MÍNIMO " + MIN_PALETS + " PALET, \n" +
+								"QUE CONTENGA UN MÍNIMO DE " + MIN_CAJAS + " CAJAS, \n" + 
+								"Y QUE CADA CAJA CONTENGA UN MÍNIMO DE " + MIN_MANZANAS + " MANZANAS:" + "\n\n" + 
+								"* cuantos Palets: " + cuantosPalets + "\n" + 
+								"* cuantas Cajas: " + cuantasCajas + "\n" +
+								"* cuantas Manzanas por caja: " + cuantasManzanas);
+						
+						return null;
+						
+					}
+					
+					
+					const grupoPalets = [];
+					
+					
+					for(let i=0; i<cuantosPalets; i++) {
+												
+						grupoPalets.push( generadorCajas(cuantasManzanas, cuantasCajas) );
+												
+					}				
+					
+					
+					// ARRAY DE ARRAYS DE ARRAYS:
+					return grupoPalets;
+					
+				}
+
+			</script>
+			
+			
+			
+			
+			
+			<script type="text/javascript">			
+				
+				const limpiar = (palet) => {
+
+					const paletPochas = [];
+					const paletBuenas = [];					
+					
+					for(caja of palet) {
+						
+						if(caja.includes("POCHA")) {
+							paletPochas.push(caja);
+							
+						} else {
+							paletBuenas.push(caja);
+						}
+						
+					}
+
+
+					//alert("PALET " + contadorLimpieza + " -> CUÁNTAS CAJAS ESTAN POCHAS ... " + paletPochas.length);
+					//alert("PALET " + contadorLimpieza + " -> CUÁNTAS CAJAS ESTAN BUENAS ... " + paletBuenas.length);
+
+					informe = "<fieldset> <legend> INFORME PALET: " + contadorPalet + "</legend>";
+					
+					informe += "<p> ¿CUÁNTAS CAJAS POCHAS? = " + paletPochas.length + "</p>";
+					
+					informe += "<p> ¿CUÁNTAS CAJAS BUENAS? = " + paletBuenas.length + "</p>";
+
+					informe += "</fieldset>";
+					
+					
+					
+					contadorLimpieza++;
+					
+					return [paletPochas, paletBuenas];
+						
+				};
+					
+			</script>
+
+
+
+
+
+			<script type="text/javascript">
+
+				// 1 palet == 50 cajas // 1 caja == 4 manzanas:
+				
+				
+				//		   CAJA1   CAJA2   CAJA3		   CAJA1   CAJA2   CAJA3
+				// [	[ [****], [****], [****] ] 	,	[ [****], [****], [****] ]		].
+				//				  PALET 1						  PALET 2			
+		
+				
+				const imprimir = (grupoPalets) => {
+				
+					let salida = informe;
+
+					let paridad = 0; // 0 ES EL PALET DE POCHAS Y 1 ES EL DE BUENAS.
+					
+					for (palet of grupoPalets) {
+											
+						salida += "<h2> PALET " + contadorPalet + "_" + ( (paridad++) ? "BUENAS" : "POCHAS") + "</h2>";					
+												
+						// MOSTRAR UNA TABLA CON TODAS LAS CAJAS Y SUS MANZANAS.
+						if (palet.length != 0) {
+						
+							salida += "<table>";
+							
+							for(caja of palet) {
+								
+								salida += "<tr>";
+								
+								for(manzana of caja) {
+									
+									if ("POCHA" === manzana) {
+										salida += "<td class='pocha'>" + manzana + "</td>";
+										
+									} else {
+										salida += "<td class='buena'>" + manzana + "</td>";	
+									}
+									
+								}
+								
+								salida += "</tr>";
+							}
+					
+							salida += "</table>";	
+						
+							
+						} else {
+							// SI NO HAY NINGUNA POCHA EL ARRAY ESTARÁ VACIO. INDICAR UN MENSAJE EN LUGAR
+							//	DE QUE SE VEA UN PUNTO AZUL EN PANTALLA:
+							salida += "<p> NINGUNA CAJA CONTIENE MANZANAS POCHAS </p>";							
+						}
+
+					}
+					
+					contadorPalet++;
+					
+					return salida;
+					
+				};
+			
+			</script>
+
+
+
+
+
+			<script type="text/javascript">
+			
+				// PRUEBAS:
+			
+				// parámetro (cuantasManzanas):			
+				
+				//alert(generadorManzanas(1) + " ... TOTAL MANZANAS: " + contadorTOTAL);
+				
+				//alert(generadorManzanas(16) + " ... TOTAL MANZANAS: " + contadorTOTAL); 
+			
+				//alert(generadorManzanas(4) + " ... TOTAL MANZANAS: " + contadorTOTAL);
+
+
+				
+				///////////////////////////////////////////////////////////
+				
+				
+				
+				// parámetros (cuantasManzanas, cuantasCajas)
+				
+				//alert(generadorCajas(4,50) + " ... TOTAL MANZANAS: " + contadorTOTAL);
+
+
+				
+				///////////////////////////////////////////////////////////
+				
+				
+				// ORDEN DE LOS PARÁMETROS : MANZANAS, CAJAS, PALETS:
+				
+				//alert(generadorPalets(3,50,1));	// ERROR, QUIERO MÍNIMO 4 MANZANAS POR CAJA
+				//alert(generadorPalets(4,49,1));	// ERROR, QUIERO MÍNIMO 50 CAJAS.				
+				//alert(generadorPalets(4,50,0));	// ERROR, QUIERO MÍNIMO 1 PALET
+				
+				
+				// A) PRUEBA CON 1 PALET:
+				//const losPalets = generadorPalets(4,10,1);
+				
+				// B) PRUEBA CON 2 PALETS:
+				const losPalets = generadorPalets(4,10,10);
+				
+				
+				
+				// MOSTRAR SIN LIMPIAR (HABRÁ BUENAS Y POCHAS):
+				//document.getElementById("pantalla").innerHTML = imprimir(losPalets);
+
+				
+				// LIMPIAR Y LUEGO IMPRIMIR 1 PALET (LA LIMPIEZA GENERARÁ 2 PALETS, EL DE LAS BUENAS Y EL DE LAS POCHAS):
+				//document.getElementById("pantalla").innerHTML = imprimir( limpiar(losPalets) );
+				
+				
+				// LIMPIAR Y LUEGO IMPRIMIR LOS N PALETS:
+				for(palet of losPalets) {					
+					document.getElementById("pantalla").innerHTML += imprimir( limpiar(palet) );					
+					document.getElementById("pantalla").innerHTML += "<br/><hr/><hr/><br/>";					
+				}
+				
+			</script>
+			
+
+		</div>
+		
+	</body>
+
+</html>

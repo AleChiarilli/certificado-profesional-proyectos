@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        // const DESTINOS = ["USA", "VERDE", "HATE", "PALILLOS"];
+
+        const crearDestinos = () => {
+
+            
+            const destinos = new Map;
+
+            destinos.set("USA", "usa.txt");
+            destinos.set("VERDE", "asturias.txt");
+            destinos.set("HATE", "java.txt");
+            destinos.set("PALILLOS", "bar.txt");
+
+            
+
+            return destinos;
+        }
+
+        const elegirDestino = () => {
+            
+            const destinos = crearDestinos();
+
+            const DESTINOS_ARRAY = Array.from(destinos.keys());
+
+            var aleatorio = Math.floor(Math.random() * DESTINOS_ARRAY.length);
+
+            var miDestino = destinos.get(DESTINOS_ARRAY[aleatorio]);
+            
+            console.log(miDestino);
+            console.log(destinos.keys());
+            return miDestino;
+        }
+
+        const pintarEnPantalla = () => {
+
+            var destinoElegido = elegirDestino();
+
+            var negociador = new XMLHttpRequest();
+
+            negociador.open("GET", `img/${destinoElegido}`);
+
+            negociador.onreadystatechange = function() {
+                document.getElementById("pantalla").innerHTML = negociador.responseText;
+            }
+
+            negociador.send(null);
+
+            
+        }
+
+
+        pintarEnPantalla();
+    </script>
+</head>
+<body>
+    <div id="pantalla"></div>
+</body>
+</html>
