@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<script type="text/javascript">
+			
+			function f_jugar() {
+				
+				// 1 - CREAR EL NEGOCIADOR AJAX:
+				let negociador = new XMLHttpRequest();
+				
+				// 2 - CONFIGURAR EL NEGOCIADOR A LA IDA:
+				negociador.open("GET", "RuletaXmlServlet");
+			
+				// 3 - CONFIGURAR EL NEGOCIADOR A LA VUELTA:
+				negociador.onreadystatechange = function() {
+					
+					if(negociador.readyState === 4 && negociador.status === 200) {
+						
+						/// AQUÍ LO QUE QUIERAS HACER CON LOS DATOS DE LA RESPUESTA AJAX ///	
+						
+						alert("RESPUESTA DEL SERVLET EN XML: \n\n" +
+									negociador.responseText);
+						
+						
+						const datosXML = negociador.responseXML;
+						
+						let numero	= datosXML.getElementsByTagName("numero")[0].firstChild.data;
+						let color	= datosXML.getElementsByTagName("color")[0].firstChild.data;
+						let paridad	= datosXML.getElementsByTagName("paridad")[0].firstChild.data;
+												
+						alert(numero + " - " + color + " - " + paridad);
+						
+						
+						
+					}
+					
+					
+				};	
+					
+				// 4 - UNA VEZ TODO CONFIGURADO ... LANZA EL NEGOCIADOR.
+				negociador.send();
+				
+			}	
+		
+		</script>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<h1> RULETA XML </h1>
+			
+			<br/><br/><br/>
+			
+			
+			<button onclick="f_jugar();">
+				JUGAR
+			</button>
+			
+
+			<br/><br/><br/>
+			
+			
+			<div id="pantalla"></div>			
+
+		</div>
+		
+	</body>
+
+</html>
