@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+		
+			var negociador = new XMLHttpRequest();
+			
+			negociador.open("GET", "AleatorioServlet");
+			
+			negociador.onreadystatechange = function() {
+				
+				if(negociador.readyState === 4 && negociador.status === 200) {
+				
+					alert(negociador.responseText);
+					alert(negociador.responseXML);
+					
+					const xml = negociador.responseXML;
+
+					
+					alert("XML ==== " + xml.getElementsByTagName("numero")[0].firstChild.data);
+				
+				}
+			};
+			
+			negociador.send();
+		
+		</script>
+	</head>
+	<body>
+		<h1>aleatorio AJAX</h1>
+		
+		
+	</body>
+</html>
