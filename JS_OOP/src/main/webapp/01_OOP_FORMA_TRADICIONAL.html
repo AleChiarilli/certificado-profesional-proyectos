@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+	</head>
+	<body>
+		<div align="center">
+		
+			<script type="text/javascript">
+			
+					//ESTO ESTÁ BIEN SI QUIERO UNO, SI QUIERO MÁS COMO ÉSTE TENGO QUE REPETIR UNA Y OTRA VEZ.
+			const persona = {
+					
+					//PROPIEDADES == CARACTERÍSTICAS DE ESTE OBJETO.
+					nombre: "Alberto",
+					apellidos: "Gonzalez Colmenares",
+					
+					
+					// FUNCIONALIDAD == ¿QUÉ SABES HACER?
+					obtenerString : function() {
+												//CUANDO UN MIEMBRO DEL OBJETO QUIERE HACER
+												//REFERENCIA A OTRO (USARLO), HAY QUE OBLIGATORIAMENTE
+												//UTILIZAR this (o el nombre del objeto)
+						return ("NOMBRE: " + this.nombre + "APELLIDOS: " + this.apellidos)
+					},
+					
+					
+					descansar: (tiempo) => { return "VAMOS A TOMARNOS UN DESCANSO DE " + tiempo + "MINUTOS"},
+					
+					
+			};
+			
+			alert("NOMBRE " + persona.nombre);
+			alert("APELLIDO " + persona.apellidos);
+			alert(persona);
+			
+
+			
+			</script>
+			
+		</div>
+	</body>
+
+</html>

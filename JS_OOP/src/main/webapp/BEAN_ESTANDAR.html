@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> CLASES Y OBJETOS </h1>
+			
+			<h2 style="color:blue;"> DEFINICIÓN DE UN BEAN ESTÁNDAR </h2>
+
+
+
+			<script type="text/javascript">
+			
+				// LA OOP DE JAVASCRIPT PARECE SIMILAR A JAVA, PERO QUEDA A AÑOS LUZ POR DEBAJO !!!			
+				
+				
+				// DEFICIÓN DE UN BEAN - CLASE:
+				class Gato {
+				
+					// ATRIBUTOS - PROPIEDADES (no utilizar const, let ni var o generará error).
+					// 
+					//	SON PÚBLICOS (si se desean privados utilizar #xxx y luego usarlos con this.#xxx):
+					color;				// BLANKED ... vacio
+					edad;
+					
+					
+					
+					// CONSTRUCTOR (sólo 1 por clase - obligatoria la palabra constructor)
+					//	SI NO SE INDICA UN CONSTRUCTOR, LA MÁQUINA HARÁ USO DEL IMPLÍCITO (vacio):
+					constructor(color, edad) {		// INICIALIZACIÓN EN CONSTRUCCIÓN (el objeto aún no existe)
+						this.color = color;
+						this.edad = edad;
+					}
+					
+					
+					
+					// MÉTODOS FUNCIONALES (sólo admite la forma sencilla y la arrow, no el uso de function):
+					maullar() {
+						return "miauuu";
+					}
+					
+					
+					// MÉTODOS DEL SISTEMA O ESTÁNDAR:
+						
+					// SETTERS:
+					setColor(color) {		// INICIALIZACIÓN EN INSTANCIA (el objeto ya existe)
+						this.color = color;
+					}	
+						
+					setEdad(edad) {
+						this.edad = edad;
+					}
+
+					
+					// MUY IMPORTANTE: A DIFERENCIA DE JAVA, HAY QUE UTILIZAR LA PALABRA
+					//	this PARA HACER REFERENCIA A UN DETERMINADO MIEMBRO DE LA CLASE,
+					//	YA SEA PROPIEDAD O MÉTODO, HAYA O NO AMBIGÜEDAD ... this.x = x;
+					//	
+					//	ASI, EL INTENTAR HACER EN EL GETTER UN return color; SIN EL this,
+					//		GENERARÁ ERROR, CUANDO MÁS TARDE SE HAGA USO DEL MÉTODO (el
+					//		compilador no informará de ningún error).
+					//
+					//	... Probar a pulsar CTRL y cursor izquierdo sobre la variable y
+					//		no llevará a ningún sitio (no se subraya con línea azul).
+					
+					// GETTERS:
+					getColor() {
+						//return color;		// ERROR AL INVOCAR AL MÉTODO getColor()
+						return this.color;	// EL NECESARIO INDICAR this.xxx
+					}	
+						
+					getEdad() {
+						return this.edad;
+					}
+						
+					
+					
+					// TOSTRING (informar del estado del objeto ... propiedades y sus valores en
+					//				un determinado momento del tiempo):
+					toString() {
+						return "GATO: \n" + "\t color = " + this.color + "\n" + 
+											"\t edad = " + this.edad;
+					}
+					
+					
+					// * * * COMO PUEDE OBSERVARSE, CONTINUAMENTE ARRASTRAMOS EL USO DE this.xxx
+					//			PARA PODER HACER USO DE ATRIBUTOS Y MÉTODOS DENTRO DE LA PROPIA
+					//			DEFINICIÓN DE LA CLASE ... JAVA NO REQUIERE DE ÉSTO.
+				}
+				
+				
+				
+				
+				
+				///////////////////// PRUEBAS ///////////////////////
+				
+				
+				let gato = new Gato("blanco", 2);
+				
+				alert(gato);	// LLAMARÁ AL MÉTODO toString().
+				
+				alert("COLOR ... " + gato.color);
+				alert("EDAD ... " + gato.edad);
+				
+				alert("MAULLAR ... " + gato.maullar());
+
+				
+				gato.setColor("MARRON");
+				gato.setEdad(10);
+
+				//alert(gato.toString());	// NO ES NECESARIO INDICAR toString() ... vaya, algo bien hecho.
+				
+				
+				alert("COLOR ... " + gato.getColor());	// GETTERS Y SETTERS TAMBIÉN PUEDEN IMPLEMENTARSE
+				alert("EDAD ... " + gato.getEdad());	// 	CON LO QUE SE DENOMINA COMO VARIABLES CONMUTADAS:
+														// 		MÉTODOS DUALES VISTOS COMO UNA PROPIEDAD.
+			</script>						
+			
+		</div>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<script type="text/javascript">
+			
+
+			// FUNCIONAL CREACIONAL ... DEFINES LA FUNCIÓN CON SUS ATRIBUTOS Y
+			//METODOS INTERNOS Y LUEGO PARA OBTENER EL OBJETO HJACES USO DEL
+			//OPERADOR new LAS VECES QUE CREAS NECESARIAS
+
+			function crearBebida(tipo, volumen, envase) {
+				//PROPIEDADES: 
+				//propiedad interna del objeto = valor del parámetro externo
+				
+				this.tipo = tipo;
+				this.volumen = volumen;
+				this.envase = envase;
+				
+				this.premioSINO = ((Math.floor(Math.random() * 1)) == 1 ? "PREMIO" : "SIGUE JUGANDO");
+				
+			////// TO-STRING ////////
+			
+				this.toString = function () {
+					return "TIPO: " + this.tipo +
+							"VOLUMEN: " + this.volumen +
+							"ENVASE: " + this.envase +
+							"PREMIO SI NO: " + this.premioSINO;
+				};
+			};
+			
+			//////// PRUEBA ///////////
+
+			const bebida1 = new crearBebida("A ","B ", "C ");
+			
+			alert(bebida1)
+			
+			</script>
+			
+		</div>
+		
+	</body>
+
+</html>

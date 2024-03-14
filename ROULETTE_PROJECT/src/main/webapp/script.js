@@ -49,16 +49,51 @@ let generatedNumber;
 let chosenOptions = [];
 
 function generateNumber() {
-  generatedNumber = Math.floor(Math.random() * 37);
-  generatedColor = numbers[generatedNumber];
-  console.log(
-    "El número que ha salido es: " +
-      generatedNumber +
-      " de color: " +
-      generatedColor
-  );
-  return generatedNumber;
-}
+//  generatedNumber = Math.floor(Math.random() * 37);
+//  generatedColor = numbers[generatedNumber];
+//  console.log(
+//    "El número que ha salido es: " +
+//      generatedNumber +
+//      " de color: " +
+//      generatedColor
+//  );
+//  return generatedNumber;
+
+
+  // 1 - CREAR EL NEGOCIADOR AJAX:
+	let negociador = new XMLHttpRequest();
+	
+	// 2 - CONFIGURAR EL NEGOCIADOR A LA IDA:
+	negociador.open("GET", "RandomNumber");
+
+	// 3 - CONFIGURAR EL NEGOCIADOR A LA VUELTA:
+	negociador.onreadystatechange = function() {
+		
+		if(negociador.readyState === 4 && negociador.status === 200) {
+			
+			/// AQUÍ LO QUE QUIERAS HACER CON LOS DATOS DE LA RESPUESTA AJAX ///	
+			
+			alert("RESPUESTA DEL SERVLET EN XML: \n\n" +
+						negociador.responseText);
+			
+			
+			const datosXML = negociador.responseXML;
+			
+			generatedNumber	= datosXML.getElementsByTagName("numero")[0].firstChild.data;
+			generatedColor = numbers[generatedNumber];
+			alert("EL NUMERO GENERADO ES: " + numero);
+			
+			return generatedNumber;
+			
+		}
+		
+		
+	};	
+		
+	// 4 - UNA VEZ TODO CONFIGURADO ... LANZA EL NEGOCIADOR.
+	negociador.send();
+};
+
 
 function handleBet(event) {
   const chosenOption = event.target.textContent;
