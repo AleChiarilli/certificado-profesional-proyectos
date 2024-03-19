@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DESARROLLO WEB</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // Definir la clase base Envase
+        class Envase {
+            constructor(tipo, volumen, material, color) {
+                this.tipo = tipo;
+                this.volumen = volumen;
+                this.material = material;
+                this.color = color;
+            }
+
+            llenar() {
+                return `El ${this.tipo} está lleno`;
+            }
+
+            vaciar() {
+                return `Se ha vaciado el ${this.tipo}`;
+            }
+
+            toString() {
+                return `El ${this.tipo} es de un material de ${this.material}, tiene un volumen de ${this.volumen} y es de color ${this.color}`;
+            }
+        }
+
+        // Definir las clases especializadas
+        class Barril extends Envase {
+            constructor() {
+                super("Barril", 5000000, "MADERA DE HAYA", "Marrón");
+            }
+        }
+
+        class Botella extends Envase {
+            constructor() {
+                super("Botella", 500, "Plástico", "Transparente");
+            }
+        }
+
+        class Vaso extends Envase {
+            constructor() {
+                super("Vaso", 50, "Cristal", "Verdaceo");
+            }
+        }
+
+        // Crear instancias de las clases y mostrar información
+        let barrica = new Barril();
+        let botellin = new Botella();
+        let vasoDeWinniPooh = new Vaso();
+
+        alert(barrica);
+        alert(botellin);
+        alert(vasoDeWinniPooh);
+
+        // Aplicar los métodos de la clase madre
+        alert(barrica.vaciar());
+    </script>
+</body>
+</html>

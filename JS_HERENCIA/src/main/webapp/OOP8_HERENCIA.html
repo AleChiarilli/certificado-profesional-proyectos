@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			figcaption {
+				color:blueviolet;
+				font-size:22px;
+				font-weight:bolder;
+			}
+			
+			#pikachu {
+				width:300px;
+				height:auto;
+				margin-top:25px;
+				margin-bottom:25px;
+				padding:10px;
+				border:3px solid blue;
+				border-radius:8px;			
+			}
+			
+		</style>
+		
+	</head>
+	
+		
+	<body>
+	
+		<div align="center">
+			
+			<h1> CLASES Y OBJETOS </h1>
+			
+			<h2 style="color:blue;"> HERENCIA ENTRE CLASES </h2>
+
+			
+			<script type="text/javascript">
+			
+				// HERENCIA:
+				//	REUTILIZACIÓN DEL CÓDIGO (ATRIBUTOS Y MÉTODOS) DE LA CLASE MADRE EN LAS CLASES HIJAS. 
+				
+				// EN EL OOP DE JAVASCRIPT:
+				//
+				// NO HAY CLASES ABSTRACTAS, NI INTERFACES, NI ENCAPSULACIÓN PROTECTED
+				//	PARA LOS ATRIBUTOS, NI POR SUPUESTO RESOLUCIÓN DINÁMICA DE MÉTODOS
+				//	O LAZY-BINDING ... ES SENCILLAMENTE UN "JUGUETE" COMPARADO CON JAVA.
+				
+				// POR OTRA PARTE, DEBEMOS ARRASTRAR LA PALABRA this A LO LARGO DE TODO
+				//	EL CÓDIGO Y NO SÓLO CUANDO DEBAMOS RESOLVER LA AMBIGÜEDAD COMO SUCEDE
+				//	CON LOS GETTERS Y SETTERS (this.x = x), ALGO QUE EN JAVA NO SUCEDE.
+				
+				// DE CARA A HERENCIA, LOS ATRIBUTOS NO PUEDEN DECLARARSE COMO PRIVADOS
+				//	CON EL MODIFICADOR #variable, YA QUE NO SERÁN VISIBLES EN LAS HIJAS.
+				//
+				//	JAVA OFRECE EL NIVEL DE ENCAPSULACIÓN PROTECTED, QUE PUEDE ENTENDERSE
+				//	COMO UN PRIVADO (no accesible desde el exterior) QUE SE HEREDA (está
+				//	disponible en las clases hijas) ... VIGILAR EL PAQUETE DE DEFINICIÓN Y USO.
+				
+				
+				
+				
+				
+				// * 1 * SUPERTIPO Animal:
+					
+				class Animal {
+					
+					// ATRIBUTOS PÚBLICOS:
+					nombre;
+					color;
+					tipo;
+
+					
+					
+					// CONSTRUCTOR (sólo puede haber 1 y si no lo ponemos será el implícito):
+					constructor(nombre, color, tipo) {
+						alert("CONSTRUCTOR DE ANIMAL");
+						this.nombre = nombre;
+						this.color = color;
+						this.tipo = tipo;
+					}
+					
+					
+					
+					// MÉTODOS DE NEGOCIO (Business Logic):
+					alimentarse() {
+						return "EL " + this.tipo + " COME ... ";
+					}
+					
+					emitirSonido() {
+						return "EL " + this.tipo + " DICE ... ";
+					}
+					
+					
+					
+					// MÉTODO ESTÁNDAR PARA IMPRIMIR EL ESTADO DEL OBJETO (propiedades y
+					//	su valor en un determinado momento del tiempo):
+					toString() {						
+						return "NOMBRE: " + this.nombre +
+									" - COLOR: " + this.color +
+											" - TIPO: " + this.tipo;
+					}
+					
+				}
+			
+			</script>
+			
+			
+			
+						
+			
+			<script type="text/javascript">
+			
+				// * 2 * SUBTIPO - GATO:
+			
+				class Gato extends Animal {			// HERENCIA ... Gato IS-A Animal.
+					
+					// EL GATO SIEMPRE ESTÁ EN CASA, LUEGO NO REQUIERE DE CHIP IDENTIFICATIVO.
+					
+					// RESTO DE ATRIBUTOS HEREDADOS DE SU SUPERCLASE O CLASE MADRE ... Animal.
+					
+					constructor(nombre, color) {
+
+						// super SIEMPRE EN LA PRIMERA LÍNEA DEL CONSTRUCTOR.
+						
+						super(nombre, color, "GATO");
+						
+						alert("CONSTRUCTOR DE GATO");
+						
+					}
+
+					
+					
+					//// SOBRESCRITURA ... SIN EL @Override DE COMPROBACIÓN, PARA NO VARIAR CLARO ////
+					
+					// REUTILIZAMOS EL CÓDIGO YA CREADO EN LA CLASE MADRE (Animal) Y LE AÑADIMOS
+					//	NUEVA INFORMACIÓN:
+					alimentarse() {
+						return super.alimentarse() + " SARDINAS.";
+					}
+					
+					emitirSonido() {
+						return super.emitirSonido() + " MIAUUU !!!.";
+					}
+
+					// GATO NO REDEFINE / SOBRESCRIBE EL MÉTODO toString() ORIGINAL DE Animal.
+					
+				}
+			
+			</script>
+			
+			
+			
+			
+			
+			<script type="text/javascript">
+			
+				// * 3 * SUBTIPO - PERRO (clase hermana de Gato ... nada que ver entre si):
+			
+				class Perro extends Animal {			// HERENCIA ... Perro IS-A Animal.
+					
+					// EL PERRO QUE SALE A LA CALLE REQUIERE DE UN CHIP .. ATRIBUTO ADICIONAL QUE NO TIENE GATO:
+					chip;
+				
+					// RESTO DE ATRIBUTOS HEREDADOS DE SU SUPERCLASE O CLASE MADRE ... Animal.
+				
+					constructor(nombre, color) {
+
+						super(nombre, color, "PERRO");
+						
+						this.chip = parseInt(Math.random() * 1000000) + 1;	// [1..1000000]
+						
+						alert("CONSTRUCTOR DE PERRO");
+						
+					}
+
+					
+					
+					alimentarse() {
+						return super.alimentarse() + " HUESOS.";
+					}
+					
+					emitirSonido() {
+						return super.emitirSonido() + " GUAUUU !!!.";
+					}
+					
+					
+					// PERRO DEBE REDEFINIR/SOBRESCRIBIR EL MÉTODO toString DE SU CLASE
+					//	MADRE Animal PORQUE TIENE INFORMACIÓN ADICIONAL (chip)
+					
+					toString() {						
+						return super.toString() + " - CHIP: " + this.chip;
+					}					
+					
+				}
+			
+			</script>
+
+
+
+
+
+			<script type="text/javascript">
+			
+				// PRUEBAS:
+
+					
+				isidoro = new Gato("ISIDORO", "NARANJA", "GATO");
+			
+				alert(isidoro);
+				
+				alert(isidoro.alimentarse());
+			
+				alert(isidoro.emitirSonido());
+
+
+				///////////////////////////////////////////////////////////////////////////////////
+
+
+				snoopy = new Perro("SNOOPY", "BLANCO", "PERRO");
+			
+				alert(snoopy);
+				
+				alert(snoopy.alimentarse());
+			
+				alert(snoopy.emitirSonido());
+				
+			</script>
+			
+			
+			<div>
+			
+				<figure>
+					<img src="img/pikachu.jpg" id="pikachu"/>
+					<figcaption> FIN DE LA OOP DE JAVASCRIPT (💩) </figcaption>
+				</figure>
+			
+			</div>
+			
+			
+		</div>
+		
+	</body>
+	
+</html>
