@@ -1,5 +1,7 @@
 package electro;
 
+import interfaces.InterfaceFrigo;
+
 public class Frigo implements InterfaceFrigo {
 	//ATRIBUTOS:
 	private String marca = null;
@@ -8,7 +10,7 @@ public class Frigo implements InterfaceFrigo {
 	
 	
 	//CONSTRUCTORES:
-	public Frigorifico() {
+	public Frigo() {
 		marca = "SAMSUNG";
 	}
 	
