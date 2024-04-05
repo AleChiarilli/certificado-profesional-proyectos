@@ -8,9 +8,12 @@ public class NumeroPrimo {
 		int[] numerosPrimos = {};
 		
 		for (int i = 1; i <= 100 ; i++) {
-			if (i / i == 1 && ) {
+			
+			if (i / i == 1 &&
+					i / 1 == i) {
 				
-			}
+				
+			};
 		}
 	}
 }
