@@ -19,7 +19,7 @@ public class Calimocho {
 	// MÃ‰TODO DE ACCESO PARA OBTENER 1 OBJETO DE ESTA CLASE.
 	//		DEBE SER ESTÃTICO PARA PODER SER INVOCADO DESDE BORRACHO SIN
 	//		NECESIDAD DE CREAR UNA INSTANCIA (constructor privado)
-	public synchronized static Calimocho comprarCalimocho() {
+	public static synchronized Calimocho comprarCalimocho() {
 		
 		if(calimocho == null) {
 			calimocho = new Calimocho();
