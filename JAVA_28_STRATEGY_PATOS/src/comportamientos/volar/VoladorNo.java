@@ -1,9 +1,11 @@
 package comportamientos.volar;
 
-public class VoladorNo extends Volador{
 
+/*public*/ class VoladorNo extends Volador {
+
+	@Override
 	public String volar() {
-		return "NO VUELO!";
-	}
+		return "NO VUELO !!";
+	} 	
 	
 }

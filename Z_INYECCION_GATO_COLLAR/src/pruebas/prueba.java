@@ -1,0 +1,97 @@
+package pruebas;
+
+
+import almacen.Collar;
+import tienda.Gato;
+
+
+public class prueba {
+
+	public static void main(String[] args) {
+		
+		//Gato gato = new Gato("BRUNA"); // NO, CONSTRUCTOR PRIVADO EN GATO.
+	
+		// LO COMPRAS TÚ Y AL COMPRARLO LE DICES AL DE LA TIENDA QUE LE PONGA UN COLLAR CON EL NOMBRE
+		//		QUE NUEVAMENTE TÚ LE DIGAS.
+		Gato g1 = Gato.solicitarGato("BRUNA");
+		System.out.println("GATO_1 ---> " + g1);
+
+		
+		System.out.println("\n---------------------------\n");
+		
+		
+		Gato g2 = Gato.solicitarGato();
+		System.out.println("GATO_2 ---> " + g2);
+		
+		
+		System.out.println("\n\n");
+		
+		
+		Collar collar = Collar.solicitarCollar();
+		System.out.println("COLLAR ... " + collar);
+		
+		collar.setNombre("ANTONIO");		
+		System.out.println("COLLAR ... " + collar);
+		
+		g2.setCollar(collar);
+		
+		
+		System.out.println("\n\n");
+		
+		
+		System.out.println("GATO_2 ---> " + g2);
+
+	}
+	
+}
+
+
+/*
+
+ 	DEPENDENCIA --->  "ME HACE FALTA ALGO ... EJEMPLO -> NECESITO DINERO PARA VIVIR". 
+							EL DINERO EN SI ES UNA ABSTRACCIÓN ... ES TODO Y NADA.
+							
+							
+	INYECCIÓN DE DEPENDENCIAS ---> TE DOY AQUELLO QUE TÚ NECESITAS ... TE RELLENO LA DEPENDENCIA.
+
+
+	INVERSIÓN DE DEPENDENCIAS ---> DIVERSIDAD == ADAPTABILIDAD == ABSTRACCIONES 
+									... PROGRAMA EN BASE A UN SUPERTIPO (REGLA OOP).
+	
+									UTILIZO AQUELLO QUE NECESITO NO DIRECTEMENTE SINO A TRAVÉS DE SU ABSTRACCIÓN.
+										ME PERMITE UTILIZAR DISTINTOS TIPOS DE COSAS QUE LO CUMPLAN.
+	
+	INVERSIÓN DE CONTROL ---> "NO ME LO PIDAS QUE SI VEO QUE TE HACE FALTA, YA TE LO DOY YO"
+								PATRÓN HOLLYWOOD.
+
+
+	----> CON GATO Y COLLAR, ¿CÓMO QUEDA LA COSA?:
+
+	DEPENDENCIA .... GATO NECESITA UN COLLAR.
+	
+	INYECCIÓN DE DEPENDENCIAS ... LA VARIABLE DE INSTANCIA GLOBAL Y PRIVADA COLLAR EN LA GATO, SE RELLENA
+									SE ASIGNA, SE LE DÁ VALOR, A TRAVÉS DE EL PROPIO ATRIBUTO, EL CONSTRUCTOR,
+										O EL MÉTODO SETTER ... INYECCIÓN A NIVEL DE XXX.
+										
+	INVERSIÓN DE DEPENDENCIAS ... HABRÍA QUE CREAR HIJAS O SUBTIPOS DE COLLAR (DE PLASTICO, DE CUERO, DE DIAMENTES)
+								PERO MANEJAR TODAS SUS POSIBLE IMPLEMENTACIONES A TRAVÉS DEL SUPERTIPO COLLAR.
+								---> FUNDAMENTAL: USA UN SUPERTIPO, NO UNA IMPLEMENTACIÓN EN PARTICULAR <---
+								
+	INVERSIÓN DE CONTROL ... SI GATO EFECTIVAMENTE NECESITA UN COLLAR, NO TE PREOCUPES, QUE CUANDO ME PIDAS UNA
+								INSTANCIA (O INFINITAS) DE DICHA CLASE GATO, YO TE LA DEVUELVO PERO CON UN 
+								COLLAR YA COLOCADO ... YO ME ENCARGO DE FORMA AUTOMÁTICA DE RELLENARTE LA DEPENDENCIA.
+								
+
+
+	UNA PREGUNTA ... LA DEPENDENCIA O CLASE DE BAJO NIVEL, EN EL CONTENEDOR O CLASE DE ALTO NIVEL ...
+	 					¿LA VAS A CAMBIAR EN UN FUTURO? ... ¿VA A HABER CHANGE? ... ¿NECESITAS ADAPTABILIDAD?.
+	 					
+	 					SI, NO ... INTENTA SIEMPRE UTILIZAR UN SUPERTIPO "POR SI LAS MOSCAS".
+	 					
+
+
+*/
+
+
+
+

@@ -1,8 +1,7 @@
 package comportamientos.volar;
 
-public abstract class Volador {
+import manejadores.IVolador;
 
-	public abstract String volar();
-	
-	
+/*public*/ abstract class Volador implements IVolador {
+	//
 }
