@@ -1,0 +1,89 @@
+
+https://www.arquitecturajava.com/jdbc-java-try-with-resources/
+
+
+USO DE try CON PARÉNTESIS QUE INDICAN LOS OBJETOS A USAR Y CERRAR AUTOMÁTICAMENTE:
+
+
+/////////////////////////// (1) SI LA PS NO TIENE PARÁMETROS /////////////////////////////////////
+
+
+final String query = "SELECT * FROM bebidas;";
+
+
+try (
+
+		Connection conexion = DriverManager.getConnection();
+		PreparedStatement ps = conexion.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		
+	) 	{
+
+		while (rs.next()) {
+			// RECORRER EL ResultSet ... AL TERMINAR SE CIERRA TODO POR SI SOLO.			
+			System.out.println(rs.getString("NOMBRE") + " ---> " + rs.getDouble("PRECIO") + "€");
+		}
+		
+} catch (SQLException sqle) {
+
+    throw new MiExcepcion("ERROR EN CIERRE DE LA CONEXIÓN: \n", sqle);
+	
+}
+
+
+
+/////////////////////// (2) SI LA PS TIENE PARÁMETROS (USAR ANIDAMIENTO) ///////////////////////////
+
+
+package daos;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+public class LoginDAO extends AbstractDAO {
+
+	public boolean getAccess(String user, String password) {
+		
+		// TRY WITH RESOURCES ... AUTOCIERRE DE TODOS LOS ELEMENTOS - JAVA 7:
+		
+		try (
+
+				Connection connection = getConnection();
+				PreparedStatement ps = connection.prepareStatement(query_login);
+				// SI TIENES PARÁMETROS EN EL ps AQUÍ NO USES EL ResultSet:
+				//		ResultSet rs = ps.executeQuery();
+				
+			) 	{
+
+				// AJUSTE DE PARÁMETROS:
+				ps.setString(1,"bombillaloca");
+				ps.setString(2,"7406");
+			
+				// TRY WITH RESOURCES ANIDADO:
+				try (ResultSet rs = ps.executeQuery();) {
+
+					// ¿CÓMO SABER SI EL USUARIO Y LA CONTRASEÑA INTRODUCIDOS SON VÁLIDOS?
+					//		HAZ SIMPLEMENTE rs.next() 	... 1 registro si usuario y clave válidos.
+					//									...	0 registros si no == return true/false.
+				
+					// QUERY: 
+					//			SELECT USER_EMAIL FROM login WHERE USER_EMAIL='bombillaloca' AND PASSWORD='7406';
+					//			SELECT USER_EMAIL FROM login WHERE USER_EMAIL=? AND PASSWORD=?;
+				
+					return rs.next();					
+					
+				}
+
+				// TODOS LOS RECURSOS SE CERRARÁN AUTOMÁTICAMENTE.
+			
+		} catch (SQLException sqle) {
+		    throw new RuntimeException("ERROR: \n", sqle);			
+		}
+		
+	}
+	
+}

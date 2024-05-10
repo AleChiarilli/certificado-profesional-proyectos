@@ -1,0 +1,5 @@
+SELECT "OK" AS "ACCESO"
+	FROM login 
+		WHERE USER_EMAIL 
+			LIKE "bombillaloca" 
+				AND PASSWORD LIKE "7406";
