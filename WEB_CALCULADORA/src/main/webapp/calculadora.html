@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			
+		
+			fieldset {
+				border-style: 20px;
+				border-size: solid;
+				border-color: green;
+				border-radius: 245px;
+			}
+		
+		</style>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<h1>Calculadora Web </h1>
+			
+			<fieldset>
+				<form>
+					<legend>OPERACIONES</legend>
+					<label for="x"> X </label>
+					<input type="number" name="x" id="x" value="" size="3" maxlength="3" autofocused required>			
+				
+					<br><br><br>
+					
+					<label for="y"> Y </label>
+					<input type="number" name="y" id="y" value="" size="3" maxlength="3"  required>
+					
+					<br><br><br>
+					
+					<button formaction="SumarServlet.do">SUMAR</button> 
+<!-- 					http://localhost:8080/WEB_CALCULADORA/sumaro.do?x=123&y=123 -->
+					
+				
+					<button formaction="RestarServlet.do">RESTAR</button>
+<!-- 					http://localhost:8080/WEB_CALCULADORA/restar.do?x=123&y=123 -->
+					
+				</form>
+			</fieldset>
+		
+		</div>
+		
+	</body>
+
+</html>

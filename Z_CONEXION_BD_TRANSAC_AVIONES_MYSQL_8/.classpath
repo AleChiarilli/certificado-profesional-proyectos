@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/_VCG/Z-LIBRERIAS/Z-LIBRERIAS_JDBC/01 DRIVER CONEXION MySQL/mysql-connector-j-8.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/_CURSO_WEB/WS_ECLIPSE__ver12/Proyectos_Certificado_Profesional/Z_CONEXION_BD_TRANSAC_AVIONES_MYSQL_8/DRIVER_JDBC_8/mysql-connector-j-8.4.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
