@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd" id="WebApp_ID" version="5.0">
+
+  <display-name>WEB03_PARAMETROS_INICIALIZACION</display-name>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <servlet>
+    <display-name>TipoAServlet</display-name>
+    <servlet-name>TipoAServlet</servlet-name>
+    <servlet-class>servlets.TipoAServlet</servlet-class>
+    
+    <init-param>
+    	<param-name>color</param-name>
+    	<param-value>rojo</param-value>
+    </init-param>
+    
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>TipoAServlet</servlet-name>
+    <url-pattern>/TipoAServlet</url-pattern>
+  </servlet-mapping>
+
+</web-app>

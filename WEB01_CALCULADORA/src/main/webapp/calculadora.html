@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			body {
+				color:white;
+				background-color:black;				
+			}
+			
+		
+			h1 {
+				color:red;
+				text-shadow: 2px 2px 5px yellow;
+			}
+		
+			fieldset {
+				
+				border:2px solid green;
+				border-radius:25px;
+				width:200px;
+				
+				/*
+				border-size:2px;
+				border-style:solid;
+				border-color:green;
+				*/
+				
+			}
+			
+			input[type=number] {
+				appearance:textfield;
+				background-color:cyan;
+			}
+			
+		</style>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<h1> CALCULADORA WEB </h1>
+
+			<fieldset>
+			
+				<legend> OPERACIONES </legend>
+				
+				
+				<form method="GET">
+				
+					<label for="x"> X </label>
+					
+					&nbsp;&nbsp;&nbsp;
+					
+					<input type="number" name="x" id="x" value="" size="3" maxlength="3"
+									autofocus required/>
+					
+					
+					<br/><br/><br/>
+					
+					
+					
+					<label for="y"> Y </label>
+					
+					&nbsp;&nbsp;&nbsp;
+					
+					<input type="number" name="y" id="y" value="" size="3" maxlength="3"
+									required/>
+					
+					
+					
+					<br/><br/><br/>
+					
+					<!-- 
+						http://localhost:8080/WEB01_CALCULADORA/sumar.do?x=1&y=2 				
+						http://localhost:8080/WEB01_CALCULADORA/restar.do?x=1&y=2
+						
+					-->
+					
+					
+					<button formaction="SumarServlet.do"> SUMAR </button>
+			
+					&nbsp;&nbsp;&nbsp;
+					
+					<button formaction="RestarServlet.do"> RESTAR </button>
+				
+				</form>
+			
+			</fieldset>
+
+		</div>
+		
+	</body>
+
+</html>
