@@ -56,18 +56,16 @@
 
         /* Estilos para los botones */
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007bff;
+            background: #ff4d4d;
             color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background 0.3s;
         }
-
         button:hover {
-            background-color: #0056b3;
+            background: #e63939;
         }
 
         /* Efectos adicionales */
@@ -92,7 +90,7 @@
 <body>
 
 <header>
-    <h1 id="title">BIENVENIDA ${param.usuario}</h1>
+    <h1 id="title">Hola, ${param.usuario} !</h1>
 </header>
 
 <nav>
@@ -106,25 +104,28 @@
 
 <section>
     <div class="container">
-        <h1>Bienvenido a Mi Página de Inicio</h1>
-        <p id="welcomeText">¡Hola! Esta es una página de inicio generada con HTML, CSS y JavaScript.</p>
+        <h1>¡Bienvenido a tu apartado personal!</h1>
+        <p id="welcomeText">Estimado ${param.usuario}, nos complace darte la bienvenida a nuestro sitio. Aquí encontrarás una variedad de servicios e información útil para hacer tu experiencia más agradable y productiva.</p>
+        <p>En nuestra página, puedes explorar diferentes secciones, conocer más sobre nosotros y nuestros servicios, y ponerte en contacto con nosotros para cualquier consulta o asistencia que necesites.</p>
         <button onclick="saludar()">Saludar</button>
         <button onclick="mostrarInformacion()">Mostrar Información</button>
         <div id="information" class="hidden">
-            <p>¡Bienvenido a mi página de inicio!</p>
-            <p>Esta página contiene contenido dinámico y efectos.</p>
+           
+            <p>Este es el lugar perfecto para encontrar información, recursos y más. ¡Disfruta tu tiempo aquí!</p>
         </div>
     </div>
 </section>
 
 <footer>
-    <p>&copy; 2024 Mi Página. Todos los derechos reservados.</p>
+    <p>&copy; 2024. Todos los derechos reservados. Diseñado con ❤️ para brindarte la mejor experiencia.</p>
 </footer>
 
 <script>
     // JavaScript
+    var usuario = '<%= request.getParameter("usuario") %>';
+
     function saludar() {
-        alert('¡Hola! Bienvenido a mi página de inicio.');
+        alert('¡Hola! Bienvenido a mi página de inicio, estimado ' + usuario);
     }
 
     function mostrarInformacion() {

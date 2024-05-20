@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xmlns="https://jakarta.ee/xml/ns/jakartaee" 
+			xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
+								https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd" id="WebApp_ID" version="5.0">
+
+  <display-name>WEB05_DISCOTECA_FILTROS</display-name>
+  
+  <servlet>
+    <display-name>DiscotecaServlet</display-name>
+    <servlet-name>DiscotecaServlet</servlet-name>
+    <servlet-class>servlets.DiscotecaServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>DiscotecaServlet</servlet-name>
+    <url-pattern>/DiscotecaServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <filter>
+    <display-name>Filtro1</display-name>
+    <filter-name>Filtro1</filter-name>
+    <filter-class>filtros.Filtro1</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>Filtro1</filter-name>
+    <servlet-name>DiscotecaServlet</servlet-name>
+  </filter-mapping>
+  
+  
+  <filter>
+    <display-name>Filtro2</display-name>
+    <filter-name>Filtro2</filter-name>
+    <filter-class>filtros.Filtro2</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>Filtro2</filter-name>
+    <servlet-name>DiscotecaServlet</servlet-name>
+  </filter-mapping>
+    
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+</web-app>
